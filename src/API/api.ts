@@ -1,3 +1,3 @@
-const apiUrl = "https://ngl-drx.vercel.app/"
+const apiUrl = "https://ngl-backend.vercel.app/"
 
 export {apiUrl}
