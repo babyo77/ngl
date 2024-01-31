@@ -80,7 +80,7 @@
   transition: all 0.3s ease-in-out;
 
   /* Animation definition */
-  animation: increaseSizeAndShake 2s infinite;
+  animation: increaseSizeAndShake 2.3s infinite;
 
 }
 
