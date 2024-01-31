@@ -1,3 +1,3 @@
-const apiUrl = "https://ngl-backend.vercel.app/"
+const apiUrl = import.meta.env.VITE_API_URL
 
 export {apiUrl}
