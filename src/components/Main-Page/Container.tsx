@@ -96,7 +96,7 @@ const {data:diceData = ["Hello how are you"]} = useGetDetailsQuery()
                   }}
                   placeholder="send me anonymous messages..."
                   {...field}
-                  className="w-[40rem] max-md:w-[21rem] min-h-[9rem] text-lg font-bold rounded-b-[1.5rem] placeholder:text-xl placeholder:font-semibold bg-white/40 rounded-t-none border-none placeholder:text-black/25 resize-none py-4  px-5 backdrop-blur-md"
+                  className="w-[40rem] max-md:w-[21rem] min-h-[9rem] text-lg font-semibold rounded-b-[1.5rem] placeholder:text-xl placeholder:font-semibold bg-white/40 rounded-t-none border-none placeholder:text-black/25 resize-none py-4  px-5 backdrop-blur-md"
                 />
               </FormControl>
 
