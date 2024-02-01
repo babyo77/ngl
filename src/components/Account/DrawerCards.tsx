@@ -12,7 +12,7 @@ import Cards  from ".."
 import { useCallback, useRef } from "react"
 import { toPng} from "html-to-image"
 import NewMessage from "./NewMessage"
-export function DrawerCard({msg}:{msg:string}){
+export function DrawerCard({msg,id}:{msg:string,id:string}){
     const cardRef = useRef<HTMLDivElement>(null)
 
 const download = useCallback(()=>{
@@ -36,13 +36,13 @@ const download = useCallback(()=>{
  return(
 
      <Drawer>
-  <DrawerTrigger>
-    <NewMessage msg={msg}/>
+  <DrawerTrigger id={id}>
+    <NewMessage  seen={false} msg={msg}/>
   </DrawerTrigger>
   <DrawerContent>
     <DrawerHeader>
       <DrawerTitle>Who sent this?</DrawerTitle>
-      <DrawerDescription>Location - sex</DrawerDescription>
+      <DrawerDescription>...</DrawerDescription>
     </DrawerHeader>
     <div className="flex justify-center items-center" >
     <Cards  ref={cardRef} msg={msg}/>

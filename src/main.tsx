@@ -4,8 +4,8 @@ import App from './App.tsx'
 import './index.css'
 import {createBrowserRouter,RouterProvider} from "react-router-dom"
 import Account from './components/Account/Account.tsx'
-import { store } from './store/store.ts'
-import { Provider } from 'react-redux'
+import {QueryClient,QueryClientProvider} from "react-query"
+const queryClient = new QueryClient() 
 const router = createBrowserRouter([
   {
      path:'/:username?',
@@ -18,8 +18,8 @@ const router = createBrowserRouter([
 ])
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <Provider store={store}>
+    <QueryClientProvider client={queryClient}>
     <RouterProvider router={router} />
-    </Provider>
+    </QueryClientProvider>
   </React.StrictMode>,
 )

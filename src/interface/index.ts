@@ -5,4 +5,11 @@ interface user {
   username: string;
 }
 
-export type { user };
+interface messages {
+  date:string
+  msg:string
+  seen:boolean
+  id:string
+}
+
+export type { user,messages };
