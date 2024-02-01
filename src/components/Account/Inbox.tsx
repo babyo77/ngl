@@ -33,7 +33,7 @@ function Inbox() {
 
 
   return (
-    <div className="pt-2  flex  flex-col gap-4 ">
+    <div className="  flex  flex-col gap-4 ">
      {isLoading && (
         <div className="w-full h-[90dvh] text-xl font-extrabold  flex justify-center items-center">
         <Loader color="#EC1187"/>
@@ -44,12 +44,13 @@ function Inbox() {
          Error Fetching data
        </div>
      )}
-     {data && data.map((msg,i)=> (
+     {data && data.map((msg)=> (
       
-      <> 
-      <DrawerCard id={msg.id} key={msg.id+i} msg={msg.msg}/>
-<div  key={msg.id} className=" h-[.05rem] bg-zinc-200"></div>
-  </>
+      <div key={`_divider${msg.id}`} className="flex flex-col gap-3">
+      <DrawerCard id={msg.id} msg={msg.msg}/>
+<div   className=" h-[.05rem] bg-zinc-200"></div>
+      </div>
+  
   
      ))}
         </div>

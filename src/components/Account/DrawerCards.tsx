@@ -37,7 +37,7 @@ const download = useCallback(()=>{
 
      <Drawer>
   <DrawerTrigger id={id}>
-    <NewMessage  seen={false} msg={msg}/>
+    <NewMessage  seen={true} msg={msg}/>
   </DrawerTrigger>
   <DrawerContent>
     <DrawerHeader>
