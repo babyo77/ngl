@@ -44,7 +44,7 @@ function Dashboard() {
     }
   };
 
-  if (isDesktop) {
+  if (!isDesktop) {
     return <Desktop />;
   }
   if (loading) {
