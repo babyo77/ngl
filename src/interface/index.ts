@@ -1,3 +1,5 @@
+import { Timestamp } from "firebase/firestore";
+
 interface user {
   avatar: string;
   email: string;
@@ -7,14 +9,11 @@ interface user {
 }
 
 interface messages {
-  date:firebaseTime
+  date:Timestamp
   msg:string
   seen:boolean
   id:string
 }
 
-interface firebaseTime{
-  _seconds:number,
-  _nanoseconds:number
-}
-export type { user,messages,firebaseTime };
+
+export type { user,messages };

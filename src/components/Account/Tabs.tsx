@@ -12,6 +12,7 @@ import { auth, usersCollection} from "@/firebase/firebaseConfig";
 import { msgCollection } from "../../firebase/firebaseConfig";
 import { doc, onSnapshot, query, where } from "firebase/firestore";
 import { useEffect, useState } from "react";
+import { messages } from "@/interface";
 export function Tab() {
 const [newMsg,setNewMsg] = useState<boolean>()
 
@@ -29,14 +30,10 @@ useEffect(() => {
 
     const unsubscribe = onSnapshot(messagesQuery, (snapshot) => {
       const newMessages = snapshot.docs.map((doc) => ({
-        ...doc.data()
+        ...doc.data() as messages
     }));
     const hasSeenMessage = newMessages.some((message) => message.seen !== true);
-        if(hasSeenMessage){
-          setNewMsg(true)
-        }else{
-          setNewMsg(false)
-        }
+       setNewMsg(hasSeenMessage)
     });
 
     return () => unsubscribe();

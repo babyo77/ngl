@@ -1,56 +1,89 @@
-import { apiUrl } from "@/API/api"
 import { DrawerCard } from ".."
-import { useQuery } from "react-query"
-import { auth } from "@/firebase/firebaseConfig"
+import { auth, msgCollection, usersCollection } from "@/firebase/firebaseConfig"
 import { Loader } from "../Loaders/Loader"
 import { messages } from "@/interface"
-
+import { useEffect, useState } from "react"
+import { doc, limit, onSnapshot, orderBy, query, startAfter, where } from "firebase/firestore"
+import { useInView } from 'react-intersection-observer';
 function Inbox() {
+const [data,setData] = useState<messages[]>()
+const [isLoading,setIsLoading] = useState<boolean>(true)
 
-  const { data, isLoading, isError } = useQuery<messages[]>("messages", async () => {
-    const response = await fetch(`${apiUrl}/api/get/messages`, {
-      method: "post",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        token: await auth.currentUser?.getIdToken(),
-        username: auth.currentUser?.displayName?.toLowerCase(),
-      }),
-    });
+useEffect(() => {
+  setIsLoading(false)
+    const user = auth.currentUser;
+  
+    if (user) {
+      const uid = doc(usersCollection,user.uid);
+   
+      const messagesQuery = query(
+        msgCollection,
+        where('ref', '==', uid),
+        orderBy('date', 'desc'),
+        limit(10)
+      );
+  
+      const unsubscribe = onSnapshot(messagesQuery, (snapshot) => {
+        const newMessages:messages[] = snapshot.docs.map((doc) => ({
+          ...doc.data() as messages
+      }));
+     
+      setData(newMessages)
+      
+    })
+    return () => unsubscribe();
+  }
+}, []); 
 
-    if (!response.ok) {
-      throw new Error('Failed to fetch messages');
-    }
 
-    return response.json();
-  }, {
-    refetchOnWindowFocus:false
+  const { ref, inView} = useInView({
+   
   });
 
+  useEffect(()=>{
+    if(inView){
+      const user = auth.currentUser;
+      if (user) {
+        const lastMessage = data?.[data.length - 1];
+        const uid = doc(usersCollection,user.uid);
+     
+        const messagesQuery = query(
+          msgCollection,
+          where('ref', '==', uid),
+          orderBy('date', 'desc'),
+          startAfter(lastMessage?.date),
+          limit(10)
+        );
+    
+        const unsubscribe = onSnapshot(messagesQuery, (snapshot) => {
+          const newMessages:messages[] = snapshot.docs.map((doc) => ({
+            ...doc.data() as messages
+        }));
+       
+        setData((prev = [])=> [...prev,...newMessages])
+      })
+        return () => unsubscribe();
+      }}
 
+  },[inView,data])
 
   return (
+
     <div className="pt-2 flex  flex-col gap-4 ">
      {isLoading && (
         <div className="w-full h-[90dvh] text-xl font-extrabold  flex justify-center items-center">
         <Loader color="#EC1187"/>
       </div>
      )}
-     {isError&&(
-         <div className="w-screen text-xl font-extrabold  flex justify-center items-center">
-         Error Fetching data
-       </div>
-     )}
      {data && data.map((msg)=> (
       
-      <div key={`_divider${msg.id}`} className="flex flex-col gap-3">
+      <div ref={ref} key={`_divider${msg.id}`} className="flex fade-in flex-col gap-3">
       <DrawerCard id={msg.id} msg={msg.msg} seen={msg.seen} time={msg.date}/>
 <div   className=" h-[.05rem] bg-zinc-200"></div>
       </div>
   
   
-     ))}
+  ))}
         </div>
   )
 }

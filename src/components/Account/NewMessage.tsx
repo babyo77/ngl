@@ -1,9 +1,9 @@
-import { firebaseTime } from "@/interface";
+import { Timestamp } from "firebase/firestore";
 
-function NewMessage({msg,seen,timestamp}:{msg?:string,seen:boolean,timestamp:firebaseTime}) {
+function NewMessage({msg,seen,timestamp}:{msg?:string,seen:boolean,timestamp:Timestamp}) {
 
-   function formatFirebaseTimestamp(time:firebaseTime) {
-    const date = new Date(Number(time._seconds) *1000 + Number(time._nanoseconds/1e6))
+   function formatFirebaseTimestamp(time:Timestamp) {
+    const date = new Date(Number(time.seconds) *1000 + Number(time.nanoseconds/1e6))
     const current = new Date()
     const diff = current.getTime() - date.getTime()
 

@@ -1,7 +1,6 @@
 import {
     Drawer,
     DrawerContent,
-    DrawerDescription,
     DrawerFooter,
     DrawerHeader,
     DrawerTitle,
@@ -15,8 +14,8 @@ import NewMessage from "./NewMessage"
 import axios from "axios"
 import { apiUrl } from "@/API/api"
 import { auth } from "@/firebase/firebaseConfig"
-import { firebaseTime } from "@/interface"
-export function DrawerCard({msg,id,seen,time}:{msg:string,id:string,seen:boolean,time:firebaseTime}){
+import { Timestamp } from "firebase/firestore"
+export function DrawerCard({msg,id,seen,time}:{msg:string,id:string,seen:boolean,time:Timestamp}){
   const [seened,setSeen] = useState<boolean>()
 
 const updateMsg = async()=>{
@@ -69,13 +68,15 @@ const download = useCallback(()=>{
   <DrawerContent>
     <DrawerHeader>
       <DrawerTitle>Who sent this?</DrawerTitle>
-      <DrawerDescription>...</DrawerDescription>
     </DrawerHeader>
     <div className="flex justify-center items-center" >
     <Cards  ref={cardRef} msg={msg}/>
     </div>
     <DrawerFooter>
-        
+    <Button  className="rounded-none border-none shadow-none  rounded-t-2xl mt-3 bg-zinc-100 text-black   py-6 text-lg font-bold">Download</Button>
+    <Button  className="rounded-none border-none shadow-none  bg-zinc-100 text-black -mt-2   py-6 text-lg font-bold">Download</Button>
+    <Button  className=" rounded-none border-none shadow-none rounded-b-2xl mb-4 bg-zinc-100 text-black -mt-2  py-6 text-lg font-bold">Download</Button>
+  
       <Button onClick={download} className="rounded-3xl py-6 text-lg font-bold">Download</Button>
     
     </DrawerFooter>

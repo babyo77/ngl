@@ -43,7 +43,7 @@ const [isLoading,setLoading] = useState<boolean>(false)
         <AlertDialogTrigger asChild>
           <Button variant={"secondary"} className="text-[1rem] mt-3 text-red-500 font-bold rounded-2xl py-6">Delete account</Button>
         </AlertDialogTrigger>
-        <AlertDialogContent className="w-[90dvw] rounded-2xl">
+        <AlertDialogContent className="w-[87dvw] rounded-2xl">
           <AlertDialogHeader>
             <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
             <AlertDialogDescription>

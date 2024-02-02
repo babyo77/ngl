@@ -11,7 +11,7 @@ function App() {
   const [details, setUser] = useState<user>();
   useEffect(() => {
     const userExist = async () => {
-      const user = await fetch(`${apiUrl}/user/${username || "ngl"}`);
+      const user = await fetch(`${apiUrl}/user/${username || "tanmay"}`);
       const details: user  = await user.json();
       setUser(details);
       user.ok
