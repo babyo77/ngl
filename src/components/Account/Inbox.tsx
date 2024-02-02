@@ -32,7 +32,7 @@ function Inbox() {
 
 
   return (
-    <div className="py-2 flex  flex-col gap-4 ">
+    <div className="pt-2 flex  flex-col gap-4 ">
      {isLoading && (
         <div className="w-full h-[90dvh] text-xl font-extrabold  flex justify-center items-center">
         <Loader color="#EC1187"/>
