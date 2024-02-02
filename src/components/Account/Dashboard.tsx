@@ -24,6 +24,7 @@ function Dashboard() {
   }, []);
 
   const Login = async () => {
+setLoading(true)
     if (!auth.currentUser) {
       try {
         const details = await signInWithPopup(auth, googleAuthProvider);
