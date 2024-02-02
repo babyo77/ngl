@@ -1,4 +1,4 @@
-
+import {QRCodeSVG} from "qrcode.react"
 function Desktop() {
   return (
     <>
@@ -9,8 +9,8 @@ function Desktop() {
         <h1 className="font-bold text-5xl mt-4 mb-4 text-zinc-700">Scan this QR</h1>
           <span className="font-semibold ">on Phone</span>
 
-          <div className=" h-96 bg-black/20 w-96 border mt-5 rounded-xl">
-            
+          <div className=" h-96 bg-black/20 w-96 border mt-5 object-center flex justify-center items-center overflow-hidden rounded-3xl">
+            <QRCodeSVG value={window.location.origin+"/da/account"} className="h-[90%] w-[90%] rounded-2xl" />
           </div>
 
           <div className="flex justify-center flex-col items-center mt-[3vw]">

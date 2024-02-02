@@ -73,10 +73,10 @@ const download = useCallback(()=>{
     <Cards  ref={cardRef} msg={msg}/>
     </div>
     <DrawerFooter>
-    <Button  className="rounded-none border-none shadow-none  rounded-t-2xl mt-3 bg-zinc-100 text-black   py-6 text-lg font-bold">Download</Button>
+    {/* <Button  className="rounded-none border-none shadow-none  rounded-t-2xl mt-3 bg-zinc-100 text-black   py-6 text-lg font-bold">Download</Button>
     <Button  className="rounded-none border-none shadow-none  bg-zinc-100 text-black -mt-2   py-6 text-lg font-bold">Download</Button>
     <Button  className=" rounded-none border-none shadow-none rounded-b-2xl mb-4 bg-zinc-100 text-black -mt-2  py-6 text-lg font-bold">Download</Button>
-  
+   */}
       <Button onClick={download} className="rounded-3xl py-6 text-lg font-bold">Download</Button>
     
     </DrawerFooter>
