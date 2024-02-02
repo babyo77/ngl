@@ -47,8 +47,8 @@ setLoading(true)
   }
   if (loading) {
     return (
-      <div className="flex h-dvh justify-center items-center">
-        <Loader color="#EC1187" />
+      <div className="flex bg-gradient-to-br from-[#EC1187] to-[#FF8D10] h-dvh justify-center items-center">
+        <Loader/>
       </div>
     );
   }
