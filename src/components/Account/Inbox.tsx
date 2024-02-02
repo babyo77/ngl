@@ -37,11 +37,11 @@ useEffect(() => {
 
 
   const { ref, inView} = useInView({
-   
+   threshold:1,
   });
 
   useEffect(()=>{
-    if(inView){
+    if(inView ){
       const user = auth.currentUser;
       if (user) {
         const lastMessage = data?.[data.length - 1];
@@ -55,15 +55,15 @@ useEffect(() => {
           limit(10)
         );
     
-        const unsubscribe = onSnapshot(messagesQuery, (snapshot) => {
+        onSnapshot(messagesQuery, (snapshot) => {
           const newMessages:messages[] = snapshot.docs.map((doc) => ({
             ...doc.data() as messages
         }));
        
         setData((prev = [])=> [...prev,...newMessages])
       })
-        return () => unsubscribe();
-      }}
+       
+    }}
 
   },[inView,data])
 
@@ -76,11 +76,12 @@ useEffect(() => {
       </div>
      )}
      {data && data.map((msg)=> (
-      
-      <div ref={ref} key={`_divider${msg.id}`} className="flex fade-in flex-col gap-3">
+    
+      <div ref={ref}  key={`_divider${msg.id}`} className="flex fade-in flex-col gap-3">
       <DrawerCard id={msg.id} country={msg.country} isp={msg.isp} city={msg.city} regionName={msg.regionName} msg={msg.msg} seen={msg.seen} time={msg.date}/>
 <div   className=" h-[.05rem] bg-zinc-200"></div>
       </div>
+ 
   
   
   ))}
