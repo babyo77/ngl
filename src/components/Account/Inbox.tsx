@@ -25,7 +25,6 @@ function Inbox() {
 
     return response.json();
   }, {
-    keepPreviousData:true,
     refetchOnWindowFocus:false
   });
 
