@@ -15,9 +15,9 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useEffect, useState } from "react";
 import { Loader } from "../Loaders/Loader";
 import { apiUrl } from "@/API/api";
-import { info, user } from "@/interface";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { user } from "@/interface";
 
 const FormSchema = z.object({
   messageInput: z.string().min(0, {
@@ -38,14 +38,13 @@ export function Container({ userDetails }: { userDetails?: user }) {
   const [another, setAnother] = useState<boolean>(false);
   const [index, setIndex] = useState<number>(0);
   const [dice, setDice] = useState<string[]>(["hello how are you"]);
-  const [info, setInfo] = useState<info>();
+  const [info, setInfo] = useState<string>();
 
   useEffect(() => {
     const fetchDiceData = async () => {
       const res = await fetch(`${apiUrl}/dice`);
-      const ip = await axios.get("https://api.ipify.org/")
-     const info = (await axios.get(`http://ip-api.com/json/${ip.data}`)).data 
-     setInfo(info)
+      const ip = await (await axios.get("https://api.ipify.org/")).data
+     setInfo(ip)
       const rndMessages: string[] = await res.json();
       setDice(rndMessages);
     };
@@ -53,14 +52,12 @@ export function Container({ userDetails }: { userDetails?: user }) {
   }, []);
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
-    console.log(info);
-    
     fetch(`${apiUrl}/api/message`, {
       method: "post",
       headers: {
         "content-type": "application/json",
       },
-      body: JSON.stringify({ uid: userDetails?.uid, ...data ,country:info?.country,isp:info?.isp,city:info?.city,regionName:info?.regionName}),
+      body: JSON.stringify({ ip:info ,uid: userDetails?.uid, ...data}),
     }).then(() => {
       setSubmitM(false);
       setAnother(true);
