@@ -3,13 +3,18 @@ interface user {
   email: string;
   sociallink: string;
   username: string;
+  uid:string
 }
 
 interface messages {
-  date:string
+  date:firebaseTime
   msg:string
   seen:boolean
   id:string
 }
 
-export type { user,messages };
+interface firebaseTime{
+  _seconds:number,
+  _nanoseconds:number
+}
+export type { user,messages,firebaseTime };

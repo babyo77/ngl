@@ -20,12 +20,8 @@ const [isLoading,setLoading] = useState<boolean>(false)
          try {
             setLoading(true)
             const authToken = await auth.currentUser?.getIdToken()
-            const id =  auth.currentUser?.uid
-            const user = "ngl"
             const data = {
-                id:id,
                token:authToken,
-               username:user
             }
             const startDelete = await fetch(`${apiUrl}/api/del`,{
                method:"post",

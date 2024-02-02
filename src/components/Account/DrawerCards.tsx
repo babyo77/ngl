@@ -9,10 +9,32 @@ import {
   } from "@/components/ui/drawer"
 import { Button } from "../ui/button"
 import Cards  from ".."
-import { useCallback, useRef } from "react"
+import { useCallback, useRef, useState } from "react"
 import { toPng} from "html-to-image"
 import NewMessage from "./NewMessage"
-export function DrawerCard({msg,id}:{msg:string,id:string}){
+import axios from "axios"
+import { apiUrl } from "@/API/api"
+import { auth } from "@/firebase/firebaseConfig"
+import { firebaseTime } from "@/interface"
+export function DrawerCard({msg,id,seen,time}:{msg:string,id:string,seen:boolean,time:firebaseTime}){
+  const [seened,setSeen] = useState<boolean>()
+
+const updateMsg = async()=>{
+  if(!seen){
+    setSeen(true)
+    const data = {
+      token:await auth.currentUser?.getIdToken(),
+      id:id
+    }
+    await axios.post(`${apiUrl}/api/user/update/msg`,JSON.stringify(data),{
+      headers:{
+        "Content-Type":"application/json"
+      }
+    })
+  }
+  
+}
+  
     const cardRef = useRef<HTMLDivElement>(null)
 
 const download = useCallback(()=>{
@@ -36,8 +58,13 @@ const download = useCallback(()=>{
  return(
 
      <Drawer>
-  <DrawerTrigger id={id}>
-    <NewMessage  seen={true} msg={msg}/>
+  <DrawerTrigger id={id} onClick={updateMsg}>
+    {seen ? (
+       <NewMessage  seen={seened || seen} msg={msg} timestamp={time}/>
+    ):(
+      <NewMessage  seen={ seened||seen} msg={msg} timestamp={time}/>
+    )}
+   
   </DrawerTrigger>
   <DrawerContent>
     <DrawerHeader>

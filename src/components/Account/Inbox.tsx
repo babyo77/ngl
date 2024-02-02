@@ -25,7 +25,6 @@ function Inbox() {
 
     return response.json();
   }, {
-    refetchInterval:30000,
     keepPreviousData:true,
     refetchOnWindowFocus:false
   });
@@ -33,7 +32,7 @@ function Inbox() {
 
 
   return (
-    <div className="  flex  flex-col gap-4 ">
+    <div className="py-2 flex  flex-col gap-4 ">
      {isLoading && (
         <div className="w-full h-[90dvh] text-xl font-extrabold  flex justify-center items-center">
         <Loader color="#EC1187"/>
@@ -47,7 +46,7 @@ function Inbox() {
      {data && data.map((msg)=> (
       
       <div key={`_divider${msg.id}`} className="flex flex-col gap-3">
-      <DrawerCard id={msg.id} msg={msg.msg}/>
+      <DrawerCard id={msg.id} msg={msg.msg} seen={msg.seen} time={msg.date}/>
 <div   className=" h-[.05rem] bg-zinc-200"></div>
       </div>
   

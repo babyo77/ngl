@@ -2,7 +2,6 @@ import { useParams } from "react-router-dom";
 import { Container } from "./components";
 import { useEffect, useState } from "react";
 import { user } from "./interface";
-import { Loader } from "./components/Loaders/Loader";
 import { apiUrl } from "./API/api";
 
 function App() {
@@ -24,11 +23,11 @@ function App() {
   if (isLoading) {
     return (
       <>
-        <div className="absolute top-0 z-[-2] h-full w-screen bg-gradient-to-br from-[#EC1187] to-[#FF8D10]"></div>
-        <div className="flex justify-center items-center h-screen">
-          <Loader />
-        </div>
-      </>
+          <div className="absolute top-0 z-[-2] h-full w-screen bg-gradient-to-br from-[#EC1187] to-[#FF8D10]"></div>
+          <div className="flex justify-center pt-12 ">
+            <Container userDetails={details}/>
+          </div>
+        </>
     );
   }
   return (

@@ -52,7 +52,7 @@ export function Container({ userDetails }: { userDetails?: user }) {
       headers: {
         "content-type": "application/json",
       },
-      body: JSON.stringify({ username: userDetails?.username, ...data }),
+      body: JSON.stringify({ uid: userDetails?.uid, ...data }),
     }).then(() => {
       setSubmitM(false);
       setAnother(true);
@@ -76,11 +76,11 @@ export function Container({ userDetails }: { userDetails?: user }) {
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <div className="bg-white rounded-t-[1.7rem]  flex items-center px-4 py-3">
           <Avatar>
-            <AvatarImage src={userDetails?.avatar} />
+            <AvatarImage className="fade-in" src={userDetails?.avatar} />
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
           <div className="ml-1.5">
-            <h1 className="text-[1rem]">@{userDetails?.username}</h1>
+            <h1 className="text-[1rem] fade-in">@{userDetails?.username}</h1>
             <p className="-mt-1  text-sm font-bold">
               send me anonymous messages!
             </p>
@@ -144,11 +144,11 @@ export function Container({ userDetails }: { userDetails?: user }) {
           </div>
         )}
         {!show && (
-          <div className=" relative top-52   max-md:w-[21rem]  w-[40rem]">
+          <div className=" relative top-[29vh]   max-md:w-[21rem]  w-[40rem]">
             <p className="text-center mt-4 text-white text-lg font-bold max-md:text-sm">
               👇 get your own tap this button 👇
             </p>
-            <Link to={"/"}>
+            <Link to={"/da/account"}>
               <Button
                 className="w-full py-7 animated-button bg-black hover:bg-black shadow-xl  text-lg mt-3 font-bold text-white 
             rounded-full"

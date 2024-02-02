@@ -11,7 +11,6 @@ function Dashboard() {
   const isDesktop = window.innerWidth <= 768;
   const [loggedIn, setLoggedIn] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
-
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -29,15 +28,13 @@ function Dashboard() {
       try {
         const details = await signInWithPopup(auth, googleAuthProvider);
         const user = details.user;
-        await fetch(`${apiUrl}/api/user`, {
+       await fetch(`${apiUrl}/api/user`, {
           method: "post",
           headers: {
             "content-type": "application/json",
           },
           body: JSON.stringify(user),
-        }).catch((err) => {
-          alert(err);
-        });
+        })
       } catch (error) {
         console.log(error);
       }

@@ -9,8 +9,8 @@ const Cards = React.forwardRef<HTMLDivElement,{ msg: string }>(({ msg },ref) => 
           Send me anonymous messages
         </CardTitle>
       </CardHeader>
-      <CardContent className="text-center flex justify-center items-center bg-white text-black   border-b border-r border-l  text-lg py-4  font-semibold  rounded-b-3xl">
-        {msg}
+      <CardContent className="text-center text-wrap  flex justify-center items-center bg-white text-black   border-b border-r border-l  text-lg py-4  font-semibold  rounded-b-3xl">
+        <span className=" overflow-auto">{msg}</span>
       </CardContent>
     </Card>
   );
