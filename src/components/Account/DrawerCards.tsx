@@ -15,7 +15,7 @@ import axios from "axios"
 import { apiUrl } from "@/API/api"
 import { auth } from "@/firebase/firebaseConfig"
 import { Timestamp } from "firebase/firestore"
-export function DrawerCard({msg,id,seen,time}:{msg:string,id:string,seen:boolean,time:Timestamp}){
+export function DrawerCard({msg,id,seen,time,country,city,isp,regionName}:{msg:string,id:string,seen:boolean,time:Timestamp,country:string,city:string,isp:string,regionName:string}){
   const [seened,setSeen] = useState<boolean>()
 
 const updateMsg = async()=>{
@@ -73,10 +73,11 @@ const download = useCallback(()=>{
     <Cards  ref={cardRef} msg={msg}/>
     </div>
     <DrawerFooter>
-    {/* <Button  className="rounded-none border-none shadow-none  rounded-t-2xl mt-3 bg-zinc-100 text-black   py-6 text-lg font-bold">Download</Button>
-    <Button  className="rounded-none border-none shadow-none  bg-zinc-100 text-black -mt-2   py-6 text-lg font-bold">Download</Button>
-    <Button  className=" rounded-none border-none shadow-none rounded-b-2xl mb-4 bg-zinc-100 text-black -mt-2  py-6 text-lg font-bold">Download</Button>
-   */}
+    <Button  className="rounded-none border-none shadow-none   justify-start rounded-t-2xl mt-3 bg-zinc-100 text-black   py-6 text-lg font-bold">Country - {country || "Not found"}</Button>
+    <Button  className="rounded-none border-none shadow-none  justify-start bg-zinc-100 text-black -mt-2   py-6 text-lg font-bold">Region - {regionName || "Not Found"}</Button>
+    <Button  className="rounded-none border-none shadow-none  justify-start bg-zinc-100 text-black -mt-2   py-6 text-lg font-bold">City - {city || "Not Found"}</Button>
+    <Button  className=" rounded-none border-none shadow-none justify-start rounded-b-2xl mb-4 bg-zinc-100 text-black -mt-2  py-6 text-lg font-bold">ISP - {isp || "Not Found"}</Button>
+  
       <Button onClick={download} className="rounded-3xl py-6 text-lg font-bold">Download</Button>
     
     </DrawerFooter>

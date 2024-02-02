@@ -13,7 +13,16 @@ interface messages {
   msg:string
   seen:boolean
   id:string
+  country:string
+  isp:string
+  regionName:string
+  city:string
 }
 
-
-export type { user,messages };
+interface info{
+  country:string
+  isp:string
+  regionName:string
+  city:string
+}
+export type { user,messages ,info};

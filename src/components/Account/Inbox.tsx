@@ -78,7 +78,7 @@ useEffect(() => {
      {data && data.map((msg)=> (
       
       <div ref={ref} key={`_divider${msg.id}`} className="flex fade-in flex-col gap-3">
-      <DrawerCard id={msg.id} msg={msg.msg} seen={msg.seen} time={msg.date}/>
+      <DrawerCard id={msg.id} country={msg.country} isp={msg.isp} city={msg.city} regionName={msg.regionName} msg={msg.msg} seen={msg.seen} time={msg.date}/>
 <div   className=" h-[.05rem] bg-zinc-200"></div>
       </div>
   
