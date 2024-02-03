@@ -46,13 +46,13 @@ const download = useCallback(()=>{
     cacheBust:true
   }).then((dataUrl)=>{
     const link = document.createElement('a')
-    link.download = "message"
+    link.download = `${msg}.png`
     link.href =dataUrl
     link.click()
   }).catch(err=>{
     console.log(err);
   })
-},[cardRef])
+},[cardRef,msg])
 
  return(
 
