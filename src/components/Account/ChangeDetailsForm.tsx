@@ -1,5 +1,3 @@
-"use client";
-
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -15,14 +13,15 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import { useEffect, useState } from "react";
-import { auth, usersCollection } from "@/firebase/firebaseConfig";
+import React, { useEffect, useRef, useState } from "react";
+import { auth, storage, usersCollection } from "@/firebase/firebaseConfig";
 import { doc, onSnapshot } from "firebase/firestore";
 import { user } from "@/interface";
 import { Loader } from "../Loaders/Loader";
 import axios from "axios";
 import { apiUrl } from "@/API/api";
 import { useMutation } from "react-query";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 
 const FormSchema = z.object({
   username: z.string().min(3, {
@@ -32,18 +31,19 @@ const FormSchema = z.object({
 
 export function ChangeDetailsForm() {
   const [loggedData, setLoggedData] = useState<user>();
+  const [uploadFile, setUploadFile] = useState<boolean>();
   const { mutateAsync, isSuccess, isLoading, isError } =
     useMutation(updateUsername);
   useEffect(() => {
     const user = auth.currentUser;
     if (user) {
       const uid = doc(usersCollection, user.uid);
-      const unsubscribe = onSnapshot(uid, (userDetails) => {
+      onSnapshot(uid, (userDetails) => {
         if (userDetails.exists()) {
           setLoggedData(userDetails.data() as user);
         }
       });
-      return () => unsubscribe();
+    
     }
   }, []);
 
@@ -53,27 +53,59 @@ export function ChangeDetailsForm() {
       username: "",
     },
   });
+    
 
   async function updateUsername(token: { token: string; username: string }) {
     const res = await axios.post(`${apiUrl}/api/user/update/username`, token);
     return res.data;
+  }
+  async function updateDp(token: { token: string; dp: string }) {
+    await axios.post(`${apiUrl}/api/user/update/dp`, token);
+    setUploadFile(false)
   }
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     const token = {
       token: (await auth.currentUser?.getIdToken()) ?? "",
       username: data.username,
     };
+ 
     await mutateAsync(token);
   }
+  const fileinput = useRef<HTMLInputElement>(null)
 
+const upload = async(event:React.ChangeEvent<HTMLInputElement>)=>{
+const file = event.target.files?.[0]
+setUploadFile(true)
+
+if(file){
+
+  await uploadBytes(ref(storage,auth.currentUser?.uid),file)
+  const url = await getDownloadURL(ref(storage,auth.currentUser?.uid))
+  const token = {
+    token: (await auth.currentUser?.getIdToken()) ?? "",
+    dp: url,
+  };
+    updateDp(token)
+}
+}
   return (
     <Form {...form}>
+      <input type="file" ref={fileinput} className="hidden" onChange={upload} />
       <div className="flex justify-center">
         <Avatar
-          onClick={() => alert("adding soon...")}
-          className="border-white  border-[.2rem] h-24 w-24"
+          onClick={()=>fileinput.current?.click()}
+          className="border-white   border-[.2rem] h-24 w-24"
         >
-          <AvatarImage src={loggedData?.avatar} alt={loggedData?.username} />
+        
+          {uploadFile ?(
+            <div className="flex w-full justify-center items-center h-full">
+              <Loader color="black"/>
+            </div>
+
+          ):(
+            <AvatarImage src={loggedData?.avatar} alt={loggedData?.username} />
+          )}
+          
           <AvatarFallback>CN</AvatarFallback>
         </Avatar>
       </div>

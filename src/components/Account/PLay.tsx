@@ -2,12 +2,38 @@ import { useEffect, useRef, useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Button } from "../ui/button";
 import { FaLink } from "react-icons/fa";
-import { auth, usersCollection } from "@/firebase/firebaseConfig";
+import { auth, messaging, usersCollection } from "@/firebase/firebaseConfig";
 import { user } from "@/interface";
 import { doc, onSnapshot } from "firebase/firestore";
 import { Loader } from "../Loaders/Loader";
+import { getToken } from "firebase/messaging";
+import axios from "axios";
+import { apiUrl } from "@/API/api";
 
 function PLay() {
+  async function requestPermission(){
+    
+  try {
+      const permission = await Notification.requestPermission()
+      if(permission==="granted"){
+        const NotifyToken = await  getToken(messaging,{vapidKey:"BHdJwrFAAKzml3BUG77fBy-fNB2UB2mWACLWQamDrsyH3dQOhWrI00T6TF-hmA1HpDSCBslsPGC2uyc_rnnVj50"})
+             console.log(NotifyToken);
+             if(NotifyToken){
+               const data = {
+                 token:await auth.currentUser?.getIdToken(),
+                 notifyId:NotifyToken
+                }
+                await axios.post(`${apiUrl}/api/user/notify`,data)
+              }
+      }else{
+        console.log("denied"); 
+      }
+  } catch (error) {
+    console.log(error);
+    
+  }
+  }
+
   const [loggedData, setLoggedData] = useState<user>();
   const [isLoading, setIsLoading] = useState<boolean>();
   useEffect(() => {
@@ -15,14 +41,16 @@ function PLay() {
     const user = auth.currentUser;
     if (user) {
       const uid = doc(usersCollection, user.uid);
-      const unsubscribe = onSnapshot(uid, (userDetails) => {
+      onSnapshot(uid, (userDetails) => {
         if (userDetails.exists()) {
           setLoggedData(userDetails.data() as user);
           setIsLoading(false)
+          requestPermission()
         }
       });
-      return () => unsubscribe();
+     
     }
+  
   }, []);
 
   const handleShare = async () => {

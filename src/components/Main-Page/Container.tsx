@@ -57,7 +57,7 @@ export function Container({ userDetails }: { userDetails?: user }) {
       headers: {
         "content-type": "application/json",
       },
-      body: JSON.stringify({ ip:info ,uid: userDetails?.uid, ...data}),
+      body: JSON.stringify({ ip:info ,uid: userDetails?.uid, ...data,email:userDetails?.email}),
     }).then(() => {
       setSubmitM(false);
       setAnother(true);
