@@ -75,7 +75,7 @@ const download = useCallback(()=>{
     <DrawerFooter>
     <Button variant={"secondary"}  className="rounded-none hover:bg-none  shadow-none border-b-[.05rem] border-zinc-200  justify-start rounded-t-2xl mt-3 bg-zinc-100 text-black   py-6 text-lg font-bold">Country - {country || "Not found"}</Button>
     <Button variant={"secondary"}  className="rounded-none hover:bg-none shadow-none border-b-[.05rem]  border-zinc-200   justify-start bg-zinc-100 text-black -mt-2   py-6 text-lg font-bold">Region - {regionName || "Not Found"}</Button>
-    <Button variant={"secondary"}  className="rounded-none hover:bg-none shadow-none border-b-[.05rem]  border-zinc-200   justify-start bg-zinc-100 text-black -mt-2   py-6 text-lg font-bold">City - {city || "Not Found"}</Button>
+    <Button variant={"secondary"}  className=" rounded-none hover:bg-none shadow-none     justify-start rounded-b-2xl mb-4 bg-zinc-100 text-black -mt-2  py-6 text-lg font-bold">City - {city || "Not Found"}</Button>
     {/* <Button variant={"secondary"}  className=" rounded-none hover:bg-none shadow-none     justify-start rounded-b-2xl mb-4 bg-zinc-100 text-black -mt-2  py-6 text-lg font-bold">ISP - {isp || "Not Found"}</Button>
    */}
       <Button onClick={download} className="rounded-3xl py-6 text-lg font-bold">Download</Button>
