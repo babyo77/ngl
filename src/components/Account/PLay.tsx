@@ -8,26 +8,41 @@ import { doc, onSnapshot } from "firebase/firestore";
 import { Loader } from "../Loaders/Loader";
 import axios from "axios";
 import { apiUrl } from "@/API/api";
-
+import { useLocation } from 'react-router-dom';
 function PLay() {
 
 
   const [loggedData, setLoggedData] = useState<user>();
   const [isLoading, setIsLoading] = useState<boolean>();
-  useEffect(() => {
-    setIsLoading(true)
-    const user = auth.currentUser;
-    if (user) {
-      const uid = doc(usersCollection, user.uid);
-      onSnapshot(uid, (userDetails) => {
-        if (userDetails.exists()) {
-          setLoggedData(userDetails.data() as user);
-          setIsLoading(false)
-        }
-      });
-     
-    }
+
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
   
+  useEffect(() => {
+    const fetchData = async()=>{
+
+      setIsLoading(true)
+      const user = auth.currentUser;
+      if (user) {
+        const uid = doc(usersCollection, user.uid);
+        onSnapshot(uid, (userDetails) => {
+          if (userDetails.exists()) {
+            setLoggedData(userDetails.data() as user);
+            setIsLoading(false)
+          }
+        });
+     
+      }     
+    if( searchParams.has("em")){
+      axios.post(`${apiUrl}/em`,JSON.stringify({token:await auth.currentUser?.getIdToken()}),{
+        headers:{
+          "Content-Type":"application/json"
+        }
+      })
+       history.pushState({},"",window.location.origin+"/da/account")
+     }
+    }
+    fetchData()
   }, []);
 
   const handleShare = async () => {

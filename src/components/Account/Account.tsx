@@ -2,6 +2,7 @@
 import { Dashboard } from '..'
 
 function Account() {
+
   return (
           <Dashboard/>
   )
