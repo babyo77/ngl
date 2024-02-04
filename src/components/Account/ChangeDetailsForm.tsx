@@ -90,7 +90,7 @@ if(file){
 }
   return (
     <Form {...form}>
-      <input type="file" ref={fileinput} className="hidden" onChange={upload} />
+      <input type="file" ref={fileinput} accept="image/*" className="hidden" onChange={upload} />
       <div className="flex justify-center">
         <Avatar
           onClick={()=>fileinput.current?.click()}
