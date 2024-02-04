@@ -23,7 +23,7 @@ function App() {
   if (isLoading) {
     return (
       <>
-         <div></div>
+          <div className="absolute top-0 z-[-2] h-full w-screen bg-gradient-to-br from-[#EC1187] to-[#FF8D10]"></div>
         </>
     );
   }
