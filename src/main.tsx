@@ -16,6 +16,10 @@ const router = createBrowserRouter([
   {
     path:"/da/account",
     element:<Account/>
+  },
+  {
+    path:"*",
+    element:<App/>
   }
 ])
 ReactDOM.createRoot(document.getElementById('root')!).render(
