@@ -5,17 +5,16 @@ import {
   TabsTrigger,
 } from "@/components/ui/tabs"
 import PLay from "./PLay"
-import { IoIosSettings } from "react-icons/io";
 import Inbox from "./Inbox";
 import Settings from "./Settings";
 import { auth, usersCollection} from "@/firebase/firebaseConfig";
 import { msgCollection } from "../../firebase/firebaseConfig";
-import { doc, onSnapshot, query, where } from "firebase/firestore";
+import { doc, limit, onSnapshot, orderBy, query, where } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { messages } from "@/interface";
 export function Tab() {
 const [newMsg,setNewMsg] = useState<boolean>()
-
+const [unseenMessagesCount,setUnseenMessagesCount] = useState<number>(0)
 useEffect(() => {
   
   const user = auth.currentUser;
@@ -28,7 +27,21 @@ useEffect(() => {
       where('ref', '==', uid)
     );
 
-    const unsubscribe = onSnapshot(messagesQuery, (snapshot) => {
+    const unseenMessagesQuery = query(
+      msgCollection,
+      where('seen', '==', false),
+      where('ref', '==', uid),
+      orderBy('seen'), 
+  limit(111) 
+    );
+    
+onSnapshot(unseenMessagesQuery, (snapshot) => {
+      const unseenMessagesCount = snapshot.size;
+      setUnseenMessagesCount(unseenMessagesCount)
+      
+    });
+
+    onSnapshot(messagesQuery, (snapshot) => {
       const newMessages = snapshot.docs.map((doc) => ({
         ...doc.data() as messages
     }));
@@ -36,14 +49,13 @@ useEffect(() => {
        setNewMsg(hasSeenMessage)
     });
 
-    return () => unsubscribe();
   }
 }, []); 
 
   return (
     <Tabs defaultValue="play" className="fade-in">
       <TabsList className="w-full bg-transparent py-2.5 z-10 fixed top-0 bg-white h-fit items-center justify-between px-4 border-b">
-        <IoIosSettings className="h-8   w-8 text-white" />
+        <h1 className=" font-extrabold text-[#EC1187]">{unseenMessagesCount > 99 && "99 + Unread"} {unseenMessagesCount < 99 &&(`${unseenMessagesCount} unread`)}</h1>
         <div className="">
         <TabsTrigger value="play">PLAY</TabsTrigger>
         <TabsTrigger value="inbox">INBOX 
