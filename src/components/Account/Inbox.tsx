@@ -3,7 +3,7 @@ import { auth, msgCollection, usersCollection } from "@/firebase/firebaseConfig"
 import { Loader } from "../Loaders/Loader"
 import { messages } from "@/interface"
 import { useEffect, useState } from "react"
-import { doc, limit, onSnapshot, orderBy, query, startAfter, where } from "firebase/firestore"
+import { doc, getDocs, limit, onSnapshot, orderBy, query, startAfter, where } from "firebase/firestore"
 import { useInView } from 'react-intersection-observer';
 function Inbox() {
 const [data,setData] = useState<messages[]>()
@@ -20,7 +20,7 @@ useEffect(() => {
         msgCollection,
         where('ref', '==', uid),
         orderBy('date', 'desc'),
-        limit(10)
+        limit(20)
       );
   
      onSnapshot(messagesQuery, (snapshot) => {
@@ -41,6 +41,8 @@ useEffect(() => {
   });
 
   useEffect(()=>{
+    const messages= async ()=>{
+
     if(inView ){
       const user = auth.currentUser;
       if (user) {
@@ -52,18 +54,24 @@ useEffect(() => {
           where('ref', '==', uid),
           orderBy('date', 'desc'),
           startAfter(lastMessage?.date),
-          limit(10)
+          limit(20)
         );
     
-        onSnapshot(messagesQuery, (snapshot) => {
+        const snapshot = await getDocs(messagesQuery);
           const newMessages:messages[] = snapshot.docs.map((doc) => ({
             ...doc.data() as messages
-        }));
-       
-        setData((prev = [])=> [...prev,...newMessages])
-      })
-       
-    }}
+      }))
+  
+      if(newMessages.length == 0){
+        return
+      }
+         if(newMessages.length !==0){
+           setData((prev = [])=> [...prev,...newMessages])
+         }
+          }
+        }
+      }
+      messages()
 
   },[inView,data])
 
