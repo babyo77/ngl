@@ -2,22 +2,44 @@ import { useEffect, useRef, useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Button } from "../ui/button";
 import { FaLink } from "react-icons/fa";
-import { auth,usersCollection } from "@/firebase/firebaseConfig";
+import { auth,storage,usersCollection } from "@/firebase/firebaseConfig";
 import { user } from "@/interface";
 import { doc, onSnapshot } from "firebase/firestore";
 import { Loader } from "../Loaders/Loader";
 import axios from "axios";
 import { apiUrl } from "@/API/api";
 import { useLocation } from 'react-router-dom';
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+
 function PLay() {
 
-
+  const [uploadFile, setUploadFile] = useState<boolean>();
   const [loggedData, setLoggedData] = useState<user>();
   const [isLoading, setIsLoading] = useState<boolean>();
 
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
-  
+  const fileinput = useRef<HTMLInputElement>(null)
+
+  async function updateDp(token: { token: string; dp: string }) {
+    await axios.post(`${apiUrl}/api/user/update/dp`, token);
+    setUploadFile(false)
+  }
+  const upload = async(event:React.ChangeEvent<HTMLInputElement>)=>{
+    const file = event.target.files?.[0]
+    setUploadFile(true)
+    
+    if(file){
+    
+      await uploadBytes(ref(storage,auth.currentUser?.uid),file)
+      const url = await getDownloadURL(ref(storage,auth.currentUser?.uid))
+      const token = {
+        token: (await auth.currentUser?.getIdToken()) ?? "",
+        dp: url,
+      };
+        updateDp(token)
+    }
+    }
   useEffect(() => {
     const fetchData = async()=>{
 
@@ -85,8 +107,18 @@ function PLay() {
       {loggedData && (
         <div className="px-3 py-2 flex fade-in  flex-col gap-4 justify-center items-center">
           <div className="border gap-2   bg-black/90 backdrop-blur-lg w-[90dvw] py-11 flex-col rounded-[2.2rem] shadow-lg  flex justify-center items-center">
-            <Avatar className="border-white  border-[.2rem] h-16 w-16">
-              <AvatarImage src={loggedData.avatar} alt={loggedData.username} />
+          <input type="file" ref={fileinput} accept="image/*" className="hidden" onChange={upload} />
+            <Avatar onClick={()=>fileinput.current?.click()} className="border-white  border-[.2rem] h-16 w-16">
+             
+            {uploadFile ?(
+            <div className="flex w-full bg-white justify-center items-center h-full">
+              <Loader color="black"/>
+            </div>
+
+          ):(
+            <AvatarImage src={loggedData?.avatar} alt={loggedData?.username} />
+          )}
+              
               <AvatarFallback>CN</AvatarFallback>
             </Avatar>
             <h1 className="text-white font-bold text-2xl w-[70vw] text-center">
