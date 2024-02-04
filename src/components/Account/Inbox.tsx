@@ -74,10 +74,10 @@ useEffect(() => {
         <Loader color="#EC1187"/>
       </div>
      )}
-     {data && data.map((msg)=> (
+     {data && data.map((msg,i)=> (
     
-      <div ref={ref}  key={`_divider${msg.id}`} className="flex fade-in flex-col gap-3">
-      <DrawerCard id={msg.id} country={msg.country} isp={msg.isp} city={msg.city} regionName={msg.regionName} msg={msg.msg} seen={msg.seen} time={msg.date}/>
+      <div ref={ref}  key={`_divider${msg.id}${i}`} className="flex fade-in flex-col gap-3">
+      <DrawerCard  id={msg.id} country={msg.country} isp={msg.isp} city={msg.city} regionName={msg.regionName} msg={msg.msg} seen={msg.seen} time={msg.date}/>
 <div   className=" h-[.05rem] bg-zinc-200"></div>
       </div>
  

@@ -57,7 +57,7 @@ const download = useCallback(()=>{
  return(
 
      <Drawer>
-  <DrawerTrigger id={id} onClick={updateMsg}>
+  <DrawerTrigger  onClick={updateMsg}>
     {seen ? (
        <NewMessage  seen={seened || seen} msg={msg} timestamp={time}/>
     ):(
