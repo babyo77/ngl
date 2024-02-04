@@ -43,7 +43,7 @@ function App() {
         <>
           <div className="absolute top-0 z-[-2] h-full w-screen bg-gradient-to-br from-[#EC1187] to-[#FF8D10]"></div>
           <div className="flex justify-center items-center h-dvh">
-            <h1 onClick={()=>window.location.href = "/"} className="text-2xl font-bold text-white underline-offset-8 underline">
+            <h1 onClick={()=>window.location.href = "/"} className="text-2xl cursor-pointer font-bold text-white underline-offset-8 underline">
               
 Not Found Go back
 

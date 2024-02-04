@@ -24,9 +24,12 @@ import { useMutation } from "react-query";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 
 const FormSchema = z.object({
-  username: z.string().min(3, {
+  username: z.string().refine(data => !data || data.length >= 3, {
     message: "Username must be at least 3 characters.",
-  }),
+  }).optional(),
+  sociallink: z.string().refine(data=>!data || z.string().url().safeParse(data).success,{
+    message: "Invalid URL format.",
+  }).optional()
 });
 
 export function ChangeDetailsForm() {
@@ -50,12 +53,13 @@ export function ChangeDetailsForm() {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      username: "",
+      username: undefined,
+      sociallink:undefined,
     },
   });
     
 
-  async function updateUsername(token: { token: string; username: string }) {
+  async function updateUsername(token: { token: string; username?: string; sociallink?:string}) {
     const res = await axios.post(`${apiUrl}/api/user/update/username`, token);
     return res.data;
   }
@@ -64,12 +68,15 @@ export function ChangeDetailsForm() {
     setUploadFile(false)
   }
   async function onSubmit(data: z.infer<typeof FormSchema>) {
-    const token = {
-      token: (await auth.currentUser?.getIdToken()) ?? "",
-      username: data.username,
-    };
- 
-    await mutateAsync(token);
+    if(data.sociallink || data.username){
+      const token = {
+        token: (await auth.currentUser?.getIdToken()) ?? "",
+        username: data?.username,
+        sociallink:data?.sociallink
+      };
+      
+      await mutateAsync(token);
+    }
   }
   const fileinput = useRef<HTMLInputElement>(null)
 
@@ -130,6 +137,25 @@ if(file){
             </FormItem>
           )}
         />
+           <FormField
+          control={form.control}
+          name="sociallink"
+          render={({ field }) => (
+            <FormItem className="text-center">
+              <FormDescription>
+                link account with custom social media link.
+              </FormDescription>
+              <FormControl>
+                <Input
+                  placeholder={"link"}
+                  {...field}
+                  className=" rounded-xl"
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
         <div className="flex justify-center">
           {!isSuccess ? (
             <Button
@@ -139,12 +165,14 @@ if(file){
               {isLoading ? <Loader /> : "Save changes"}
             </Button>
           ) : (
-            <Button className="text-[1rem] w-full py-6 mt-2 font-bold rounded-2xl">
+            <Button disabled className="text-[1rem] w-full py-6 mt-2 font-bold rounded-2xl">
               Profile updated
             </Button>
           )}
         </div>
+        
       </form>
+      
     </Form>
   );
 }
