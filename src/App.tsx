@@ -24,6 +24,9 @@ function App() {
     return (
       <>
           <div className="absolute top-0 z-[-2] h-full w-screen bg-gradient-to-br from-[#EC1187] to-[#FF8D10]"></div>
+          <div className="flex justify-center pt-12 ">
+            <Container userDetails={details}/>
+          </div>
         </>
     );
   }
