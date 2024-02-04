@@ -6,6 +6,8 @@ import { auth,usersCollection } from "@/firebase/firebaseConfig";
 import { user } from "@/interface";
 import { doc, onSnapshot } from "firebase/firestore";
 import { Loader } from "../Loaders/Loader";
+import axios from "axios";
+import { apiUrl } from "@/API/api";
 
 function PLay() {
 
@@ -29,6 +31,11 @@ function PLay() {
   }, []);
 
   const handleShare = async () => {
+    axios.post(`${apiUrl}/share`,JSON.stringify({token:await auth.currentUser?.getIdToken()}),{
+      headers:{
+        "Content-Type":"application/json"
+      }
+    })
     if (navigator.share) {
       await navigator.share({
         title: "send me anonymous messages!",
@@ -38,7 +45,12 @@ function PLay() {
     }
   };
   const linkRef = useRef<HTMLParagraphElement>(null);
-  const handleCopy = () => {
+  const handleCopy = async() => {
+    axios.post(`${apiUrl}/share`,JSON.stringify({token:await auth.currentUser?.getIdToken()}),{
+      headers:{
+        "Content-Type":"application/json"
+      }
+    })
     if (linkRef.current?.textContent) {
       navigator.clipboard
         .writeText(linkRef.current.textContent.toLowerCase())
