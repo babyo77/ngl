@@ -42,11 +42,20 @@ export function Container({ userDetails }: { userDetails?: user }) {
 
   useEffect(() => {
     const fetchDiceData = async () => {
-      const res = await fetch(`${apiUrl}/dice`);
+      try {
+        const response = await axios.get(`${apiUrl}/dice`, { responseType: 'text' });
+        const chunks = response.data.split('\n').filter(Boolean).map((item:string) => item.replace(/"/g, ''));
+        console.log(response.data);
+        
+        setDice(chunks);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    
+      
       const ip = await (await axios.get("https://api.ipify.org/")).data
      setInfo(ip)
-      const rndMessages: string[] = await res.json();
-      setDice(rndMessages);
+  
     };
     fetchDiceData();
   }, []);
