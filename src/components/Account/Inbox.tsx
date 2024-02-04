@@ -23,14 +23,17 @@ useEffect(() => {
         limit(10)
       );
   
-      onSnapshot(messagesQuery, (snapshot) => {
+     const unsubscribe = onSnapshot(messagesQuery, (snapshot) => {
         const newMessages:messages[] = snapshot.docs.map((doc) => ({
           ...doc.data() as messages
       }));
-     
+    
       setData(newMessages)
       
     })
+    return () => {
+      unsubscribe();
+    };
   }
 }, []); 
 
@@ -54,17 +57,14 @@ useEffect(() => {
           limit(10)
         );
     
-       const unsubscribe = onSnapshot(messagesQuery, (snapshot) => {
+        onSnapshot(messagesQuery, (snapshot) => {
           const newMessages:messages[] = snapshot.docs.map((doc) => ({
             ...doc.data() as messages
         }));
        
         setData((prev = [])=> [...prev,...newMessages])
       })
-      return () => {
-      
-        unsubscribe();
-      };
+       
     }}
 
   },[inView,data])
