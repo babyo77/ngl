@@ -140,7 +140,8 @@ export function Container({ userDetails }: { userDetails?: user }) {
             ) : (
               <Button
                 type="submit"
-                className="w-full py-7 bg-black hover:bg-black text-lg mt-3 font-bold shadow-xl text-white 
+                disabled={submitM}
+                className="w-full py-7 disabled:opacity-100 bg-black hover:bg-black text-lg mt-3 font-bold shadow-xl text-white 
           rounded-full"
               >
                 {!submitM ? "Send!" : <Loader />}
