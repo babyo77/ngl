@@ -23,7 +23,7 @@ useEffect(() => {
         limit(10)
       );
   
-     const unsubscribe = onSnapshot(messagesQuery, (snapshot) => {
+     onSnapshot(messagesQuery, (snapshot) => {
         const newMessages:messages[] = snapshot.docs.map((doc) => ({
           ...doc.data() as messages
       }));
@@ -31,9 +31,7 @@ useEffect(() => {
       setData(newMessages)
       
     })
-    return () => {
-      unsubscribe();
-    };
+ 
   }
 }, []); 
 
