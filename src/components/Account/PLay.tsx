@@ -81,20 +81,17 @@ function PLay() {
       });
     }
   };
-  const linkRef = useRef<HTMLParagraphElement>(null);
   const handleCopy = async() => {
     axios.post(`${apiUrl}/share`,JSON.stringify({token:await auth.currentUser?.getIdToken()}),{
       headers:{
         "Content-Type":"application/json"
       }
     })
-    if (linkRef.current?.textContent) {
       navigator.clipboard
-        .writeText(linkRef.current.textContent.toLowerCase())
+        .writeText(`${window.location.origin}/${loggedData?.username}`)
         .then(() => {
           alert("🔗 link copied");
         });
-    }
   };
 
   return (
@@ -131,7 +128,6 @@ function PLay() {
               Step 1: Copy your link
             </h1>
             <p
-              ref={linkRef}
               className="text-zinc-500  w-[70vw]  overflow-auto font-semibold text-[.7rem]  bg-transparent uppercase text-center"
             >
               {`${window.location.host}/${loggedData.username}`}
