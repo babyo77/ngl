@@ -89,7 +89,7 @@ export function Container({ userDetails }: { userDetails?: user }) {
         <div className="bg-white rounded-t-[1.7rem]  flex items-center px-4 py-3">
           <a href={userDetails?.sociallink} target="_blank">
           <Avatar>
-            <AvatarImage src={userDetails?.avatar} />
+            <AvatarImage className="fade-in" src={userDetails?.avatar} />
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
           </a>
