@@ -18,9 +18,8 @@ function PLay() {
   const [isLoading, setIsLoading] = useState<boolean>();
 
   const location = useLocation();
-  const searchParams = new URLSearchParams(location.search);
   const fileinput = useRef<HTMLInputElement>(null)
-
+  
   async function updateDp(token: { token: string; dp: string }) {
     await axios.post(`${apiUrl}/api/user/update/dp`, token);
     setUploadFile(false)
@@ -30,17 +29,18 @@ function PLay() {
     setUploadFile(true)
     
     if(file){
-    
+      
       await uploadBytes(ref(storage,auth.currentUser?.uid),file)
       const url = await getDownloadURL(ref(storage,auth.currentUser?.uid))
       const token = {
         token: (await auth.currentUser?.getIdToken()) ?? "",
         dp: url,
       };
-        updateDp(token)
+      updateDp(token)
     }
-    }
+  }
   useEffect(() => {
+    const searchParams = new URLSearchParams(location.search);
     const fetchData = async()=>{
 
       setIsLoading(true)
@@ -65,7 +65,7 @@ function PLay() {
      }
     }
     fetchData()
-  }, []);
+  }, [location.search]);
 
   const handleShare = async () => {
     axios.post(`${apiUrl}/share`,JSON.stringify({token:await auth.currentUser?.getIdToken()}),{
