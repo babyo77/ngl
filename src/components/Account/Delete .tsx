@@ -52,7 +52,7 @@ const [isLoading,setLoading] = useState<boolean>(false)
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel className="text-[1rem] mt-3 font-bold rounded-2xl py-6">Cancel</AlertDialogCancel>
+            <AlertDialogCancel className="text-[1rem] mt-3 font-bold rounded-2xl py-[1.4rem]">Cancel</AlertDialogCancel>
           {isLoading ? (
               <Button disabled className="text-[1rem] bg-red-500 mt-3 font-bold rounded-2xl py-6"><Loader/></Button>
           ):(

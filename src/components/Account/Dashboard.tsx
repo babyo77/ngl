@@ -65,6 +65,7 @@ setLoading(true)
           >
             Continue with Google
           </Button>
+          <a href="/" className="underline text-white font-extrabold underline-offset-4 mt-1">Go back</a>
         </div>
       )}
     </div>

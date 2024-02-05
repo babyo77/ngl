@@ -1,7 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { GoogleAuthProvider, getAuth } from "firebase/auth";
 import {getFirestore,collection } from "firebase/firestore"
-import {getMessaging} from "firebase/messaging"
 import {getStorage} from "firebase/storage"
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_API_KEY,
@@ -18,7 +17,6 @@ export const db = getFirestore(app)
 export const auth = getAuth();
 export const msgCollection = collection(db,"messages")
 export const usersCollection = collection(db,"users")
-export const messaging = getMessaging(app)
 export const storage =  getStorage(app)
 export const googleAuthProvider = new GoogleAuthProvider();
 

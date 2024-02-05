@@ -54,7 +54,7 @@ onSnapshot(unseenMessagesQuery, (snapshot) => {
 
   return (
     <Tabs defaultValue="play" className="fade-in">
-      <TabsList className="w-full bg-transparent py-2.5 z-10 fixed top-0 bg-white h-fit items-center justify-between px-4 border-b">
+      <TabsList className="w-full bg-transparent py-2.5 rounded-none z-10 fixed top-0 bg-white h-fit items-center justify-between px-4 border-b">
        
        {unseenMessagesCount > 0 &&(
          <h1 className=" font-extrabold text-[#EC1187]">{unseenMessagesCount > 99 && "99+ Unread"} {unseenMessagesCount < 99 &&(`${unseenMessagesCount} unread`)}</h1>
