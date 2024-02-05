@@ -43,7 +43,10 @@ const download = useCallback(()=>{
         return
       }
   toPng(cardRef.current,{
-    cacheBust:true
+    cacheBust:true,
+    style:{
+      fontFamily: "Sen, sans-serif"
+    }
   }).then((dataUrl)=>{
     const link = document.createElement('a')
     link.download = `${msg}.png`
@@ -78,7 +81,7 @@ const download = useCallback(()=>{
     <Button variant={"secondary"}  className=" rounded-none hover:bg-none shadow-none     justify-start rounded-b-2xl mb-4 bg-zinc-100 text-black -mt-2  py-6 text-lg font-bold">City - {city || "Not Found"}</Button>
     {/* <Button variant={"secondary"}  className=" rounded-none hover:bg-none shadow-none     justify-start rounded-b-2xl mb-4 bg-zinc-100 text-black -mt-2  py-6 text-lg font-bold">ISP - {isp || "Not Found"}</Button>
    */}
-      <Button onClick={download} className="rounded-3xl py-6 text-lg font-bold">Download</Button>
+      <Button onClick={download} className="rounded-3xl py-6 text-lg font-bold">Save</Button>
     
     </DrawerFooter>
   </DrawerContent>

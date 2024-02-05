@@ -23,7 +23,7 @@ useEffect(() => {
         limit(20)
       );
   
-     onSnapshot(messagesQuery, (snapshot) => {
+     onSnapshot(messagesQuery,{includeMetadataChanges: false}, (snapshot) => {
         const newMessages:messages[] = snapshot.docs.map((doc) => ({
           ...doc.data() as messages
       }));
