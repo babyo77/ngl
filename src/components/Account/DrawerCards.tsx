@@ -9,7 +9,7 @@ import {
 import { Button } from "../ui/button";
 import Cards from "..";
 import { useCallback, useRef, useState } from "react";
-import { toBlob, toPng } from "html-to-image";
+import { toBlob} from "html-to-image";
 import NewMessage from "./NewMessage";
 import axios from "axios";
 import { apiUrl } from "@/API/api";
@@ -56,6 +56,7 @@ export function DrawerCard({
       cacheBust: true,
       style: {
         fontFamily: "Sen, sans-serif",
+        width:"600px"
       },
     }).then((blob) => {
       if (blob !== null) {
@@ -82,26 +83,6 @@ export function DrawerCard({
     });
   }, [cardRef, msg]);
 
-  const download = useCallback(() => {
-    if (cardRef.current === null) {
-      return;
-    }
-    toPng(cardRef.current, {
-      cacheBust: true,
-      style: {
-        fontFamily: "Sen, sans-serif",
-      },
-    })
-      .then((dataUrl) => {
-        const a = document.createElement("a");
-        a.href = dataUrl;
-        a.download = `${msg}.png`;
-        a.click();
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, [cardRef, msg]);
 
   return (
     <Drawer>
@@ -143,12 +124,6 @@ export function DrawerCard({
             className="rounded-3xl py-6 text-lg font-bold"
           >
             Reply
-          </Button>
-          <Button
-            onClick={download}
-            className="rounded-3xl py-6 text-lg font-bold"
-          >
-            Save
           </Button>
         </DrawerFooter>
       </DrawerContent>
