@@ -56,7 +56,7 @@ export function DrawerCard({
       cacheBust: true,
       style: {
         fontFamily: "Sen, sans-serif",
-        width:"600px"
+        
       },
     }).then((blob) => {
       if (blob !== null) {
