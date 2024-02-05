@@ -20,16 +20,16 @@ useEffect(() => {
         msgCollection,
         where('ref', '==', uid),
         orderBy('date', 'desc'),
-        limit(20)
+        limit(10)
       );
   
-     onSnapshot(messagesQuery,{includeMetadataChanges: false}, (snapshot) => {
+     const unSub = onSnapshot(messagesQuery,{includeMetadataChanges: false}, (snapshot) => {
         const newMessages:messages[] = snapshot.docs.map((doc) => ({
           ...doc.data() as messages
       }));
     
       setData(newMessages)
-      
+       return ()=> unSub()
     })
  
   }
@@ -54,7 +54,7 @@ useEffect(() => {
           where('ref', '==', uid),
           orderBy('date', 'desc'),
           startAfter(lastMessage?.date),
-          limit(20)
+          limit(10)
         );
     
         const snapshot = await getDocs(messagesQuery);
@@ -77,7 +77,7 @@ useEffect(() => {
 
   return (
 
-    <div className="pt-[1vw] flex  flex-col gap-4 ">
+    <div className="flex  flex-col gap-4 ">
      {isLoading && (
         <div className="w-full h-[90dvh] text-xl font-extrabold  flex justify-center items-center">
         <Loader color="#EC1187"/>

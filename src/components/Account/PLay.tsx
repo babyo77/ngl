@@ -47,12 +47,13 @@ function PLay() {
       const user = auth.currentUser;
       if (user) {
         const uid = doc(usersCollection, user.uid);
-        onSnapshot(uid, (userDetails) => {
+       const unSub =  onSnapshot(uid, (userDetails) => {
           if (userDetails.exists()) {
             setLoggedData(userDetails.data() as user);
             setIsLoading(false)
           }
         });
+        return ()=> unSub()
      
       }     
     if( searchParams.has("em")){

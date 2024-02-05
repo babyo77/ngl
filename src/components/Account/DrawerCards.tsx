@@ -15,7 +15,7 @@ import axios from "axios";
 import { apiUrl } from "@/API/api";
 import { auth } from "@/firebase/firebaseConfig";
 import { Timestamp } from "firebase/firestore";
-
+import { RiTwitterXLine } from "react-icons/ri";
 export function DrawerCard({
   msg,
   id,
@@ -34,6 +34,7 @@ export function DrawerCard({
   regionName: string;
 }) {
   const [seened, setSeen] = useState<boolean>();
+  const twitterRef = useRef<HTMLDivElement>(null);
   const cardRef = useRef<HTMLDivElement>(null);
 
   const updateMsg = async () => {
@@ -51,25 +52,51 @@ export function DrawerCard({
     }
   };
 
+  const twitterShare = useCallback(() => {
+    if (twitterRef.current === null) return;
+    
+    twitterRef.current.classList.replace("hidden","flex")
+    
+    toBlob(twitterRef.current, {
+      cacheBust: true,
+    }).then((blob) => {
+      if (blob !== null) {
+         if(twitterRef.current){
+           twitterRef.current.classList.replace("flex","hidden")
+          }
+        const reader = new FileReader();
+        reader.readAsDataURL(blob);
+        reader.onload = () => {
+          if (navigator.share) {
+            navigator
+              .share({
+                files: [new File([blob], `${msg}.png`, { type: "image/png" })],
+              })
+              .catch((err) => {
+                console.log(err.message);
+              });
+          } else {
+            console.log("not supported");
+          }
+        };
+      } else {
+        console.log("null blob");
+      }
+    });
+  }, [twitterRef, msg]);
+
   const share = useCallback(() => {
     if (cardRef.current === null) return;
     
     
     toBlob(cardRef.current, {
       cacheBust: true,
-      style: {
-        fontFamily: "Sen, sans-serif",
-        width: "300px",
-        height: "300px", 
-      },
     }).then((blob) => {
       if (blob !== null) {
-     
+  
         const reader = new FileReader();
         reader.readAsDataURL(blob);
         reader.onload = () => {
-          const image = reader.result;
-          console.log(image);
           if (navigator.share) {
             navigator
               .share({
@@ -103,7 +130,7 @@ export function DrawerCard({
           <DrawerTitle>Who sent this?</DrawerTitle>
         </DrawerHeader>
         <div className="flex justify-center items-center">
-          <Cards ref={cardRef} msg={msg} />
+          <Cards ref={twitterRef} msg={msg}   ref2={cardRef}/>
         </div>
         <DrawerFooter>
           <Button
@@ -125,11 +152,19 @@ export function DrawerCard({
             City - {city || "Not Found"}
           </Button>
           <Button
+            onClick={twitterShare}
+            className="rounded-3xl py-6 text-lg font-bold"
+          >
+             Reply on <RiTwitterXLine className="ml-1 mt-0.5" />
+          </Button>
+       
+          <Button
             onClick={share}
             className="rounded-3xl py-6 text-lg font-bold"
           >
-             Reply 
+             Save 
           </Button>
+       
         </DrawerFooter>
       </DrawerContent>
     </Drawer>

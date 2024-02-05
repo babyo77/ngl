@@ -10,7 +10,6 @@ import {
     AlertDialogTrigger,
   } from "@/components/ui/alert-dialog"
   import { Button } from "@/components/ui/button"
-import { auth } from "@/firebase/firebaseConfig"
 import { useState } from "react"
 import { Loader } from "../Loaders/Loader"
   
@@ -19,7 +18,7 @@ const [isLoading,setLoading] = useState<boolean>(false)
     const deleteUser = async()=>{
          try {
             setLoading(true)
-            const authToken = await auth.currentUser?.getIdToken()
+            const authToken = ""
             const data = {
                token:authToken,
             }

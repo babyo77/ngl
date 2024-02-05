@@ -11,9 +11,7 @@ import { auth, usersCollection} from "@/firebase/firebaseConfig";
 import { msgCollection } from "../../firebase/firebaseConfig";
 import { doc, limit, onSnapshot, orderBy, query, where } from "firebase/firestore";
 import { useEffect, useState } from "react";
-import { messages } from "@/interface";
 export function Tab() {
-const [newMsg,setNewMsg] = useState<boolean>()
 const [unseenMessagesCount,setUnseenMessagesCount] = useState<number>(0)
 useEffect(() => {
   
@@ -21,11 +19,7 @@ useEffect(() => {
 
   if (user) {
     const uid = doc(usersCollection,user.uid);
- 
-    const messagesQuery = query(
-      msgCollection,
-      where('ref', '==', uid)
-    );
+
 
     const unseenMessagesQuery = query(
       msgCollection,
@@ -38,16 +32,8 @@ useEffect(() => {
 onSnapshot(unseenMessagesQuery, (snapshot) => {
       const unseenMessagesCount = snapshot.size;
       setUnseenMessagesCount(unseenMessagesCount)
-      
     });
 
-    onSnapshot(messagesQuery, (snapshot) => {
-      const newMessages = snapshot.docs.map((doc) => ({
-        ...doc.data() as messages
-    }));
-    const hasSeenMessage = newMessages.some((message) => message.seen !== true);
-       setNewMsg(hasSeenMessage)
-    });
 
   }
 }, []); 
@@ -66,7 +52,7 @@ onSnapshot(unseenMessagesQuery, (snapshot) => {
         <TabsTrigger value="play">PLAY</TabsTrigger>
         <TabsTrigger value="inbox">INBOX 
         {
-          newMsg &&(
+          unseenMessagesCount>0 &&(
             <div className="rounded-full bg-red-500 h-3 w-3 ml-1"></div>
           )
         }
@@ -75,12 +61,12 @@ onSnapshot(unseenMessagesQuery, (snapshot) => {
         <Settings/>
       </TabsList>
 
-      <TabsContent value="play" className="mt-[10dvh]">
+      <TabsContent value="play" className="mt-[4.2rem]">
       <PLay/>
       </TabsContent>
 
 
-      <TabsContent value="inbox" className="mt-[10dvh]">
+      <TabsContent value="inbox" className="mt-[4.5rem]">
       <Inbox/>
       </TabsContent>
 
