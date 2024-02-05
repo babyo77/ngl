@@ -15,6 +15,7 @@ import axios from "axios";
 import { apiUrl } from "@/API/api";
 import { auth } from "@/firebase/firebaseConfig";
 import { Timestamp } from "firebase/firestore";
+import { RiTwitterXLine } from "react-icons/ri";
 export function DrawerCard({
   msg,
   id,
@@ -52,14 +53,21 @@ export function DrawerCard({
 
   const share = useCallback(() => {
     if (cardRef.current === null) return;
+    cardRef.current.style.width = "300px";
+    cardRef.current.style.height = "300px";
     toBlob(cardRef.current, {
       cacheBust: true,
       style: {
         fontFamily: "Sen, sans-serif",
-        
+        width: "300px",
+        height: "300px", 
       },
     }).then((blob) => {
       if (blob !== null) {
+        if(cardRef.current){
+          cardRef.current.style.width = "90dvw";
+          cardRef.current.style.height = "";
+        }
         const reader = new FileReader();
         reader.readAsDataURL(blob);
         reader.onload = () => {
@@ -123,7 +131,7 @@ export function DrawerCard({
             onClick={share}
             className="rounded-3xl py-6 text-lg font-bold"
           >
-            Reply
+             Reply on <RiTwitterXLine className="ml-1 mt-0.5" />
           </Button>
         </DrawerFooter>
       </DrawerContent>
