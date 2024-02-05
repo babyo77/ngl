@@ -6,6 +6,7 @@ import { Button } from "../ui/button";
 import { useEffect, useState } from "react";
 import { Loader } from "../Loaders/Loader";
 import { apiUrl } from "@/API/api";
+import { Link } from "react-router-dom";
 
 function Dashboard() {
   const isDesktop = window.innerWidth <= 768;
@@ -65,7 +66,9 @@ setLoading(true)
           >
             Continue with Google
           </Button>
-          <a href="/" className="underline text-white font-extrabold underline-offset-4 mt-1">Go back</a>
+          <Link to={"/"}>
+          <p className="underline text-white font-extrabold underline-offset-4 mt-1">Go back</p>
+          </Link>
         </div>
       )}
     </div>

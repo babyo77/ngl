@@ -59,6 +59,9 @@ export function DrawerCard({
     
     toBlob(twitterRef.current, {
       cacheBust: true,
+      style:{
+        fontFamily:"Sen, sans-serif"
+      }
     }).then((blob) => {
       if (blob !== null) {
          if(twitterRef.current){
@@ -91,6 +94,9 @@ export function DrawerCard({
     
     toBlob(cardRef.current, {
       cacheBust: true,
+      style:{
+        fontFamily:"Sen, sans-serif"
+      }
     }).then((blob) => {
       if (blob !== null) {
   
