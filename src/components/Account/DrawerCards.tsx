@@ -36,7 +36,7 @@ export function DrawerCard({
   const [seened, setSeen] = useState<boolean>();
   const twitterRef = useRef<HTMLDivElement>(null);
   const cardRef = useRef<HTMLDivElement>(null);
-  const [firstRender, setFirstRender] = useState<boolean>();
+  const [firstRender, setFirstRender] = useState<boolean>(true);
 
   const updateMsg = async () => {
     if (!seen) {
