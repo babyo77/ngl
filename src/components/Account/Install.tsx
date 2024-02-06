@@ -36,7 +36,7 @@ function Install() {
         
                 <AspectRatio ratio={3 / 3}>
     <img
-     src="../public/install.webp"
+     src="/install.webp"
      alt="install-NGLdrx"
      className=" border rounded-xl object-cover h-[100%] w-[100%]"
    />
