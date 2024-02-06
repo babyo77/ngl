@@ -1,6 +1,7 @@
 {
   "name": "NGLdrx",
   "short_name": "NGLdrx",
+  "version": "1.3.0",
   "description": "NGL-drx. Share honest feelings and opinions anonymously. Send and receive messages, boost your messages, and explore the love wall.",
   "icons": [
     {
@@ -55,7 +56,7 @@
   "scope": "/",
   "start_url": "/da/account",
   "display": "standalone",
-  "theme_color": "#ffffff", 
-  "background_color": "#ffffff",  
+  "theme_color": "#ffffff",
+  "background_color": "#ffffff",
   "orientation": "portrait"
 }
