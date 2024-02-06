@@ -57,7 +57,6 @@ export function DrawerCard({
     if (twitterRef.current === null) return;
     if (firstRender) {
       twitterRef.current.classList.replace("hidden", "flex");
-      twitterRef.current.classList.replace("flex", "hidden");
       setFirstRender(false);
     }
     twitterRef.current.classList.replace("hidden", "flex");
