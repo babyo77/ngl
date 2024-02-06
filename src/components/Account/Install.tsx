@@ -13,7 +13,6 @@ import { DialogTitle } from "@radix-ui/react-dialog";
 import { Button } from "../ui/button";
 
 function Install() {
- 
   return (
     <Dialog>
       <DialogTrigger>
@@ -33,21 +32,19 @@ function Install() {
             <li>Step 1. Click on Share</li>
             <li>Step 2. Add to home screen</li>
           </ul>
-        
-                <AspectRatio ratio={3 / 3}>
-    <img
-     src="../public/install.webp"
-     alt="install-NGLdrx"
-     className=" border rounded-xl object-cover h-[100%] w-[100%]"
-   />
-      </AspectRatio>
-            
-        
-       
+
+          <AspectRatio ratio={3 / 3}>
+            <img
+              src="install.webp"
+              alt="install-NGLdrx"
+              className=" border rounded-xl object-cover h-[100%] w-[100%]"
+            />
+          </AspectRatio>
         </div>
         <DialogFooter>
           <DialogClose>
-            <Button asChild
+            <Button
+              asChild
               variant={"default"}
               className="font-bold py-5 w-full rounded-xl"
             >

@@ -9,7 +9,7 @@ import {
 import { Button } from "../ui/button";
 import Cards from "..";
 import { useCallback, useRef, useState } from "react";
-import { toBlob} from "html-to-image";
+import { toBlob } from "html-to-image";
 import NewMessage from "./NewMessage";
 import axios from "axios";
 import { apiUrl } from "@/API/api";
@@ -36,7 +36,8 @@ export function DrawerCard({
   const [seened, setSeen] = useState<boolean>();
   const twitterRef = useRef<HTMLDivElement>(null);
   const cardRef = useRef<HTMLDivElement>(null);
-const [firstRender,setFirstRender] = useState<boolean>()
+  const [firstRender, setFirstRender] = useState<boolean>();
+
   const updateMsg = async () => {
     if (!seen) {
       setSeen(true);
@@ -54,23 +55,23 @@ const [firstRender,setFirstRender] = useState<boolean>()
 
   const twitterShare = useCallback(() => {
     if (twitterRef.current === null) return;
-    if(firstRender){
-      twitterRef.current.classList.replace("hidden","flex")
-      twitterRef.current.classList.replace("flex","hidden")
-      setFirstRender(false)
+    if (firstRender) {
+      twitterRef.current.classList.replace("hidden", "flex");
+      twitterRef.current.classList.replace("flex", "hidden");
+      setFirstRender(false);
     }
-    twitterRef.current.classList.replace("hidden","flex")
-    
+    twitterRef.current.classList.replace("hidden", "flex");
+
     toBlob(twitterRef.current, {
       cacheBust: true,
-      style:{
-        fontFamily:"Sen, sans-serif"
-      }
+      style: {
+        fontFamily: "Sen, sans-serif",
+      },
     }).then((blob) => {
       if (blob !== null) {
-         if(twitterRef.current){
-           twitterRef.current.classList.replace("flex","hidden")
-          }
+        if (twitterRef.current) {
+          twitterRef.current.classList.replace("flex", "hidden");
+        }
         const reader = new FileReader();
         reader.readAsDataURL(blob);
         reader.onload = () => {
@@ -90,20 +91,18 @@ const [firstRender,setFirstRender] = useState<boolean>()
         console.log("null blob");
       }
     });
-  }, [twitterRef, msg]);
+  }, [twitterRef, msg, firstRender]);
 
   const share = useCallback(() => {
     if (cardRef.current === null) return;
-    
-    
+
     toBlob(cardRef.current, {
       cacheBust: true,
-      style:{
-        fontFamily:"Sen, sans-serif"
-      }
+      style: {
+        fontFamily: "Sen, sans-serif",
+      },
     }).then((blob) => {
       if (blob !== null) {
-  
         const reader = new FileReader();
         reader.readAsDataURL(blob);
         reader.onload = () => {
@@ -125,7 +124,6 @@ const [firstRender,setFirstRender] = useState<boolean>()
     });
   }, [cardRef, msg]);
 
-
   return (
     <Drawer>
       <DrawerTrigger onClick={updateMsg}>
@@ -140,7 +138,7 @@ const [firstRender,setFirstRender] = useState<boolean>()
           <DrawerTitle>Who sent this?</DrawerTitle>
         </DrawerHeader>
         <div className="flex justify-center items-center">
-          <Cards ref={twitterRef} msg={msg}   ref2={cardRef}/>
+          <Cards ref={twitterRef} msg={msg} ref2={cardRef} />
         </div>
         <DrawerFooter>
           <Button
@@ -165,16 +163,15 @@ const [firstRender,setFirstRender] = useState<boolean>()
             onClick={twitterShare}
             className="rounded-3xl py-6 text-lg font-bold"
           >
-             Reply on <RiTwitterXLine className="ml-1 mt-0.5" />
+            Reply on <RiTwitterXLine className="ml-1 mt-0.5" />
           </Button>
-       
+
           <Button
             onClick={share}
             className="rounded-3xl py-6 text-lg font-bold"
           >
-             Save 
+            Save
           </Button>
-       
         </DrawerFooter>
       </DrawerContent>
     </Drawer>
