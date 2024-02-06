@@ -8,7 +8,7 @@
     }
   ],
   "scope": "/",
-  "start_url": "/",
+  "start_url": "/da/account",
   "display": "standalone",
   "theme_color": "#ffffff", 
   "background_color": "#ffffff",  
