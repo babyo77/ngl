@@ -9,7 +9,7 @@ const Cards = React.forwardRef<
     <div>
       <div
         ref={ref}
-        className="w-[300px] hidden  h-[300px]    flex-col items-center"
+        className="w-[300px] hidden h-[300px] font-Sen  flex-col items-center"
       >
         <nav className="bg-gradient-to-br from-[#EC1187] to-[#FF8D10] p-4 py-7 text-center text-white font-bold text-2xl">
           Send me anonymous messages
