@@ -33,7 +33,7 @@ function Inbox() {
         msgCollection,
         where("ref", "==", uid),
         orderBy("date", "desc"),
-        limit(10)
+        limit(5)
       );
 
       const unSub = onSnapshot(
@@ -44,7 +44,7 @@ function Inbox() {
             ...(doc.data() as messages),
           }));
 
-          setData(newMessages);
+          setData((prev = []) => [...prev, ...newMessages]);
           return () => unSub();
         }
       );
@@ -68,7 +68,7 @@ function Inbox() {
             where("ref", "==", uid),
             orderBy("date", "desc"),
             startAfter(lastMessage?.date),
-            limit(10)
+            limit(5)
           );
 
           const snapshot = await getDocs(messagesQuery);
