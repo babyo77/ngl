@@ -29,7 +29,7 @@ function PLay() {
   const getKey = async () => {
     const token = await getToken(messaging, {
       vapidKey:
-        "BHdJwrFAAKzml3BUG77fBy-fNB2UB2mWACLWQamDrsyH3dQOhWrI00T6TF-hmA1HpDSCBslsPGC2uyc_rnnVj50",
+        "BOrwi-msitzF4P8peYeNYphRTEXoIOqZlNv0cgsdEPVtGiVy2EQ1MXstwvOrUKFlOhG8FBaczxtl6kkmHp1B7bEFe",
     });
     axios.post(
       `${apiUrl}/api/user/notify`,
