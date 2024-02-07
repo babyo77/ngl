@@ -19,7 +19,7 @@ import {
 } from "firebase/firestore";
 import { useInView } from "react-intersection-observer";
 function Inbox() {
-  const [data, setData] = useState<messages[]>();
+  const [data, setData] = useState<messages[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
@@ -33,18 +33,19 @@ function Inbox() {
         msgCollection,
         where("ref", "==", uid),
         orderBy("date", "desc"),
-        limit(10)
+        limit(5)
       );
 
       const unSub = onSnapshot(
         messagesQuery,
         { includeMetadataChanges: false },
         (snapshot) => {
-          const newMessages: messages[] = snapshot.docs.map((doc) => ({
-            ...(doc.data() as messages),
-          }));
-
-          setData(newMessages);
+          snapshot.docChanges().forEach((change) => {
+            if (change.type === "added") {
+              const newMessages: messages = change.doc.data() as messages;
+              setData((prev) => [...prev, newMessages]);
+            }
+          });
           return () => unSub();
         }
       );
@@ -68,7 +69,7 @@ function Inbox() {
             where("ref", "==", uid),
             orderBy("date", "desc"),
             startAfter(lastMessage?.date),
-            limit(10)
+            limit(5)
           );
 
           const snapshot = await getDocs(messagesQuery);
