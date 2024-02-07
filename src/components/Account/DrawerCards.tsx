@@ -72,11 +72,17 @@ export function DrawerCard({
         }
         const reader = new FileReader();
         reader.readAsDataURL(blob);
+        const cleanMsg = msg.replace(/[^a-z0-9]/gi, ""); // Remove invalid characters from msg
+
         reader.onload = () => {
           if (navigator.share) {
             navigator
               .share({
-                files: [new File([blob], `${msg}.png`, { type: "image/png" })],
+                files: [
+                  new File([blob], `NGLdrx${cleanMsg}.png`, {
+                    type: "image/png",
+                  }),
+                ],
               })
               .catch((err) => {
                 console.log(err.message);
