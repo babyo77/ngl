@@ -222,7 +222,7 @@ function PLay() {
             </Button>
           </div>
           {!notification && (
-            <div className="  bg-zinc-100 backdrop-blur-lg mb-3 py-6 w-[90dvw] flex-col rounded-3xl gap-3 flex justify-center items-center">
+            <div className="  bg-zinc-100 backdrop-blur-lg mb-4 py-6 w-[90dvw] flex-col rounded-3xl gap-3 flex justify-center items-center">
               <h1 className="text-black font-bold text-lg  text-center">
                 Step 3: Enable Notification
               </h1>
