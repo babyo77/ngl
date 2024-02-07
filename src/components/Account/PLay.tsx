@@ -21,6 +21,7 @@ function PLay() {
   const [uploadFile, setUploadFile] = useState<boolean>();
   const [loggedData, setLoggedData] = useState<user>();
   const [isLoading, setIsLoading] = useState<boolean>();
+  const [notification, setNotification] = useState<boolean>();
 
   const location = useLocation();
   const fileinput = useRef<HTMLInputElement>(null);
@@ -42,6 +43,7 @@ function PLay() {
       }
       const permission = await Notification.requestPermission();
       if (permission === "granted") {
+        setNotification(true);
         const token = await getToken(messaging, {
           vapidKey:
             "BHdJwrFAAKzml3BUG77fBy-fNB2UB2mWACLWQamDrsyH3dQOhWrI00T6TF-hmA1HpDSCBslsPGC2uyc_rnnVj50",
@@ -60,9 +62,11 @@ function PLay() {
         );
       } else {
         console.log("permission denied");
+        setNotification(false);
       }
     } else {
       alert("Not supported! Please install NGLdrx. from account settings");
+      setNotification(false);
     }
   };
 
@@ -217,21 +221,19 @@ function PLay() {
               Share
             </Button>
           </div>
-          {"notification" in window &&
-            Notification.permission !== "denied" &&
-            Notification.permission !== "granted" && (
-              <div className="  bg-zinc-100 backdrop-blur-lg mb-3 py-6 w-[90dvw] flex-col rounded-3xl gap-3 flex justify-center items-center">
-                <h1 className="text-black font-bold text-lg  text-center">
-                  Step 3: Enable Notification
-                </h1>
-                <Button
-                  onClick={enableNotifications}
-                  className=" bg-transparent px-32 text-lg py-7  flex items-center justify-center tracking-normal font-extrabold  bg-gradient-to-br from-[#EC1187] to-[#FF8D10] rounded-full shadow-none"
-                >
-                  Enable
-                </Button>
-              </div>
-            )}
+          {!notification && (
+            <div className="  bg-zinc-100 backdrop-blur-lg mb-3 py-6 w-[90dvw] flex-col rounded-3xl gap-3 flex justify-center items-center">
+              <h1 className="text-black font-bold text-lg  text-center">
+                Step 3: Enable Notification
+              </h1>
+              <Button
+                onClick={enableNotifications}
+                className=" bg-transparent px-32 text-lg py-7  flex items-center justify-center tracking-normal font-extrabold  bg-gradient-to-br from-[#EC1187] to-[#FF8D10] rounded-full shadow-none"
+              >
+                Enable
+              </Button>
+            </div>
+          )}
         </div>
       )}
     </>
