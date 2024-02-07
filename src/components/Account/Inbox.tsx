@@ -19,7 +19,7 @@ import {
 } from "firebase/firestore";
 import { useInView } from "react-intersection-observer";
 function Inbox() {
-  const [data, setData] = useState<messages[]>();
+  const [data, setData] = useState<messages[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
@@ -44,7 +44,7 @@ function Inbox() {
             ...(doc.data() as messages),
           }));
 
-          setData((prev = []) => [...prev, ...newMessages]);
+          setData((prev) => [...prev, ...newMessages]);
           return () => unSub();
         }
       );
@@ -80,7 +80,7 @@ function Inbox() {
             return;
           }
           if (newMessages.length !== 0) {
-            setData((prev = []) => [...prev, ...newMessages]);
+            setData((prev) => [...prev, ...newMessages]);
           }
         }
       }
