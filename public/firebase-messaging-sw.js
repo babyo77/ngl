@@ -4,13 +4,13 @@ importScripts(
 );
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBTb6PAR7CyJzH6R1GkT0pZwgVI3Msv-2c",
-  authDomain: "ngldrx.firebaseapp.com",
-  projectId: "ngldrx",
-  storageBucket: "ngldrx.appspot.com",
-  messagingSenderId: "1011251421809",
-  appId: "1:1011251421809:web:89f1238ed265a12052b1d0",
-  measurementId: "G-S54D629J4V",
+  apiKey: "AIzaSyC3UYt7dxYgR-8T1DgdZT86pwi5JmKLF2Y",
+  authDomain: "ngl-drx-prod.firebaseapp.com",
+  projectId: "ngl-drx-prod",
+  storageBucket: "ngl-drx-prod.appspot.com",
+  messagingSenderId: "162610520917",
+  appId: "1:162610520917:web:e039ca4f4c659eeafa05dc",
+  measurementId: "G-C7VFF3RJ2P",
 };
 
 firebase.initializeApp(firebaseConfig);
