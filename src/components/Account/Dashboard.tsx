@@ -25,18 +25,18 @@ function Dashboard() {
   }, []);
 
   const Login = async () => {
-setLoading(true)
+    setLoading(true);
     if (!auth.currentUser) {
       try {
         const details = await signInWithPopup(auth, googleAuthProvider);
         const user = details.user;
-       await fetch(`${apiUrl}/api/user`, {
+        await fetch(`${apiUrl}/api/user`, {
           method: "post",
           headers: {
             "content-type": "application/json",
           },
           body: JSON.stringify(user),
-        })
+        });
       } catch (error) {
         console.log(error);
       }
@@ -49,7 +49,7 @@ setLoading(true)
   if (loading) {
     return (
       <div className="flex bg-gradient-to-br from-[#EC1187] to-[#FF8D10] h-dvh justify-center items-center">
-        <Loader/>
+        <Loader />
       </div>
     );
   }
@@ -67,7 +67,9 @@ setLoading(true)
             Continue with Google
           </Button>
           <Link to={"/"}>
-          <p className="underline text-white font-extrabold underline-offset-4 mt-1">Go back</p>
+            <p className="underline text-white font-extrabold underline-offset-4 mt-1">
+              Go back
+            </p>
           </Link>
         </div>
       )}
