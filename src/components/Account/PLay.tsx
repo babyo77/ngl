@@ -21,16 +21,12 @@ function PLay() {
   const [uploadFile, setUploadFile] = useState<boolean>();
   const [loggedData, setLoggedData] = useState<user>();
   const [isLoading, setIsLoading] = useState<boolean>();
-  const [notification, setNotification] = useState<boolean>(false);
+  const [notification, setNotification] = useState<boolean>(true);
 
   const location = useLocation();
   const fileinput = useRef<HTMLInputElement>(null);
 
   const getKey = async () => {
-    const workers = await navigator.serviceWorker.getRegistrations();
-    if (workers.length > 0) {
-      workers.map((worker) => worker.unregister());
-    }
     const token = await getToken(messaging, {
       vapidKey:
         "BHdJwrFAAKzml3BUG77fBy-fNB2UB2mWACLWQamDrsyH3dQOhWrI00T6TF-hmA1HpDSCBslsPGC2uyc_rnnVj50",
@@ -89,6 +85,8 @@ function PLay() {
     if ("Notification" in window) {
       if (Notification.permission === "granted") {
         getKey();
+      } else {
+        setNotification(false);
       }
     }
     const searchParams = new URLSearchParams(location.search);
