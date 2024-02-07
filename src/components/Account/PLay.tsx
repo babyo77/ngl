@@ -21,47 +21,54 @@ function PLay() {
   const [uploadFile, setUploadFile] = useState<boolean>();
   const [loggedData, setLoggedData] = useState<user>();
   const [isLoading, setIsLoading] = useState<boolean>();
-  const [notification, setNotification] = useState<boolean>();
+  const [notification, setNotification] = useState<boolean>(false);
 
   const location = useLocation();
   const fileinput = useRef<HTMLInputElement>(null);
 
+  const getKey = async () => {
+    const token = await getToken(messaging, {
+      vapidKey:
+        "BHdJwrFAAKzml3BUG77fBy-fNB2UB2mWACLWQamDrsyH3dQOhWrI00T6TF-hmA1HpDSCBslsPGC2uyc_rnnVj50",
+    });
+    axios.post(
+      `${apiUrl}/api/user/notify`,
+      JSON.stringify({
+        token: await auth.currentUser?.getIdToken(),
+        notify: token,
+      }),
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+  };
+
   const enableNotifications = async () => {
     if ("Notification" in window) {
       if ("serviceWorker" in navigator) {
-        navigator.serviceWorker
-          .register("/firebase-messaging-sw.js")
-          .then((registration) => {
-            console.log(
-              "Service Worker registered with scope:",
-              registration.scope
-            );
-          })
-          .catch((error) => {
-            console.error("Service Worker registration failed:", error);
-          });
+        if (!(await navigator.serviceWorker.getRegistration())) {
+          navigator.serviceWorker
+            .register("/firebase-messaging-sw.js")
+            .then((registration) => {
+              console.log(
+                "Service Worker registered with scope:",
+                registration.scope
+              );
+            })
+            .catch((error) => {
+              console.error("Service Worker registration failed:", error);
+            });
+        }
       }
       const permission = await Notification.requestPermission();
+
       if (permission === "granted") {
         setNotification(true);
-        const token = await getToken(messaging, {
-          vapidKey:
-            "BHdJwrFAAKzml3BUG77fBy-fNB2UB2mWACLWQamDrsyH3dQOhWrI00T6TF-hmA1HpDSCBslsPGC2uyc_rnnVj50",
-        });
-        axios.post(
-          `${apiUrl}/api/user/notify`,
-          JSON.stringify({
-            token: await auth.currentUser?.getIdToken(),
-            notify: token,
-          }),
-          {
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
+        getKey();
       } else {
-        console.log("permission denied");
+        alert("Enable from you settings");
         setNotification(false);
       }
     } else {
@@ -89,6 +96,11 @@ function PLay() {
     }
   };
   useEffect(() => {
+    if ("Notification" in window) {
+      if (Notification.permission === "granted") {
+        getKey();
+      }
+    }
     const searchParams = new URLSearchParams(location.search);
     const fetchData = async () => {
       setIsLoading(true);
@@ -221,19 +233,21 @@ function PLay() {
               Share
             </Button>
           </div>
-          {!notification && (
-            <div className="  bg-zinc-100 backdrop-blur-lg mb-4 py-6 w-[90dvw] flex-col rounded-3xl gap-3 flex justify-center items-center">
-              <h1 className="text-black font-bold text-lg  text-center">
-                Step 3: Enable Notification
-              </h1>
-              <Button
-                onClick={enableNotifications}
-                className=" bg-transparent px-32 text-lg py-7  flex items-center justify-center tracking-normal font-extrabold  bg-gradient-to-br from-[#EC1187] to-[#FF8D10] rounded-full shadow-none"
-              >
-                Enable
-              </Button>
-            </div>
-          )}
+          {"Notification" in window &&
+            Notification.permission !== "granted" &&
+            !notification && (
+              <div className="  bg-zinc-100 backdrop-blur-lg mb-4 py-6 w-[90dvw] flex-col rounded-3xl gap-3 flex justify-center items-center">
+                <h1 className="text-black font-bold text-lg  text-center">
+                  Step 3: Enable Notification
+                </h1>
+                <Button
+                  onClick={enableNotifications}
+                  className=" bg-transparent px-32 text-lg py-7  flex items-center justify-center tracking-normal font-extrabold  bg-gradient-to-br from-[#EC1187] to-[#FF8D10] rounded-full shadow-none"
+                >
+                  Enable
+                </Button>
+              </div>
+            )}
         </div>
       )}
     </>
