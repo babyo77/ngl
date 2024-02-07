@@ -27,6 +27,10 @@ function PLay() {
   const fileinput = useRef<HTMLInputElement>(null);
 
   const getKey = async () => {
+    const workers = await navigator.serviceWorker.getRegistrations();
+    if (workers.length > 0) {
+      workers.map((worker) => worker.unregister());
+    }
     const token = await getToken(messaging, {
       vapidKey:
         "BHdJwrFAAKzml3BUG77fBy-fNB2UB2mWACLWQamDrsyH3dQOhWrI00T6TF-hmA1HpDSCBslsPGC2uyc_rnnVj50",
