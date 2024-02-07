@@ -32,5 +32,5 @@ messaging.onBackgroundMessage((payload) => {
 
 self.addEventListener("notificationclick", (event) => {
   event.notification.close();
-  event.waitUntil(clients.openWindow("https://ngl-drx.vercel.app/da/account"));
+  event.waitUntil(clients.openWindow("/da/account"));
 });
