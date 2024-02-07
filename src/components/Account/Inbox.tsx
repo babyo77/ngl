@@ -14,54 +14,79 @@ import {
   onSnapshot,
   orderBy,
   query,
+  startAfter,
   where,
 } from "firebase/firestore";
 import { useInView } from "react-intersection-observer";
 function Inbox() {
-  const [data, setData] = useState<messages[]>([]);
-  const [limitN, setLimit] = useState<number>(3);
+  const [data, setData] = useState<messages[]>();
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const { ref, inView } = useInView({
-    threshold: 0,
-  });
+
   useEffect(() => {
-    const loadMessages = async () => {
-      setIsLoading(true);
-      const user = auth.currentUser;
+    setIsLoading(false);
+    const user = auth.currentUser;
 
-      if (user) {
-        const uid = doc(usersCollection, user.uid);
+    if (user) {
+      const uid = doc(usersCollection, user.uid);
 
-        const messagesQuery = query(
-          msgCollection,
-          where("ref", "==", uid),
-          orderBy("date", "desc"),
-          limit(limitN)
-        );
+      const messagesQuery = query(
+        msgCollection,
+        where("ref", "==", uid),
+        orderBy("date", "desc"),
+        limit(10)
+      );
 
-        try {
-          const snapshot = await getDocs(messagesQuery);
+      const unSub = onSnapshot(
+        messagesQuery,
+        { includeMetadataChanges: false },
+        (snapshot) => {
           const newMessages: messages[] = snapshot.docs.map((doc) => ({
             ...(doc.data() as messages),
           }));
 
           setData(newMessages);
-        } catch (error) {
-          console.error("Error fetching messages:", error);
-        } finally {
-          setIsLoading(false);
+          return () => unSub();
+        }
+      );
+    }
+  }, []);
+
+  const { ref, inView } = useInView({
+    threshold: 0,
+  });
+
+  useEffect(() => {
+    const messages = async () => {
+      if (inView) {
+        const user = auth.currentUser;
+        if (user) {
+          const lastMessage = data?.[data.length - 1];
+          const uid = doc(usersCollection, user.uid);
+
+          const messagesQuery = query(
+            msgCollection,
+            where("ref", "==", uid),
+            orderBy("date", "desc"),
+            startAfter(lastMessage?.date),
+            limit(10)
+          );
+
+          const snapshot = await getDocs(messagesQuery);
+          const newMessages: messages[] = snapshot.docs.map((doc) => ({
+            ...(doc.data() as messages),
+          }));
+
+          if (newMessages.length == 0) {
+            return;
+          }
+          if (newMessages.length !== 0) {
+            setData((prev = []) => [...prev, ...newMessages]);
+          }
         }
       }
     };
-
-    loadMessages();
-  }, [limitN]);
-
-  useEffect(() => {
-    if (inView) {
-      setLimit((prev) => prev + 5);
-    }
-  }, [inView]);
+    messages();
+  }, [inView, data]);
 
   return (
     <div className="flex  flex-col gap-4 ">
