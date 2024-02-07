@@ -44,7 +44,7 @@ function Inbox() {
             ...(doc.data() as messages),
           }));
 
-          setData((prev) => [...prev, ...newMessages]);
+          setData((prev = []) => [...prev, ...newMessages]);
           return () => unSub();
         }
       );
