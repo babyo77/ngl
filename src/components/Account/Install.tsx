@@ -17,7 +17,7 @@ function Install() {
     <Dialog>
       <DialogTrigger>
         <p className="text-[1rem] mt-3 w-full bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80 font-bold rounded-2xl py-3">
-          Install NGLdrx.
+          Enable notification
         </p>
       </DialogTrigger>
       <DialogContent className="w-[87vw] rounded-2xl">
