@@ -14,17 +14,8 @@ import { auth } from "@/firebase/firebaseConfig";
 import { DeleteDialog } from "./Delete ";
 import { ChangeDetails } from "./ChangeDetails";
 import { Install } from "./Install";
-import { useEffect, useState } from "react";
 
 function Settings() {
-  const [serviceWorker, setServiceWorker] = useState<number>();
-  useEffect(() => {
-    const worker = async () => {
-      const w = (await navigator.serviceWorker.getRegistrations()).length;
-      setServiceWorker(w);
-    };
-    worker();
-  }, [serviceWorker]);
   const isPwa = window.matchMedia("(display-mode: standalone)").matches;
 
   return (
@@ -58,9 +49,6 @@ function Settings() {
         >
           Log out
         </Button>
-        <p className=" text-center mt-4 text-xs text-zinc-300">
-          {serviceWorker}
-        </p>
         <DrawerFooter />
       </DrawerContent>
     </Drawer>
