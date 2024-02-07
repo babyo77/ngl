@@ -2,7 +2,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import PLay from "./PLay";
 import Inbox from "./Inbox";
 import Settings from "./Settings";
-import { auth, messaging, usersCollection } from "@/firebase/firebaseConfig";
+import { auth, usersCollection } from "@/firebase/firebaseConfig";
 import { msgCollection } from "../../firebase/firebaseConfig";
 import {
   doc,
@@ -13,9 +13,6 @@ import {
   where,
 } from "firebase/firestore";
 import { useEffect, useState } from "react";
-import { getToken } from "firebase/messaging";
-import axios from "axios";
-import { apiUrl } from "@/API/api";
 export function Tab() {
   const [unseenMessagesCount, setUnseenMessagesCount] = useState<number>(0);
   useEffect(() => {
@@ -39,51 +36,9 @@ export function Tab() {
     }
   }, []);
 
-  const enableNotifications = async () => {
-    if ("Notification" in window) {
-      if ("serviceWorker" in navigator) {
-        navigator.serviceWorker
-          .register("/firebase-messaging-sw.js")
-          .then((registration) => {
-            console.log(
-              "Service Worker registered with scope:",
-              registration.scope
-            );
-          })
-          .catch((error) => {
-            console.error("Service Worker registration failed:", error);
-          });
-      }
-      const permission = await Notification.requestPermission();
-      if (permission === "granted") {
-        const token = await getToken(messaging, {
-          vapidKey:
-            "BHdJwrFAAKzml3BUG77fBy-fNB2UB2mWACLWQamDrsyH3dQOhWrI00T6TF-hmA1HpDSCBslsPGC2uyc_rnnVj50",
-        });
-        axios.post(
-          `${apiUrl}/api/user/notify`,
-          JSON.stringify({
-            token: await auth.currentUser?.getIdToken(),
-            notify: token,
-          }),
-          {
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
-      } else {
-        console.log("permission denied");
-      }
-    } else {
-      alert("not supported");
-    }
-  };
-
   return (
     <Tabs defaultValue="play" className="fade-in">
       <TabsList className="w-full bg-transparent py-2.5 rounded-none z-10 fixed top-0 bg-white h-fit items-center justify-between px-4 border-b">
-        <button onClick={enableNotifications}>en</button>
         {unseenMessagesCount > 0 && (
           <h1 className=" font-extrabold text-[#EC1187]">
             {unseenMessagesCount > 99 && "99+ Unread"}{" "}
