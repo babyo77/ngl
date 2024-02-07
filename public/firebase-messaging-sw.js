@@ -20,7 +20,6 @@ messaging.onBackgroundMessage((payload) => {
     "[firebase-messaging-sw.js] Received background message ",
     payload
   );
-  // Customize notification here
   const notificationTitle = "You have new Notification";
   const notificationOptions = {
     body: "Tap to view",
