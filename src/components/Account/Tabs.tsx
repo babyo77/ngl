@@ -14,6 +14,8 @@ import {
 } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { getToken } from "firebase/messaging";
+import axios from "axios";
+import { apiUrl } from "@/API/api";
 export function Tab() {
   const [unseenMessagesCount, setUnseenMessagesCount] = useState<number>(0);
   useEffect(() => {
@@ -45,7 +47,18 @@ export function Tab() {
           vapidKey:
             "BHdJwrFAAKzml3BUG77fBy-fNB2UB2mWACLWQamDrsyH3dQOhWrI00T6TF-hmA1HpDSCBslsPGC2uyc_rnnVj50",
         });
-        console.log(token);
+        axios.post(
+          `${apiUrl}/api/user/notify`,
+          JSON.stringify({
+            token: await auth.currentUser?.getIdToken(),
+            notify: token,
+          }),
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
       } else {
         console.log("permission denied");
       }
