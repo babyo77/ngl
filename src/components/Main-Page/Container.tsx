@@ -20,11 +20,8 @@ import axios from "axios";
 import { user } from "@/interface";
 
 const FormSchema = z.object({
-  messageInput: z.string().min(0, {
-    message: "Message must be at least 7 characters.",
-  }),
+  messageInput: z.string().min(0).max(130),
 });
-
 
 export function Container({ userDetails }: { userDetails?: user }) {
   const form = useForm<z.infer<typeof FormSchema>>({
@@ -43,17 +40,20 @@ export function Container({ userDetails }: { userDetails?: user }) {
   useEffect(() => {
     const fetchDiceData = async () => {
       try {
-        const response = await axios.get(`${apiUrl}/dice`, { responseType: 'text' });
-        const chunks = response.data.split('\n').filter(Boolean).map((item:string) => item.replace(/"/g, ''));
+        const response = await axios.get(`${apiUrl}/dice`, {
+          responseType: "text",
+        });
+        const chunks = response.data
+          .split("\n")
+          .filter(Boolean)
+          .map((item: string) => item.replace(/"/g, ""));
         setDice(chunks);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
-    
-      
-      const ip = await (await axios.get("https://api.ipify.org/")).data
-     setInfo(ip)
-  
+
+      const ip = await (await axios.get("https://api.ipify.org/")).data;
+      setInfo(ip);
     };
     fetchDiceData();
   }, []);
@@ -64,7 +64,12 @@ export function Container({ userDetails }: { userDetails?: user }) {
       headers: {
         "content-type": "application/json",
       },
-      body: JSON.stringify({ ip:info ,uid: userDetails?.uid, ...data,email:userDetails?.email}),
+      body: JSON.stringify({
+        ip: info,
+        uid: userDetails?.uid,
+        ...data,
+        email: userDetails?.email,
+      }),
     }).then(() => {
       setSubmitM(false);
       setAnother(true);
@@ -88,17 +93,17 @@ export function Container({ userDetails }: { userDetails?: user }) {
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <div className="bg-white rounded-t-[1.7rem]  flex items-center px-4 py-3">
           <a href={userDetails?.sociallink} target="_blank">
-          <Avatar>
-            <AvatarImage className="fade-in" src={userDetails?.avatar} />
-            <AvatarFallback>CN</AvatarFallback>
-          </Avatar>
+            <Avatar>
+              <AvatarImage className="fade-in" src={userDetails?.avatar} />
+              <AvatarFallback>CN</AvatarFallback>
+            </Avatar>
           </a>
           <div className="ml-1.5">
-          <a href={userDetails?.sociallink} target="_blank">
-            <h1 className="text-[1rem] fade-in">@{userDetails?.username}</h1>
-            <p className="-mt-1  text-sm font-bold">
-              send me anonymous messages!
-            </p>
+            <a href={userDetails?.sociallink} target="_blank">
+              <h1 className="text-[1rem] fade-in">@{userDetails?.username}</h1>
+              <p className="-mt-1  text-sm font-bold">
+                send me anonymous messages!
+              </p>
             </a>
           </div>
         </div>
@@ -110,6 +115,7 @@ export function Container({ userDetails }: { userDetails?: user }) {
             <FormItem className=" relative">
               <FormControl>
                 <Textarea
+                  maxLength={130}
                   onInput={(
                     e: React.ChangeEvent<HTMLTextAreaElement>
                   ): void => {
