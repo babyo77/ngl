@@ -51,6 +51,7 @@ function PLay() {
       const permission = await Notification.requestPermission();
 
       if (permission === "granted") {
+        setNotification(true);
         getKey();
       } else {
         alert("Enable from you settings");
