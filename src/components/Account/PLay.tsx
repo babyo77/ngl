@@ -62,7 +62,7 @@ function PLay() {
         console.log("permission denied");
       }
     } else {
-      alert("not supported");
+      alert("Not supported! Please install NGLdrx. from account settings");
     }
   };
 
@@ -217,18 +217,19 @@ function PLay() {
               Share
             </Button>
           </div>
-          {/* 
-          <div className="  bg-zinc-100 backdrop-blur-lg py-6 w-[90dvw] flex-col rounded-3xl gap-3 flex justify-center items-center">
-            <h1 className="text-black font-bold text-lg  text-center">
-              Step 2: Share link on social media
-            </h1>
-            <Button
-              onClick={handleShare}
-              className=" bg-transparent px-32 text-lg py-7  flex items-center justify-center tracking-normal font-extrabold  bg-gradient-to-br from-[#EC1187] to-[#FF8D10] rounded-full shadow-none"
-            >
-              Share
-            </Button>
-          </div> */}
+          {Notification.permission !== "granted" && (
+            <div className="  bg-zinc-100 backdrop-blur-lg py-6 w-[90dvw] flex-col rounded-3xl gap-3 flex justify-center items-center">
+              <h1 className="text-black font-bold text-lg  text-center">
+                Step 3: Enable Notification
+              </h1>
+              <Button
+                onClick={enableNotifications}
+                className=" bg-transparent px-32 text-lg py-7  flex items-center justify-center tracking-normal font-extrabold  bg-gradient-to-br from-[#EC1187] to-[#FF8D10] rounded-full shadow-none"
+              >
+                Enable
+              </Button>
+            </div>
+          )}
         </div>
       )}
     </>
