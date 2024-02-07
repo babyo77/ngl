@@ -21,7 +21,7 @@ messaging.onBackgroundMessage((payload) => {
     "[firebase-messaging-sw.js] Received background message ",
     payload
   );
-  const notificationTitle = "You have new Notification";
+  const notificationTitle = "You have new question";
   const notificationOptions = {
     body: "Tap to view",
     icon: "https://ngl-drx.vercel.app/icon.jpg",
