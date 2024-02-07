@@ -80,7 +80,7 @@ function Inbox() {
             return;
           }
           if (newMessages.length !== 0) {
-            setData((prev) => [...prev, ...newMessages]);
+            setData((prev = []) => [...prev, ...newMessages]);
           }
         }
       }
