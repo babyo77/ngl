@@ -6,10 +6,10 @@ const Cards = React.forwardRef<
   { msg: string; ref2: React.RefObject<HTMLDivElement> }
 >(({ msg, ref2 }, ref) => {
   return (
-    <div>
+    <div className=" font-Sen">
       <div
         ref={ref}
-        className="w-[300px] hidden h-[300px] flex-col items-center"
+        className="w-[300px] font-Sen hidden h-[300px] flex-col items-center"
       >
         <nav className=" font-Sen bg-gradient-to-br from-[#EC1187] to-[#FF8D10] p-4 py-7 text-center text-white font-bold text-2xl">
           Send me anonymous messages
