@@ -36,19 +36,12 @@ function Inbox() {
         limit(5)
       );
 
-      const unSub = onSnapshot(
-        messagesQuery,
-        { includeMetadataChanges: false },
-        (snapshot) => {
-          snapshot.docChanges().forEach((change) => {
-            if (change.type === "added") {
-              const newMessages: messages = change.doc.data() as messages;
-              setData((prev) => [...prev, newMessages]);
-            }
-          });
-          return () => unSub();
-        }
-      );
+      const unSub = onSnapshot(messagesQuery, (snapshot) => {
+        const newMessages = snapshot.docs.map((doc) => doc.data() as messages);
+        setData(newMessages);
+      });
+
+      return () => unSub();
     }
   }, []);
 
