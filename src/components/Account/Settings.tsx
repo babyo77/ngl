@@ -38,6 +38,15 @@ function Settings() {
         >
           Who made this?
         </Button>
+        <Button
+          variant={"secondary"}
+          onClick={() =>
+            (window.location.href = "mailto:yfw111realone@gmail.com")
+          }
+          className="text-[1rem] mt-3 font-bold rounded-2xl py-6"
+        >
+          Report bug
+        </Button>
         <DeleteDialog />
         <Button
           variant={"destructive"}
