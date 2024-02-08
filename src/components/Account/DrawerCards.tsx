@@ -56,7 +56,11 @@ export function DrawerCard({
     if (twitterRef.current === null) return;
 
     twitterRef.current.classList.replace("hidden", "flex");
-    firstRender && (await toBlob(twitterRef.current), setFirstRender(false));
+    firstRender &&
+      (await toBlob(twitterRef.current).then(() => {
+        twitterRef.current?.classList.replace("flex", "hidden"),
+          setFirstRender(false);
+      }));
 
     toBlob(twitterRef.current, {
       cacheBust: true,
