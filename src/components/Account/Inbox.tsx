@@ -46,9 +46,9 @@ function Inbox() {
               setData((prev) => [...prev, newMessages]);
             }
           });
-          return () => unSub();
         }
       );
+      return () => unSub();
     }
   }, []);
 
