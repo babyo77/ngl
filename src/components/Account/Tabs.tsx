@@ -26,7 +26,7 @@ export function Tab() {
         where("seen", "==", false),
         where("ref", "==", uid),
         orderBy("seen"),
-        limit(111)
+        limit(11)
       );
 
       onSnapshot(unseenMessagesQuery, (snapshot) => {
@@ -41,8 +41,8 @@ export function Tab() {
       <TabsList className="w-full bg-transparent py-2.5 rounded-none z-10 fixed top-0 bg-white h-fit items-center justify-between px-4 border-b">
         {unseenMessagesCount > 0 && (
           <h1 className=" font-extrabold text-[#EC1187]">
-            {unseenMessagesCount > 99 && "99+ Unread"}{" "}
-            {unseenMessagesCount < 99 && `${unseenMessagesCount} unread`}
+            {unseenMessagesCount > 8 && "9+ Unread"}{" "}
+            {unseenMessagesCount <= 8 && `${unseenMessagesCount} unread`}
           </h1>
         )}
         {unseenMessagesCount <= 0 && (

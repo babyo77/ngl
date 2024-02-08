@@ -11,6 +11,7 @@ import {
   doc,
   getDocs,
   limit,
+  onSnapshot,
   orderBy,
   query,
   startAfter,
@@ -22,38 +23,38 @@ function Inbox() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    const messages = async () => {
-      const user = auth.currentUser;
+    const user = auth.currentUser;
 
-      if (user) {
-        const uid = doc(usersCollection, user.uid);
+    if (user) {
+      const uid = doc(usersCollection, user.uid);
 
-        const messagesQuery = query(
-          msgCollection,
-          where("ref", "==", uid),
-          orderBy("date", "desc"),
-          limit(4)
-        );
-        const snapshot = await getDocs(messagesQuery);
+      const messagesQuery = query(
+        msgCollection,
+        where("ref", "==", uid),
+        orderBy("date", "desc"),
+        limit(10)
+      );
 
-        if (snapshot.size > 0) {
-          const newMessages: messages[] = snapshot.docs.map((doc) => ({
-            ...(doc.data() as messages),
-          }));
-          setData((prev = []) => [...prev, ...newMessages]);
+      const unSub = onSnapshot(
+        messagesQuery,
+        { includeMetadataChanges: false },
+        (snapshot) => {
+          setData(snapshot.docs.map((doc) => doc.data() as messages));
           setIsLoading(false);
         }
-      }
-    };
-    messages();
+      );
+      return () => unSub();
+    }
   }, []);
 
   const { ref, inView } = useInView({
-    threshold: 0,
+    trackVisibility: true,
+    delay: 300,
+    rootMargin: "10px",
   });
 
   useEffect(() => {
-    const messages = async () => {
+    async function create() {
       if (inView) {
         const user = auth.currentUser;
         if (user) {
@@ -73,16 +74,18 @@ function Inbox() {
             const newMessages: messages[] = snapshot.docs.map((doc) => ({
               ...(doc.data() as messages),
             }));
-            setData((prev) => [...prev, ...newMessages]);
+            setData((prev = []) => [...prev, ...newMessages]);
           }
         }
       }
-    };
-    messages();
+    }
+    create();
   }, [inView, data]);
 
+  console.log(data.length);
+
   return (
-    <div className="flex  flex-col gap-4 ">
+    <div className="flex  flex-col gap-4">
       {isLoading && (
         <div className="w-full h-[90dvh] text-xl font-extrabold  flex justify-center items-center">
           <Loader color="#EC1187" />
