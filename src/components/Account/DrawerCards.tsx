@@ -57,7 +57,7 @@ export function DrawerCard({
 
     twitterRef.current.classList.replace("hidden", "flex");
     if (firstRender) {
-      toBlob(twitterRef.current);
+      twitterRef.current.style.fontFamily = "Sen, sans-serif";
       setFirstRender(false);
     }
     toBlob(twitterRef.current, {
