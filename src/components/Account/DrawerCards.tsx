@@ -56,7 +56,7 @@ export function DrawerCard({
 
     twitterRef.current.classList.replace("hidden", "flex");
 
-    toBlob(twitterRef.current, {
+    toBlob(document.getElementById("twitter-card") || twitterRef.current, {
       cacheBust: true,
       style: {
         fontFamily: "Sen, sans-serif",

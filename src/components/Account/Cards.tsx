@@ -8,6 +8,7 @@ const Cards = React.forwardRef<
   return (
     <div className=" font-Sen">
       <div
+        id="twitter-card"
         ref={ref}
         className="w-[300px] font-Sen hidden h-[300px] flex-col items-center"
       >
