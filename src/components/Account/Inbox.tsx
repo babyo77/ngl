@@ -7,17 +7,8 @@ import {
 import { Loader } from "../Loaders/Loader";
 import { messages } from "@/interface";
 import { useEffect, useState } from "react";
-import {
-  doc,
-  getDocs,
-  limit,
-  onSnapshot,
-  orderBy,
-  query,
-  startAfter,
-  where,
-} from "firebase/firestore";
-import { useInView } from "react-intersection-observer";
+import { doc, onSnapshot, orderBy, query, where } from "firebase/firestore";
+
 function Inbox() {
   const [data, setData] = useState<messages[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -32,62 +23,25 @@ function Inbox() {
       const messagesQuery = query(
         msgCollection,
         where("ref", "==", uid),
-        orderBy("date", "desc"),
-        limit(5)
+        orderBy("date", "desc")
       );
 
       const unSub = onSnapshot(
         messagesQuery,
         { includeMetadataChanges: false },
         (snapshot) => {
-          snapshot.docChanges().forEach((change) => {
-            if (change.type === "added") {
-              const newMessages: messages = change.doc.data() as messages;
-              setData((prev) => [...prev, newMessages]);
-            }
-          });
+          if (snapshot.size > 0) {
+            const newMessages: messages[] = snapshot.docs.map(
+              (doc) => doc.data() as messages
+            );
+            setData(newMessages);
+          }
         }
       );
       return () => unSub();
     }
   }, []);
-
-  const { ref, inView } = useInView({
-    threshold: 0,
-  });
-
-  useEffect(() => {
-    const messages = async () => {
-      if (inView) {
-        const user = auth.currentUser;
-        if (user) {
-          const lastMessage = data?.[data.length - 1];
-          const uid = doc(usersCollection, user.uid);
-
-          const messagesQuery = query(
-            msgCollection,
-            where("ref", "==", uid),
-            orderBy("date", "desc"),
-            startAfter(lastMessage?.date),
-            limit(5)
-          );
-
-          const snapshot = await getDocs(messagesQuery);
-          const newMessages: messages[] = snapshot.docs.map((doc) => ({
-            ...(doc.data() as messages),
-          }));
-
-          if (newMessages.length == 0) {
-            return;
-          }
-          if (newMessages.length !== 0) {
-            setData((prev = []) => [...prev, ...newMessages]);
-          }
-        }
-      }
-    };
-    messages();
-  }, [inView, data]);
+  console.log("local", data);
 
   return (
     <div className="flex  flex-col gap-4 ">
@@ -99,7 +53,6 @@ function Inbox() {
       {data &&
         data.map((msg, i) => (
           <div
-            ref={ref}
             key={`_divider${msg.id}${i}`}
             className="flex fade-in flex-col gap-3"
           >
