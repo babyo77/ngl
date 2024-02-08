@@ -24,12 +24,18 @@ import { useMutation } from "react-query";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 
 const FormSchema = z.object({
-  username: z.string().refine(data => !data || data.length >= 3, {
-    message: "Username must be at least 3 characters.",
-  }).optional(),
-  sociallink: z.string().refine(data=>!data || z.string().url().safeParse(data).success,{
-    message: "Invalid URL format.",
-  }).optional()
+  username: z
+    .string()
+    .refine((data) => !data || (data.length >= 3 && !/[$*/#@]/.test(data)), {
+      message: "Invalid username.",
+    })
+    .optional(),
+  sociallink: z
+    .string()
+    .refine((data) => !data || z.string().url().safeParse(data).success, {
+      message: "Invalid URL format.",
+    })
+    .optional(),
 });
 
 export function ChangeDetailsForm() {
@@ -46,7 +52,6 @@ export function ChangeDetailsForm() {
           setLoggedData(userDetails.data() as user);
         }
       });
-    
     }
   }, []);
 
@@ -54,65 +59,71 @@ export function ChangeDetailsForm() {
     resolver: zodResolver(FormSchema),
     defaultValues: {
       username: undefined,
-      sociallink:undefined,
+      sociallink: undefined,
     },
   });
-    
 
-  async function updateUsername(token: { token: string; username?: string; sociallink?:string}) {
+  async function updateUsername(token: {
+    token: string;
+    username?: string;
+    sociallink?: string;
+  }) {
     const res = await axios.post(`${apiUrl}/api/user/update/username`, token);
     return res.data;
   }
   async function updateDp(token: { token: string; dp: string }) {
     await axios.post(`${apiUrl}/api/user/update/dp`, token);
-    setUploadFile(false)
+    setUploadFile(false);
   }
   async function onSubmit(data: z.infer<typeof FormSchema>) {
-    if(data.sociallink || data.username){
+    if (data.sociallink || data.username) {
       const token = {
         token: (await auth.currentUser?.getIdToken()) ?? "",
         username: data?.username,
-        sociallink:data?.sociallink
+        sociallink: data?.sociallink,
       };
-      
+
       await mutateAsync(token);
     }
   }
-  const fileinput = useRef<HTMLInputElement>(null)
+  const fileinput = useRef<HTMLInputElement>(null);
 
-const upload = async(event:React.ChangeEvent<HTMLInputElement>)=>{
-const file = event.target.files?.[0]
-setUploadFile(true)
+  const upload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    setUploadFile(true);
 
-if(file){
-
-  await uploadBytes(ref(storage,auth.currentUser?.uid),file)
-  const url = await getDownloadURL(ref(storage,auth.currentUser?.uid))
-  const token = {
-    token: (await auth.currentUser?.getIdToken()) ?? "",
-    dp: url,
+    if (file) {
+      await uploadBytes(ref(storage, auth.currentUser?.uid), file);
+      const url = await getDownloadURL(ref(storage, auth.currentUser?.uid));
+      const token = {
+        token: (await auth.currentUser?.getIdToken()) ?? "",
+        dp: url,
+      };
+      updateDp(token);
+    }
   };
-    updateDp(token)
-}
-}
   return (
     <Form {...form}>
-      <input type="file" ref={fileinput} accept="image/*" className="hidden" onChange={upload} />
+      <input
+        type="file"
+        ref={fileinput}
+        accept="image/*"
+        className="hidden"
+        onChange={upload}
+      />
       <div className="flex justify-center">
         <Avatar
-          onClick={()=>fileinput.current?.click()}
+          onClick={() => fileinput.current?.click()}
           className="border-white   border-[.2rem] h-24 w-24"
         >
-        
-          {uploadFile ?(
+          {uploadFile ? (
             <div className="flex w-full justify-center items-center h-full">
-              <Loader color="black"/>
+              <Loader color="black" />
             </div>
-
-          ):(
+          ) : (
             <AvatarImage src={loggedData?.avatar} alt={loggedData?.username} />
           )}
-          
+
           <AvatarFallback>CN</AvatarFallback>
         </Avatar>
       </div>
@@ -137,7 +148,7 @@ if(file){
             </FormItem>
           )}
         />
-           <FormField
+        <FormField
           control={form.control}
           name="sociallink"
           render={({ field }) => (
@@ -165,14 +176,15 @@ if(file){
               {isLoading ? <Loader /> : "Save changes"}
             </Button>
           ) : (
-            <Button disabled className="text-[1rem] w-full py-6 mt-2 font-bold rounded-2xl">
+            <Button
+              disabled
+              className="text-[1rem] w-full py-6 mt-2 font-bold rounded-2xl"
+            >
               Profile updated
             </Button>
           )}
         </div>
-        
       </form>
-      
     </Form>
   );
 }
