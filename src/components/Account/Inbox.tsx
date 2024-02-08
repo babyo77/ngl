@@ -6,7 +6,7 @@ import {
 } from "@/firebase/firebaseConfig";
 import { Loader } from "../Loaders/Loader";
 import { messages } from "@/interface";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   doc,
   getDocs,
@@ -18,13 +18,13 @@ import {
   where,
 } from "firebase/firestore";
 import { useInView } from "react-intersection-observer";
-function Inbox() {
+function InboxComp() {
   const [data, setData] = useState<messages[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const user = auth.currentUser;
-
+    setIsLoading(false);
     if (user) {
       const uid = doc(usersCollection, user.uid);
 
@@ -35,15 +35,13 @@ function Inbox() {
         limit(10)
       );
 
-      const unSub = onSnapshot(
+      onSnapshot(
         messagesQuery,
         { includeMetadataChanges: false },
         (snapshot) => {
           setData(snapshot.docs.map((doc) => doc.data() as messages));
-          setIsLoading(false);
         }
       );
-      return () => unSub();
     }
   }, []);
 
@@ -114,5 +112,5 @@ function Inbox() {
     </div>
   );
 }
-
+const Inbox = React.memo(InboxComp);
 export default Inbox;

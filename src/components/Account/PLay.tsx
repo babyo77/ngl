@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { memo, useEffect, useRef, useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Button } from "../ui/button";
 import { FaLink } from "react-icons/fa";
@@ -17,7 +17,7 @@ import { useLocation } from "react-router-dom";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { getToken } from "firebase/messaging";
 
-function PLay() {
+function Play() {
   const [uploadFile, setUploadFile] = useState<boolean>();
   const [loggedData, setLoggedData] = useState<user>();
   const [isLoading, setIsLoading] = useState<boolean>();
@@ -239,5 +239,7 @@ function PLay() {
     </>
   );
 }
+
+const PLay = memo(Play);
 
 export default PLay;
