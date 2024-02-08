@@ -96,7 +96,7 @@ export function DrawerCard({
         console.log("null blob");
       }
     });
-  }, [twitterRef, msg]);
+  }, [twitterRef, msg, firstRender]);
 
   const share = useCallback(() => {
     if (cardRef.current === null) return;
