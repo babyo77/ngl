@@ -59,9 +59,9 @@ export function DrawerCard({
     if (firstRender) {
       toBlob(twitterRef.current, {
         cacheBust: true,
-        style: {
-          fontFamily: "Sen, sans-serif",
-        },
+      });
+      toBlob(twitterRef.current, {
+        cacheBust: true,
       });
       setFirstRender(false);
     }
