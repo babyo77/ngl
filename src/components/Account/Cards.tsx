@@ -11,10 +11,10 @@ const Cards = React.forwardRef<
         ref={ref}
         className="w-[300px] hidden h-[300px] flex-col items-center"
       >
-        <nav className="bg-gradient-to-br from-[#EC1187] to-[#FF8D10] p-4 py-7 text-center text-white font-bold text-2xl">
+        <nav className=" font-Sen bg-gradient-to-br from-[#EC1187] to-[#FF8D10] p-4 py-7 text-center text-white font-bold text-2xl">
           Send me anonymous messages
         </nav>
-        <div className=" bg-white overflow-auto font-semibold px-1 text-center rounded-b-xl border-r border-l border-b  w-full h-full flex justify-center items-center text-2xl">
+        <div className=" font-Sen bg-white overflow-auto font-semibold px-1 text-center rounded-b-xl border-r border-l border-b  w-full h-full flex justify-center items-center text-2xl">
           {msg}
         </div>
       </div>
