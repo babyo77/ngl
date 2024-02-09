@@ -20,7 +20,7 @@ import axios from "axios";
 import { user } from "@/interface";
 
 const FormSchema = z.object({
-  messageInput: z.string().min(1).max(130),
+  messageInput: z.string().min(0).max(130),
 });
 
 export function Container({ userDetails }: { userDetails?: user }) {
@@ -59,27 +59,29 @@ export function Container({ userDetails }: { userDetails?: user }) {
   }, []);
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
-    fetch(`${apiUrl}/api/message`, {
-      method: "post",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify({
-        ip: info,
-        uid: userDetails?.uid,
-        ...data,
-        email: userDetails?.email,
-      }),
-    }).then(() => {
-      setSubmitM(false);
-      setAnother(true);
-      setTimeout(() => {
-        setAnother(false);
-        setShow(false);
-      }, 777);
-      form.setValue("messageInput", "");
-    });
-    setSubmitM(true);
+    if (data.messageInput.trim() !== "") {
+      fetch(`${apiUrl}/api/message`, {
+        method: "post",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify({
+          ip: info,
+          uid: userDetails?.uid,
+          ...data,
+          email: userDetails?.email,
+        }),
+      }).then(() => {
+        setSubmitM(false);
+        setAnother(true);
+        setTimeout(() => {
+          setAnother(false);
+          setShow(false);
+        }, 777);
+        form.setValue("messageInput", "");
+      });
+      setSubmitM(true);
+    }
   }
 
   function ChangeInput() {
