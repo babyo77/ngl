@@ -141,6 +141,3 @@ body {
     opacity: 1;
   }
 }
-*::selection {
-  display: none;
-}

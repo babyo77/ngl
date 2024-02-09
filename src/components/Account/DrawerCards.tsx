@@ -13,8 +13,8 @@ import { toBlob } from "html-to-image";
 import NewMessage from "./NewMessage";
 import axios from "axios";
 import { apiUrl } from "@/API/api";
-import { auth } from "@/firebase/firebaseConfig";
-import { Timestamp } from "firebase/firestore";
+import { auth, msgCollection } from "@/firebase/firebaseConfig";
+import { Timestamp, deleteDoc, doc } from "firebase/firestore";
 import { RiTwitterXLine } from "react-icons/ri";
 export function DrawerCard({
   msg,
@@ -139,6 +139,15 @@ export function DrawerCard({
     });
   }, [cardRef, msg]);
 
+  const handleDelete = async () => {
+    try {
+      await deleteDoc(doc(msgCollection, id));
+      console.log("Document deleted successfully!");
+    } catch (error) {
+      console.error("Error deleting document: ", error);
+    }
+  };
+
   return (
     <Drawer>
       <DrawerTrigger onClick={updateMsg}>
@@ -150,7 +159,12 @@ export function DrawerCard({
       </DrawerTrigger>
       <DrawerContent>
         <DrawerHeader>
-          <DrawerTitle>Who sent this?</DrawerTitle>
+          <DrawerTitle
+            className=" font-bold text-destructive"
+            onClick={handleDelete}
+          >
+            {id && id !== "ngl" ? "Delete Message" : "Love from NGLdrx."}
+          </DrawerTitle>
         </DrawerHeader>
         <div className="flex justify-center items-center">
           <Cards ref={twitterRef} msg={msg} ref2={cardRef} />

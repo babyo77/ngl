@@ -80,8 +80,6 @@ function InboxComp() {
     create();
   }, [inView, data]);
 
-  console.log(data.length);
-
   return (
     <div className="flex  flex-col gap-4">
       {isLoading && (
