@@ -100,7 +100,7 @@ export function Container({ userDetails }: { userDetails?: user }) {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
-        <div className="bg-white rounded-t-[1.7rem]  flex items-center px-4 py-3">
+        <div className="bg-white rounded-t-[1.7rem]  flex items-center px-4 py-3.5">
           <a href={userDetails?.sociallink} target="_blank">
             <Avatar>
               <AvatarImage className="fade-in" src={userDetails?.avatar} />
@@ -150,7 +150,7 @@ export function Container({ userDetails }: { userDetails?: user }) {
             </FormItem>
           )}
         />
-        <p className="text-center mt-4 text-white text-sm max-md:text-xs">
+        <p className="text-center mt-4 text-white text-[.8rem] max-md:text-xs">
           🔒 anonymous q&a
         </p>
 
@@ -177,7 +177,7 @@ export function Container({ userDetails }: { userDetails?: user }) {
         )}
         {!show && (
           <div className=" relative top-[27vh]   max-md:w-[21rem]  w-[40rem]">
-            <p className="text-center mt-4 fade-in  text-white text-sm font-extrabold max-md:text-sm">
+            <p className="text-center mt-4 fade-in  text-white text-sm font-bold max-md:text-sm">
               👇
               <span ref={tapped}>
                 {" "}
