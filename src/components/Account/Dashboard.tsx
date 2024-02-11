@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { Loader } from "../Loaders/Loader";
 import { apiUrl } from "@/API/api";
 import { Link } from "react-router-dom";
-
+import * as htmlToImage from "html-to-image";
 function Dashboard() {
   const isDesktop = window.innerWidth <= 768;
   const [loggedIn, setLoggedIn] = useState<boolean>(false);
@@ -17,6 +17,9 @@ function Dashboard() {
       if (user) {
         setLoggedIn(true);
         setLoading(false);
+        htmlToImage
+          .toBlob(document.getElementById("ioFix")!)
+          .then(() => console.log("ok"));
       } else {
         setLoading(false);
       }
@@ -48,7 +51,10 @@ function Dashboard() {
   }
   if (loading) {
     return (
-      <div className="flex bg-gradient-to-br from-[#EC1187] to-[#FF8D10] h-dvh justify-center items-center">
+      <div
+        id="ioFix"
+        className="flex bg-gradient-to-br from-[#EC1187] to-[#FF8D10] h-dvh justify-center items-center"
+      >
         <Loader />
       </div>
     );
