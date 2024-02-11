@@ -13,12 +13,8 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
-import { useEffect, useRef } from "react";
-
 const FormSchema = z.object({
-  messageInput: z.string().min(0, {
-    message: "Message must be at least 7 characters.",
-  }),
+  messageInput: z.string().min(0),
 });
 
 export function Temp() {
@@ -29,24 +25,9 @@ export function Temp() {
     },
   });
 
-  function onSubmit(data: z.infer<typeof FormSchema>) {
-    return data;
-  }
-
-  const tapped = useRef<HTMLSpanElement>(null);
-  useEffect(() => {
-    const count = setInterval(() => {
-      let clickCount = parseInt(tapped.current?.textContent || "0", 10);
-      clickCount += Math.floor(Math.random() * 5) - 1;
-      tapped.current!.textContent = clickCount.toString();
-    }, 800);
-
-    return () => clearInterval(count);
-  });
-
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)}>
+      <form>
         <div className="bg-white rounded-t-[1.7rem]  flex items-center px-4 py-3">
           <a href={""} target="_blank">
             <Avatar>
