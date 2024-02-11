@@ -177,7 +177,7 @@ export function Container({ userDetails }: { userDetails?: user }) {
         )}
         {!show && (
           <div className=" relative top-[29vh]   max-md:w-[21rem]  w-[40rem]">
-            <p className="text-center mt-4 fade-in  text-white text-lg font-bold max-md:text-sm">
+            <p className="text-center mt-4 fade-in  text-white text-sm font-extrabold max-md:text-sm">
               👇
               <span ref={tapped}>
                 {" "}
@@ -187,7 +187,7 @@ export function Container({ userDetails }: { userDetails?: user }) {
             </p>
             <Link to={"/da/account"}>
               <Button
-                className="w-full py-7 animated-button bg-black hover:bg-black shadow-xl  text-lg mt-3 font-bold text-white 
+                className="w-full py-7 animated-button bg-black hover:bg-black shadow-xl  text-lg mt-3 font-extrabold text-white 
             rounded-full"
               >
                 Get your own messages!
