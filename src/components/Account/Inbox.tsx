@@ -25,14 +25,13 @@ function InboxComp() {
         orderBy("date", "desc")
       );
 
-      const unSub = onSnapshot(
+      onSnapshot(
         messagesQuery,
         { includeMetadataChanges: false },
         (snapshot) => {
           setData(snapshot.docs.map((doc) => doc.data() as messages));
         }
       );
-      return () => unSub();
     }
   }, []);
 
@@ -51,6 +50,7 @@ function InboxComp() {
             className="flex fade-in flex-col gap-3"
           >
             <DrawerCard
+              key={`message${msg.id}${i}`}
               id={msg.id}
               country={msg.country}
               city={msg.city}
