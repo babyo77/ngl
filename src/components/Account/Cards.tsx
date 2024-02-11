@@ -9,6 +9,7 @@ const Cards = React.forwardRef<
     <div className=" font-Sen">
       <div
         ref={ref}
+        id="twitter-ref"
         className="w-[300px] font-Sen hidden h-[300px] flex-col items-center"
       >
         <nav className=" font-Sen bg-gradient-to-br from-[#EC1187] to-[#FF8D10] p-4 py-7 text-center text-white font-bold text-2xl">
@@ -19,6 +20,7 @@ const Cards = React.forwardRef<
         </div>
       </div>
       <Card
+        id="card"
         ref={ref2}
         className="rounded-3xl border-none shadow-none w-[90dvw] m-0 p-0"
       >

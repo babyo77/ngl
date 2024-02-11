@@ -9,7 +9,7 @@ import {
 import { Button } from "../ui/button";
 import Cards from "..";
 import { useCallback, useRef, useState } from "react";
-import { toBlob } from "html-to-image";
+import * as htmlToImage from "html-to-image";
 import NewMessage from "./NewMessage";
 import axios from "axios";
 import { apiUrl } from "@/API/api";
@@ -56,80 +56,84 @@ export function DrawerCard({
 
     twitterRef.current.classList.replace("hidden", "flex");
 
-    await toBlob(twitterRef.current, {
-      cacheBust: true,
-      style: {
-        fontFamily: "Sen, sans-serif",
-      },
-    }).then((blob) => {
-      if (blob !== null) {
-        if (twitterRef.current) {
-          twitterRef.current.classList.replace("flex", "hidden");
-        }
-        const reader = new FileReader();
-        reader.readAsDataURL(blob);
-        const cleanMsg = msg.replace(/[^a-z0-9]/gi, "");
-
-        reader.onload = () => {
-          if (navigator.share) {
-            navigator
-              .share({
-                files: [
-                  new File([blob], `NGLdrx${cleanMsg}.png`, {
-                    type: "image/png",
-                  }),
-                ],
-              })
-              .catch((err) => {
-                console.log(err.message);
-              });
-          } else {
-            console.log("not supported");
+    htmlToImage
+      .toBlob(twitterRef.current, {
+        cacheBust: true,
+        style: {
+          fontFamily: "Sen, sans-serif",
+        },
+      })
+      .then((blob) => {
+        if (blob !== null) {
+          if (twitterRef.current) {
+            twitterRef.current.classList.replace("flex", "hidden");
           }
-        };
-      } else {
-        if (twitterRef.current) {
-          twitterRef.current.classList.replace("flex", "hidden");
+          const reader = new FileReader();
+          reader.readAsDataURL(blob);
+          const cleanMsg = msg.replace(/[^a-z0-9]/gi, "");
+
+          reader.onload = () => {
+            if (navigator.share) {
+              navigator
+                .share({
+                  files: [
+                    new File([blob], `NGLdrx${cleanMsg}.png`, {
+                      type: "image/png",
+                    }),
+                  ],
+                })
+                .catch((err) => {
+                  console.log(err.message);
+                });
+            } else {
+              console.log("not supported");
+            }
+          };
+        } else {
+          if (twitterRef.current) {
+            twitterRef.current.classList.replace("flex", "hidden");
+          }
+          console.log("null blob");
         }
-        console.log("null blob");
-      }
-    });
+      });
   }, [twitterRef, msg]);
 
   const share = useCallback(async () => {
     if (cardRef.current === null) return;
 
-    await toBlob(cardRef.current, {
-      cacheBust: true,
-      style: {
-        fontFamily: "Sen, sans-serif",
-      },
-    }).then((blob) => {
-      if (blob !== null) {
-        const reader = new FileReader();
-        reader.readAsDataURL(blob);
-        const cleanMsg = msg.replace(/[^a-z0-9]/gi, "");
-        reader.onload = () => {
-          if (navigator.share) {
-            navigator
-              .share({
-                files: [
-                  new File([blob], `NGLdrx${cleanMsg}.png`, {
-                    type: "image/png",
-                  }),
-                ],
-              })
-              .catch((err) => {
-                console.log(err.message);
-              });
-          } else {
-            console.log("not supported");
-          }
-        };
-      } else {
-        console.log("null blob");
-      }
-    });
+    htmlToImage
+      .toBlob(cardRef.current, {
+        cacheBust: true,
+        style: {
+          fontFamily: "Sen, sans-serif",
+        },
+      })
+      .then((blob) => {
+        if (blob !== null) {
+          const reader = new FileReader();
+          reader.readAsDataURL(blob);
+          const cleanMsg = msg.replace(/[^a-z0-9]/gi, "");
+          reader.onload = () => {
+            if (navigator.share) {
+              navigator
+                .share({
+                  files: [
+                    new File([blob], `NGLdrx${cleanMsg}.png`, {
+                      type: "image/png",
+                    }),
+                  ],
+                })
+                .catch((err) => {
+                  console.log(err.message);
+                });
+            } else {
+              console.log("not supported");
+            }
+          };
+        } else {
+          console.log("null blob");
+        }
+      });
   }, [cardRef, msg]);
 
   const handleDelete = async () => {
