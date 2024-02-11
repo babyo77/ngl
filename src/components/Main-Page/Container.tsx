@@ -107,10 +107,10 @@ export function Container({ userDetails }: { userDetails?: user }) {
               <AvatarFallback>CN</AvatarFallback>
             </Avatar>
           </a>
-          <div className="ml-1.5">
+          <div className="ml-2">
             <a href={userDetails?.sociallink} target="_blank">
               <h1 className="text-[1rem] fade-in">@{userDetails?.username}</h1>
-              <p className="-mt-1  text-sm font-bold">
+              <p className="-mt-0.5  text-sm font-extrabold">
                 send me anonymous messages!
               </p>
             </a>
