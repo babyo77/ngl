@@ -15,11 +15,10 @@ function Dashboard() {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
-        setLoggedIn(true);
-        setLoading(false);
-        htmlToImage
-          .toBlob(document.getElementById("ioFix")!)
-          .then(() => console.log("ok"));
+        htmlToImage.toBlob(document.getElementById("ioFix")!).then(() => {
+          setLoggedIn(true);
+          setLoading(false);
+        });
       } else {
         setLoading(false);
       }
