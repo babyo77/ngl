@@ -107,10 +107,10 @@ export function Container({ userDetails }: { userDetails?: user }) {
               <AvatarFallback>CN</AvatarFallback>
             </Avatar>
           </a>
-          <div className="ml-2">
+          <div className="ml-1.5">
             <a href={userDetails?.sociallink} target="_blank">
               <h1 className="text-[1rem] fade-in">@{userDetails?.username}</h1>
-              <p className="-mt-0.5  text-sm font-bold">
+              <p className="-mt-1  text-sm font-bold">
                 send me anonymous messages!
               </p>
             </a>
@@ -177,7 +177,7 @@ export function Container({ userDetails }: { userDetails?: user }) {
         )}
         {!show && (
           <div className=" relative top-[27vh]   max-md:w-[21rem]  w-[40rem]">
-            <p className="text-center mt-4 fade-in  text-white text-lg font-extrabold max-md:text-sm">
+            <p className="text-center mt-4 fade-in  text-white text-lg font-bold max-md:text-sm">
               👇
               <span ref={tapped}>
                 {" "}
