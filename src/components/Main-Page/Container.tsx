@@ -176,7 +176,7 @@ export function Container({ userDetails }: { userDetails?: user }) {
           </div>
         )}
         {!show && (
-          <div className=" relative top-[29vh]   max-md:w-[21rem]  w-[40rem]">
+          <div className=" relative top-[27vh]   max-md:w-[21rem]  w-[40rem]">
             <p className="text-center mt-4 fade-in  text-white text-sm font-extrabold max-md:text-sm">
               👇
               <span ref={tapped}>
