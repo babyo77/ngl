@@ -80,13 +80,11 @@ export function DrawerCard({
     try {
       const card = cardRef.current;
       if (!card) return;
-      card.classList.replace("hidden", "flex");
 
       const image = await htmlToImage.toPng(card, {
         cacheBust: true,
       });
 
-      card.classList.replace("flex", "hidden");
       const cleanMsg = msg.replace(/[^a-z0-9]/gi, "");
 
       await navigator.share({
