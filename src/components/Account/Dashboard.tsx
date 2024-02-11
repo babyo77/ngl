@@ -3,23 +3,19 @@ import { Desktop, Mobile } from "..";
 import { onAuthStateChanged, signInWithPopup } from "firebase/auth";
 
 import { Button } from "../ui/button";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { Loader } from "../Loaders/Loader";
 import { apiUrl } from "@/API/api";
 import { Link } from "react-router-dom";
-import * as htmlToImage from "html-to-image";
 function Dashboard() {
   const isDesktop = window.innerWidth <= 768;
   const [loggedIn, setLoggedIn] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
-  const iosFix = useRef<HTMLDivElement>(null);
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
-        htmlToImage.toBlob(iosFix.current!).then(() => {
-          setLoggedIn(true);
-          setLoading(false);
-        });
+        setLoggedIn(true);
+        setLoading(false);
       } else {
         setLoading(false);
       }
@@ -51,10 +47,7 @@ function Dashboard() {
   }
   if (loading) {
     return (
-      <div
-        ref={iosFix}
-        className="flex bg-gradient-to-br from-[#EC1187] to-[#FF8D10] h-dvh justify-center items-center"
-      >
+      <div className="flex bg-gradient-to-br from-[#EC1187] to-[#FF8D10] h-dvh justify-center items-center">
         <Loader />
       </div>
     );
