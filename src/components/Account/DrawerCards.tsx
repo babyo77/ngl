@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/drawer";
 import { Button } from "../ui/button";
 import Cards from "..";
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import * as htmlToImage from "html-to-image";
 import NewMessage from "./NewMessage";
 import axios from "axios";
@@ -130,6 +130,11 @@ export function DrawerCard({
       console.error("Error deleting document: ", error);
     }
   };
+  useEffect(() => {
+    htmlToImage
+      .toBlob(document.getElementById("iosFix")!)
+      .catch(() => console.log("ok"));
+  }, []);
 
   return (
     <Drawer>
