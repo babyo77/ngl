@@ -193,8 +193,11 @@ export function Container({ userDetails }: { userDetails?: user }) {
                 Get your own messages!
               </Button>
             </Link>
-            <p className="text-center fade-in  mt-3 text-white/60 font-bold text-xs">
-              Inspired by NGL.
+            <p
+              onClick={() => window.open("https://www.instagram.com/babyo7_/")}
+              className="text-center fade-in cursor-pointer mt-3 text-white/60 font-bold text-xs"
+            >
+              By babyo7_
             </p>
           </div>
         )}
