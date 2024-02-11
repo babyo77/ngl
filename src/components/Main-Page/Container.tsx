@@ -12,7 +12,7 @@ import {
 
 import { Textarea } from "@/components/ui/textarea";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Loader } from "../Loaders/Loader";
 import { apiUrl } from "@/API/api";
 import { Link } from "react-router-dom";
@@ -36,7 +36,7 @@ export function Container({ userDetails }: { userDetails?: user }) {
   const [index, setIndex] = useState<number>(0);
   const [dice, setDice] = useState<string[]>(["hello how are you"]);
   const [info, setInfo] = useState<string>();
-
+  const tapped = useRef<HTMLSpanElement>(null);
   useEffect(() => {
     const fetchDiceData = async () => {
       try {
@@ -55,7 +55,15 @@ export function Container({ userDetails }: { userDetails?: user }) {
       const ip = await (await axios.get("https://api.ipify.org/")).data;
       setInfo(ip);
     };
+
+    const count = setInterval(() => {
+      let clickCount = parseInt(tapped.current?.textContent || "0", 10);
+      clickCount += Math.floor(Math.random() * 5) - 1;
+      tapped.current!.textContent = clickCount.toString();
+    }, 800);
+
     fetchDiceData();
+    return () => clearInterval(count);
   }, []);
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
@@ -169,8 +177,13 @@ export function Container({ userDetails }: { userDetails?: user }) {
         )}
         {!show && (
           <div className=" relative top-[29vh]   max-md:w-[21rem]  w-[40rem]">
-            <p className="text-center mt-4 text-white text-lg font-bold max-md:text-sm">
-              👇 get your own tap this button 👇
+            <p className="text-center mt-4 fade-in  text-white text-lg font-bold max-md:text-sm">
+              👇
+              <span ref={tapped}>
+                {" "}
+                {Math.floor(Math.random() * 101) + 100}
+              </span>{" "}
+              people just tapped the button 👇
             </p>
             <Link to={"/da/account"}>
               <Button
@@ -180,7 +193,7 @@ export function Container({ userDetails }: { userDetails?: user }) {
                 Get your own messages!
               </Button>
             </Link>
-            <p className="text-center mt-3 text-white/60 font-bold text-xs">
+            <p className="text-center fade-in  mt-3 text-white/60 font-bold text-xs">
               Inspired by NGL.
             </p>
           </div>
