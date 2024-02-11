@@ -100,17 +100,17 @@ export function Container({ userDetails }: { userDetails?: user }) {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
-        <div className="bg-white rounded-t-[1.7rem]  flex items-center px-4 py-3.5">
+        <div className="bg-white rounded-t-[1.7rem]  flex items-center px-4 py-3">
           <a href={userDetails?.sociallink} target="_blank">
             <Avatar>
               <AvatarImage className="fade-in" src={userDetails?.avatar} />
               <AvatarFallback>CN</AvatarFallback>
             </Avatar>
           </a>
-          <div className="ml-1.5">
+          <div className="ml-2">
             <a href={userDetails?.sociallink} target="_blank">
               <h1 className="text-[1rem] fade-in">@{userDetails?.username}</h1>
-              <p className="-mt-1  text-sm font-bold">
+              <p className="-mt-0.5  text-sm font-bold">
                 send me anonymous messages!
               </p>
             </a>
