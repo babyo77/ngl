@@ -56,70 +56,84 @@ export function DrawerCard({
 
     twitterRef.current.classList.replace("hidden", "flex");
 
-    htmlToImage.toBlob(twitterRef.current).then((blob) => {
-      if (blob !== null) {
-        if (twitterRef.current) {
-          twitterRef.current.classList.replace("flex", "hidden");
-        }
-        const reader = new FileReader();
-        reader.readAsDataURL(blob);
-        const cleanMsg = msg.replace(/[^a-z0-9]/gi, "");
-
-        reader.onload = () => {
-          if (navigator.share) {
-            navigator
-              .share({
-                files: [
-                  new File([blob], `NGLdrx${cleanMsg}.png`, {
-                    type: "image/png",
-                  }),
-                ],
-              })
-              .catch((err) => {
-                console.log(err.message);
-              });
-          } else {
-            console.log("not supported");
+    htmlToImage
+      .toBlob(twitterRef.current, {
+        cacheBust: true,
+        style: {
+          fontFamily: "Sen, sans-serif",
+        },
+      })
+      .then((blob) => {
+        if (blob !== null) {
+          if (twitterRef.current) {
+            twitterRef.current.classList.replace("flex", "hidden");
           }
-        };
-      } else {
-        if (twitterRef.current) {
-          twitterRef.current.classList.replace("flex", "hidden");
+          const reader = new FileReader();
+          reader.readAsDataURL(blob);
+          const cleanMsg = msg.replace(/[^a-z0-9]/gi, "");
+
+          reader.onload = () => {
+            if (navigator.share) {
+              navigator
+                .share({
+                  files: [
+                    new File([blob], `NGLdrx${cleanMsg}.png`, {
+                      type: "image/png",
+                    }),
+                  ],
+                })
+                .catch((err) => {
+                  console.log(err.message);
+                });
+            } else {
+              console.log("not supported");
+            }
+          };
+        } else {
+          if (twitterRef.current) {
+            twitterRef.current.classList.replace("flex", "hidden");
+          }
+          console.log("null blob");
         }
-        console.log("null blob");
-      }
-    });
+      });
   }, [twitterRef, msg]);
 
   const share = useCallback(async () => {
     if (cardRef.current === null) return;
 
-    htmlToImage.toBlob(cardRef.current).then((blob) => {
-      if (blob !== null) {
-        const reader = new FileReader();
-        reader.readAsDataURL(blob);
-        const cleanMsg = msg.replace(/[^a-z0-9]/gi, "");
-        reader.onload = () => {
-          if (navigator.share) {
-            navigator
-              .share({
-                files: [
-                  new File([blob], `NGLdrx${cleanMsg}.png`, {
-                    type: "image/png",
-                  }),
-                ],
-              })
-              .catch((err) => {
-                console.log(err.message);
-              });
-          } else {
-            console.log("not supported");
-          }
-        };
-      } else {
-        console.log("null blob");
-      }
-    });
+    htmlToImage
+      .toBlob(cardRef.current, {
+        cacheBust: true,
+        style: {
+          fontFamily: "Sen, sans-serif",
+        },
+      })
+      .then((blob) => {
+        if (blob !== null) {
+          const reader = new FileReader();
+          reader.readAsDataURL(blob);
+          const cleanMsg = msg.replace(/[^a-z0-9]/gi, "");
+          reader.onload = () => {
+            if (navigator.share) {
+              navigator
+                .share({
+                  files: [
+                    new File([blob], `NGLdrx${cleanMsg}.png`, {
+                      type: "image/png",
+                    }),
+                  ],
+                })
+                .catch((err) => {
+                  console.log(err.message);
+                });
+            } else {
+              console.log("not supported");
+            }
+          };
+        } else {
+          console.log("null blob");
+        }
+      });
   }, [cardRef, msg]);
 
   const handleDelete = async () => {
@@ -133,7 +147,7 @@ export function DrawerCard({
 
   return (
     <Drawer>
-      <DrawerTrigger onClick={updateMsg} id="iosFix">
+      <DrawerTrigger onClick={updateMsg}>
         {seen ? (
           <NewMessage seen={seened || seen} msg={msg} timestamp={time} />
         ) : (
