@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/drawer";
 import { Button } from "../ui/button";
 import Cards from "..";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import * as htmlToImage from "html-to-image";
 import NewMessage from "./NewMessage";
 import axios from "axios";
@@ -36,8 +36,6 @@ export function DrawerCard({
   const [seened, setSeen] = useState<boolean>();
   const twitterRef = useRef<HTMLDivElement>(null);
   const cardRef = useRef<HTMLDivElement>(null);
-  const iosFix = useRef<HTMLDivElement>(null);
-  const [FirstRender, setFirstRender] = useState<boolean>(true);
   const updateMsg = async () => {
     if (!seen) {
       setSeen(true);
@@ -58,98 +56,71 @@ export function DrawerCard({
 
     twitterRef.current.classList.replace("hidden", "flex");
 
-    htmlToImage
-      .toBlob(twitterRef.current, {
-        cacheBust: true,
-        style: {
-          fontFamily: "Sen, sans-serif",
-        },
-      })
-      .then((blob) => {
-        if (blob !== null) {
-          if (twitterRef.current) {
-            twitterRef.current.classList.replace("flex", "hidden");
-          }
-          const reader = new FileReader();
-          reader.readAsDataURL(blob);
-          const cleanMsg = msg.replace(/[^a-z0-9]/gi, "");
-
-          reader.onload = () => {
-            if (navigator.share) {
-              navigator
-                .share({
-                  files: [
-                    new File([blob], `NGLdrx${cleanMsg}.png`, {
-                      type: "image/png",
-                    }),
-                  ],
-                })
-                .catch((err) => {
-                  console.log(err.message);
-                });
-            } else {
-              console.log("not supported");
-            }
-          };
-        } else {
-          if (twitterRef.current) {
-            twitterRef.current.classList.replace("flex", "hidden");
-          }
-          console.log("null blob");
+    htmlToImage.toBlob(twitterRef.current).then((blob) => {
+      if (blob !== null) {
+        if (twitterRef.current) {
+          twitterRef.current.classList.replace("flex", "hidden");
         }
-      });
+        const reader = new FileReader();
+        reader.readAsDataURL(blob);
+        const cleanMsg = msg.replace(/[^a-z0-9]/gi, "");
+
+        reader.onload = () => {
+          if (navigator.share) {
+            navigator
+              .share({
+                files: [
+                  new File([blob], `NGLdrx${cleanMsg}.png`, {
+                    type: "image/png",
+                  }),
+                ],
+              })
+              .catch((err) => {
+                console.log(err.message);
+              });
+          } else {
+            console.log("not supported");
+          }
+        };
+      } else {
+        if (twitterRef.current) {
+          twitterRef.current.classList.replace("flex", "hidden");
+        }
+        console.log("null blob");
+      }
+    });
   }, [twitterRef, msg]);
 
   const share = useCallback(async () => {
     if (cardRef.current === null) return;
 
-    htmlToImage
-      .toBlob(cardRef.current, {
-        cacheBust: true,
-        style: {
-          fontFamily: "Sen, sans-serif",
-        },
-      })
-      .then((blob) => {
-        if (blob !== null) {
-          const reader = new FileReader();
-          reader.readAsDataURL(blob);
-          const cleanMsg = msg.replace(/[^a-z0-9]/gi, "");
-          reader.onload = () => {
-            if (navigator.share) {
-              navigator
-                .share({
-                  files: [
-                    new File([blob], `NGLdrx${cleanMsg}.png`, {
-                      type: "image/png",
-                    }),
-                  ],
-                })
-                .catch((err) => {
-                  console.log(err.message);
-                });
-            } else {
-              console.log("not supported");
-            }
-          };
-        } else {
-          console.log("null blob");
-        }
-      });
+    htmlToImage.toBlob(cardRef.current).then((blob) => {
+      if (blob !== null) {
+        const reader = new FileReader();
+        reader.readAsDataURL(blob);
+        const cleanMsg = msg.replace(/[^a-z0-9]/gi, "");
+        reader.onload = () => {
+          if (navigator.share) {
+            navigator
+              .share({
+                files: [
+                  new File([blob], `NGLdrx${cleanMsg}.png`, {
+                    type: "image/png",
+                  }),
+                ],
+              })
+              .catch((err) => {
+                console.log(err.message);
+              });
+          } else {
+            console.log("not supported");
+          }
+        };
+      } else {
+        console.log("null blob");
+      }
+    });
   }, [cardRef, msg]);
-
-  const iosProblemRender = useCallback(() => {
-    if (FirstRender) {
-      if (iosFix.current == null) return;
-      htmlToImage.toBlob(iosFix.current).then(() => {
-        setFirstRender(false);
-      });
-    }
-  }, [FirstRender]);
-
-  useEffect(() => {
-    iosProblemRender();
-  }, [iosProblemRender]);
 
   const handleDelete = async () => {
     try {
@@ -169,7 +140,7 @@ export function DrawerCard({
           <NewMessage seen={seened || seen} msg={msg} timestamp={time} />
         )}
       </DrawerTrigger>
-      <DrawerContent ref={iosFix}>
+      <DrawerContent>
         <DrawerHeader>
           <DrawerTitle
             className=" font-bold text-destructive"
