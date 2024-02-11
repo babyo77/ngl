@@ -52,12 +52,13 @@ export function DrawerCard({
   };
 
   const twitterShare = useCallback(async () => {
-    if (twitterRef.current === null) return;
+    const twitterCard = twitterRef.current;
+    if (!twitterCard) return;
 
-    twitterRef.current.classList.replace("hidden", "flex");
+    twitterCard.classList.replace("hidden", "flex");
 
     htmlToImage
-      .toBlob(twitterRef.current, {
+      .toBlob(twitterCard, {
         cacheBust: true,
         style: {
           fontFamily: "Sen, sans-serif",
@@ -65,8 +66,8 @@ export function DrawerCard({
       })
       .then((blob) => {
         if (blob !== null) {
-          if (twitterRef.current) {
-            twitterRef.current.classList.replace("flex", "hidden");
+          if (twitterCard) {
+            twitterCard.classList.replace("flex", "hidden");
           }
           const reader = new FileReader();
           reader.readAsDataURL(blob);
@@ -90,8 +91,8 @@ export function DrawerCard({
             }
           };
         } else {
-          if (twitterRef.current) {
-            twitterRef.current.classList.replace("flex", "hidden");
+          if (twitterCard) {
+            twitterCard.classList.replace("flex", "hidden");
           }
           console.log("null blob");
         }
@@ -99,10 +100,11 @@ export function DrawerCard({
   }, [twitterRef, msg]);
 
   const share = useCallback(async () => {
-    if (cardRef.current === null) return;
+    const card = cardRef.current;
+    if (!card) return;
 
     htmlToImage
-      .toBlob(cardRef.current, {
+      .toBlob(card, {
         cacheBust: true,
         style: {
           fontFamily: "Sen, sans-serif",
