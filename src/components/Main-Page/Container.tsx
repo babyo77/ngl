@@ -69,7 +69,6 @@ export function Container({ userDetails }: { userDetails?: user }) {
           ip: info,
           uid: userDetails?.uid,
           ...data,
-          email: userDetails?.email,
         }),
       }).then(() => {
         setSubmitM(false);
