@@ -34,6 +34,7 @@ export function DrawerCard({
   regionName: string;
 }) {
   const [seened, setSeen] = useState<boolean>();
+  const [first, setFirst] = useState<boolean>(true);
   const twitterRef = useRef<HTMLDivElement>(null);
   const cardRef = useRef<HTMLDivElement>(null);
   const updateMsg = async () => {
@@ -54,8 +55,11 @@ export function DrawerCard({
   const twitterShare = useCallback(async () => {
     const twitterCard = twitterRef.current;
     if (!twitterCard) return;
-
     twitterCard.classList.replace("hidden", "flex");
+    if (first) {
+      await htmlToImage.toBlob(twitterCard);
+      setFirst(false);
+    }
 
     htmlToImage
       .toBlob(twitterCard, {
@@ -97,12 +101,15 @@ export function DrawerCard({
           console.log("null blob");
         }
       });
-  }, [twitterRef, msg]);
+  }, [twitterRef, msg, first]);
 
   const share = useCallback(async () => {
     const card = cardRef.current;
     if (!card) return;
-
+    if (first) {
+      await htmlToImage.toBlob(card);
+      setFirst(false);
+    }
     htmlToImage
       .toBlob(card, {
         cacheBust: true,
@@ -136,7 +143,7 @@ export function DrawerCard({
           console.log("null blob");
         }
       });
-  }, [cardRef, msg]);
+  }, [cardRef, msg, first]);
 
   const handleDelete = async () => {
     try {
