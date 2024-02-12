@@ -197,7 +197,7 @@ export function Container({ userDetails }: { userDetails?: user }) {
             </Link>
             <p
               onClick={() => window.open("https://www.instagram.com/babyo7_/")}
-              className="text-center fade-in cursor-pointer mt-3 text-white/60 font-bold text-xs"
+              className="text-center fade-in cursor-pointer mt-3 text-white/60 font-extrabold text-xs"
             >
               By babyo7_
             </p>
