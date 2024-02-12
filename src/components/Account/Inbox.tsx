@@ -25,13 +25,14 @@ function InboxComp() {
         orderBy("date", "desc")
       );
 
-      onSnapshot(
+      const unSub = onSnapshot(
         messagesQuery,
         { includeMetadataChanges: false },
         (snapshot) => {
           setData(snapshot.docs.map((doc) => doc.data() as messages));
         }
       );
+      return () => unSub();
     }
   }, []);
 
