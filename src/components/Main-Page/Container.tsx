@@ -100,7 +100,7 @@ export function Container({ userDetails }: { userDetails?: user }) {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
-        <div className="bg-white rounded-t-[1.7rem]  flex items-center px-4 py-3">
+        <div className="bg-white rounded-t-[1.7rem] font-Nunito flex items-center px-4 py-3">
           <a href={userDetails?.sociallink} target="_blank">
             <Avatar>
               <AvatarImage className="fade-in" src={userDetails?.avatar} />
@@ -109,8 +109,10 @@ export function Container({ userDetails }: { userDetails?: user }) {
           </a>
           <div className="ml-1.5">
             <a href={userDetails?.sociallink} target="_blank">
-              <h1 className="text-[1rem] fade-in">@{userDetails?.username}</h1>
-              <p className="-mt-1  text-sm font-bold">
+              <h1 className="text-[1rem] font-semibold fade-in">
+                @{userDetails?.username}
+              </h1>
+              <p className="-mt-1  text-sm font-extrabold">
                 send me anonymous messages!
               </p>
             </a>
@@ -136,21 +138,21 @@ export function Container({ userDetails }: { userDetails?: user }) {
                   }}
                   placeholder="send me anonymous messages..."
                   {...field}
-                  className="w-[40rem] max-md:w-[21rem] min-h-[9rem] text-lg font-semibold rounded-b-[1.5rem] placeholder:text-xl placeholder:font-semibold bg-white/40 rounded-t-none border-none placeholder:text-black/25 resize-none py-4  px-5 backdrop-blur-md"
+                  className="w-[40rem] font-Nunito max-md:w-[21rem] min-h-[9rem] text-lg font-bold rounded-b-[1.5rem] placeholder:text-xl placeholder:font-bold bg-white/45 rounded-t-none border-none placeholder:text-black/25 resize-none py-4  px-5 backdrop-blur-md"
                 />
               </FormControl>
 
               <FormMessage className="text-white" />
               <span
                 onClick={ChangeInput}
-                className="bg-white/40 px-1.5 selection:bg-none cursor-pointer py-1 rounded-full absolute text-lg z-10 bottom-3.5   right-3"
+                className="bg-white/40 max-md:px-2 px-1.5 font-Nunito selection:bg-none cursor-pointer py-1 rounded-full absolute text-lg z-10 bottom-4  right-4"
               >
                 🎲
               </span>
             </FormItem>
           )}
         />
-        <p className="text-center mt-4 text-white text-sm max-md:text-xs">
+        <p className="text-center mt-4 font-Nunito text-white text-sm max-md:text-xs">
           🔒 anonymous q&a
         </p>
 
@@ -158,7 +160,7 @@ export function Container({ userDetails }: { userDetails?: user }) {
           <div>
             {another ? (
               <Button
-                className="w-full py-7 bg-black hover:bg-black text-lg mt-3 font-bold shadow-xl text-white 
+                className="w-full py-7 font-Nunito bg-black hover:bg-black text-lg mt-3 font-extrabold shadow-xl text-white 
            rounded-full"
               >
                 Message sent!
@@ -167,7 +169,7 @@ export function Container({ userDetails }: { userDetails?: user }) {
               <Button
                 type="submit"
                 disabled={submitM}
-                className="w-full py-7 disabled:opacity-100 bg-black hover:bg-black text-lg mt-3 font-bold shadow-xl text-white 
+                className="w-full py-7 font-Nunito disabled:opacity-100 bg-black hover:bg-black text-lg mt-3 font-extrabold shadow-xl text-white 
           rounded-full"
               >
                 {!submitM ? "Send!" : <Loader />}
@@ -176,8 +178,8 @@ export function Container({ userDetails }: { userDetails?: user }) {
           </div>
         )}
         {!show && (
-          <div className=" relative top-[27vh]   max-md:w-[21rem]  w-[40rem]">
-            <p className="text-center mt-4 fade-in  text-white text-lg font-bold max-md:text-sm">
+          <div className=" relative top-[27vh] font-Nunito   max-md:w-[21rem]  w-[40rem]">
+            <p className="text-center mt-4 fade-in  text-white text-lg font-extrabold max-md:text-sm">
               👇
               <span ref={tapped}>
                 {" "}
@@ -187,7 +189,7 @@ export function Container({ userDetails }: { userDetails?: user }) {
             </p>
             <Link to={"/da/account"}>
               <Button
-                className="w-full py-7 animated-button bg-black hover:bg-black shadow-xl  text-lg mt-3 font-bold text-white 
+                className="w-full py-7 animated-button bg-black hover:bg-black shadow-xl  text-lg mt-3 font-extrabold text-white 
             rounded-full"
               >
                 Get your own messages!

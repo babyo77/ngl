@@ -19,6 +19,7 @@ module.exports = {
     extend: {
       fontFamily: {
         Sen: ["Sen", "sans-serif"],
+        Nunito: ["Nunito Sans", "sans-serif"],
       },
       colors: {
         border: "hsl(var(--border))",

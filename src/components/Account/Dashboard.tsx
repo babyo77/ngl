@@ -57,11 +57,11 @@ function Dashboard() {
       {loggedIn ? (
         <Mobile />
       ) : (
-        <div className="flex flex-col gap-1 bg-gradient-to-br from-[#EC1187] to-[#FF8D10] h-dvh justify-center items-center">
+        <div className="flex flex-col font-Nunito gap-1 bg-gradient-to-br from-[#EC1187] to-[#FF8D10] h-dvh justify-center items-center">
           <h1 className="text-white font-extrabold">NGLdrx.</h1>
           <Button
             onClick={Login}
-            className="border-none rounded-3xl font-extrabold py-6 px-8 text-[1rem]"
+            className="border-none  rounded-3xl font-extrabold py-6 px-8 text-[1rem]"
           >
             Continue with Google
           </Button>
