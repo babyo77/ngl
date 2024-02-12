@@ -109,9 +109,7 @@ export function Container({ userDetails }: { userDetails?: user }) {
           </a>
           <div className="ml-1.5">
             <a href={userDetails?.sociallink} target="_blank">
-              <h1 className="text-[1rem] font-semibold fade-in">
-                @{userDetails?.username}
-              </h1>
+              <h1 className="text-[1rem]  fade-in">@{userDetails?.username}</h1>
               <p className="-mt-1  text-sm font-bold">
                 send me anonymous messages!
               </p>
