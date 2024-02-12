@@ -152,7 +152,7 @@ export function Container({ userDetails }: { userDetails?: user }) {
             </FormItem>
           )}
         />
-        <p className="text-center mt-4 font-Nunito text-white text-sm max-md:text-xs">
+        <p className="text-center mt-4 font-Nunito text-white text-sm max-md:text-sm">
           🔒 anonymous q&a
         </p>
 
