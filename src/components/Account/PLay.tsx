@@ -82,6 +82,9 @@ function Play() {
     }
   };
   useEffect(() => {
+    const searchParams = new URLSearchParams(location.search);
+    console.log(searchParams.has("em"));
+
     if ("Notification" in window) {
       if (Notification.permission === "granted") {
         getKey();
@@ -89,20 +92,8 @@ function Play() {
         setNotification(false);
       }
     }
-    const searchParams = new URLSearchParams(location.search);
+
     const fetchData = async () => {
-      setIsLoading(true);
-      const user = auth.currentUser;
-      if (user) {
-        const uid = doc(usersCollection, user.uid);
-        const unSub = onSnapshot(uid, (userDetails) => {
-          if (userDetails.exists()) {
-            setLoggedData(userDetails.data() as user);
-            setIsLoading(false);
-          }
-        });
-        return () => unSub();
-      }
       if (searchParams.has("em")) {
         axios.post(
           `${apiUrl}/em`,
@@ -115,7 +106,21 @@ function Play() {
         );
         history.pushState({}, "", window.location.origin + "/da/account");
       }
+
+      setIsLoading(true);
+      const user = auth.currentUser;
+      if (user) {
+        const uid = doc(usersCollection, user.uid);
+        const unSub = onSnapshot(uid, (userDetails) => {
+          if (userDetails.exists()) {
+            setLoggedData(userDetails.data() as user);
+            setIsLoading(false);
+          }
+        });
+        return () => unSub();
+      }
     };
+
     fetchData();
   }, [location.search]);
 
