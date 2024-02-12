@@ -83,7 +83,6 @@ function Play() {
   };
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
-    console.log(searchParams.has("em"));
 
     if ("Notification" in window) {
       if (Notification.permission === "granted") {
