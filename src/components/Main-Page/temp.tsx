@@ -59,7 +59,7 @@ export function Temp() {
               </FormControl>
 
               <FormMessage className="text-white" />
-              <span className="bg-white/40 px-1.5 max-md:px-2 selection:bg-none cursor-pointer py-1 rounded-full absolute text-lg z-10 bottom-4   right-4">
+              <span className="bg-white/40 max-md:px-2 px-1.5  max-md:text-base selection:bg-none cursor-pointer py-1 max-md:py-1.5 rounded-full absolute text-lg z-10 bottom-4  right-4">
                 🎲
               </span>
             </FormItem>

@@ -158,7 +158,7 @@ export function ChangeDetailsForm() {
               </FormDescription>
               <FormControl>
                 <Input
-                  placeholder={"link"}
+                  placeholder={loggedData?.sociallink || "Link not set"}
                   {...field}
                   className=" rounded-xl"
                 />

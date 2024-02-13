@@ -99,7 +99,7 @@ export function Container({ userDetails }: { userDetails?: user }) {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="fade-in">
+      <form onSubmit={form.handleSubmit(onSubmit)}>
         <div className="bg-white rounded-t-[1.7rem]  flex items-center px-4 py-3">
           <a
             href={userDetails?.sociallink}
