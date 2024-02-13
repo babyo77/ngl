@@ -124,38 +124,46 @@ function Play() {
   }, [location.search]);
 
   const handleShare = async () => {
-    axios.post(
-      `${apiUrl}/share`,
-      JSON.stringify({ token: await auth.currentUser?.getIdToken() }),
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
+    try {
+      if (navigator.share) {
+        axios.post(
+          `${apiUrl}/share`,
+          JSON.stringify({ token: await auth.currentUser?.getIdToken() }),
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        await navigator.share({
+          title: "send me anonymous messages!",
+          text: "send me anonymous messages!",
+          url: `${window.location.origin}/${loggedData?.username}`,
+        });
       }
-    );
-    if (navigator.share) {
-      await navigator.share({
-        title: "send me anonymous messages!",
-        text: "send me anonymous messages!",
-        url: `${window.location.origin}/${loggedData?.username}`,
-      });
+    } catch (error) {
+      console.log(error);
     }
   };
-  const handleCopy = async () => {
-    axios.post(
-      `${apiUrl}/share`,
-      JSON.stringify({ token: await auth.currentUser?.getIdToken() }),
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    navigator.clipboard
-      .writeText(`${window.location.origin}/${loggedData?.username}`)
-      .then(() => {
-        alert("🔗 link copied");
-      });
+  const handleCopy = () => {
+    try {
+      navigator.clipboard
+        .writeText(`${window.location.origin}/${loggedData?.username}`)
+        .then(async () => {
+          axios.post(
+            `${apiUrl}/share`,
+            JSON.stringify({ token: await auth.currentUser?.getIdToken() }),
+            {
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
+          alert("🔗 link copied");
+        });
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (

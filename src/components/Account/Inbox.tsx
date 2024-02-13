@@ -6,35 +6,73 @@ import {
 } from "@/firebase/firebaseConfig";
 import { Loader } from "../Loaders/Loader";
 import { messages } from "@/interface";
-import React, { useEffect, useState } from "react";
-import { doc, onSnapshot, orderBy, query, where } from "firebase/firestore";
-
+import React, { useCallback, useEffect, useState } from "react";
+import {
+  doc,
+  getDocs,
+  limit,
+  orderBy,
+  query,
+  startAfter,
+  where,
+} from "firebase/firestore";
+import { useInView } from "react-intersection-observer";
 function InboxComp() {
   const [data, setData] = useState<messages[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const { ref, inView } = useInView({
+    trackVisibility: true,
+    delay: 500,
+    rootMargin: "10px",
+  });
 
-  useEffect(() => {
+  const messages = useCallback(async () => {
     setIsLoading(false);
     const user = auth.currentUser;
+    const uid = doc(usersCollection, user?.uid);
+    const messagesQuery = query(
+      msgCollection,
+      where("ref", "==", uid),
+      orderBy("date", "desc"),
+      limit(70)
+    );
 
-    if (user) {
-      const uid = doc(usersCollection, user.uid);
+    const QuerySnapshot = await getDocs(messagesQuery);
+    const Msg: messages[] = QuerySnapshot.docs.map(
+      (snapshot) => snapshot.data() as messages
+    );
+    setData(Msg);
+  }, []);
+
+  useEffect(() => {
+    messages();
+  }, [messages]);
+
+  const getMoreMessages = useCallback(async () => {
+    if (inView) {
+      const user = auth.currentUser;
+
+      const uid = doc(usersCollection, user?.uid);
       const messagesQuery = query(
         msgCollection,
         where("ref", "==", uid),
-        orderBy("date", "desc")
+        orderBy("date", "desc"),
+        startAfter(data[data.length - 1].date),
+        limit(10)
       );
 
-      const unSub = onSnapshot(
-        messagesQuery,
-        { includeMetadataChanges: false },
-        (snapshot) => {
-          setData(snapshot.docs.map((doc) => doc.data() as messages));
-        }
+      const QuerySnapshot = await getDocs(messagesQuery);
+      const newMsg: messages[] = QuerySnapshot.docs.map(
+        (snapshot) => snapshot.data() as messages
       );
-      return () => unSub();
+      setData([...data, ...newMsg]);
+      console.log(data.length);
     }
-  }, []);
+  }, [inView]);
+
+  useEffect(() => {
+    getMoreMessages();
+  }, [getMoreMessages]);
 
   return (
     <div className="flex  flex-col gap-4">
@@ -47,6 +85,7 @@ function InboxComp() {
       {data &&
         data.map((msg, i) => (
           <div
+            ref={ref}
             key={`_divider${msg.id}${i}`}
             className="flex fade-in flex-col gap-3"
           >

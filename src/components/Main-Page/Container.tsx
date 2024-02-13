@@ -99,9 +99,13 @@ export function Container({ userDetails }: { userDetails?: user }) {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="fade-in">
         <div className="bg-white rounded-t-[1.7rem]  flex items-center px-4 py-3">
-          <a href={userDetails?.sociallink} target="_blank">
+          <a
+            href={userDetails?.sociallink}
+            target="_blank"
+            className=" cursor-pointer"
+          >
             <Avatar>
               <AvatarImage className="fade-in" src={userDetails?.avatar} />
               <AvatarFallback>CN</AvatarFallback>
@@ -136,14 +140,14 @@ export function Container({ userDetails }: { userDetails?: user }) {
                   }}
                   placeholder="send me anonymous messages..."
                   {...field}
-                  className="w-[40rem]  max-md:w-[21rem] min-h-[9rem] text-lg font-semibold rounded-b-[1.5rem] placeholder:text-xl placeholder:font-bold bg-white/40 rounded-t-none border-none placeholder:text-black/25 resize-none py-4  px-5 backdrop-blur-md"
+                  className="w-[40rem]  max-md:w-[21rem] min-h-[9rem] text-lg font-semibold rounded-b-[1.5rem] placeholder:text-xl placeholder:font-bold bg-gray-100/45 rounded-t-none border-none placeholder:text-black/25 resize-none py-4  px-5 backdrop-blur-md"
                 />
               </FormControl>
 
               <FormMessage className="text-white" />
               <span
                 onClick={ChangeInput}
-                className="bg-white/40 max-md:px-2 px-1.5  selection:bg-none cursor-pointer py-1 rounded-full absolute text-lg z-10 bottom-4  right-4"
+                className="bg-white/40 max-md:px-2 px-1.5  max-md:text-base selection:bg-none cursor-pointer py-1 max-md:py-1.5 rounded-full absolute text-lg z-10 bottom-4  right-4"
               >
                 🎲
               </span>
