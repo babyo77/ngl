@@ -11,7 +11,19 @@ function Dashboard() {
   const isDesktop = window.innerWidth <= 768;
   const [loggedIn, setLoggedIn] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
+  const [randomGradient, setRandomGradient] = useState<string>();
+
+  const randomBg = () => {
+    const random = Math.floor(Math.random() * 3);
+    const gradient = [
+      "bg-gradient-to-br from-blue-500 to-purple-800",
+      "bg-gradient-to-br from-[#EC1187] to-[#FF8D10]",
+      "bg-gradient-to-br from-pink-500 via-purple-600 to-purple-900",
+    ];
+    setRandomGradient(gradient[random]);
+  };
   useEffect(() => {
+    randomBg();
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         setLoggedIn(true);
@@ -47,7 +59,9 @@ function Dashboard() {
   }
   if (loading) {
     return (
-      <div className="flex bg-gradient-to-br from-[#EC1187] to-[#FF8D10] h-dvh justify-center items-center">
+      <div
+        className={`flex ${randomGradient} h-dvh justify-center items-center`}
+      >
         <Loader />
       </div>
     );
@@ -57,7 +71,9 @@ function Dashboard() {
       {loggedIn ? (
         <Mobile />
       ) : (
-        <div className="flex flex-col gap-1 bg-gradient-to-br from-[#EC1187] to-[#FF8D10] h-dvh justify-center items-center">
+        <div
+          className={`flex flex-col gap-1 ${randomGradient} h-dvh justify-center items-center`}
+        >
           <h1 className="text-white font-extrabold">NGLdrx.</h1>
           <Button
             onClick={Login}
