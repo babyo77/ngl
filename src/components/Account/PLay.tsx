@@ -126,20 +126,23 @@ function Play() {
   const handleShare = async () => {
     try {
       if (navigator.share) {
-        axios.post(
-          `${apiUrl}/share`,
-          JSON.stringify({ token: await auth.currentUser?.getIdToken() }),
-          {
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
-        await navigator.share({
-          title: "send me anonymous messages!",
-          text: "send me anonymous messages!",
-          url: `${window.location.origin}/${loggedData?.username}`,
-        });
+        await navigator
+          .share({
+            title: "send me anonymous messages!",
+            text: "send me anonymous messages!",
+            url: `${window.location.origin}/${loggedData?.username}`,
+          })
+          .then(async () => {
+            axios.post(
+              `${apiUrl}/share`,
+              JSON.stringify({ token: await auth.currentUser?.getIdToken() }),
+              {
+                headers: {
+                  "Content-Type": "application/json",
+                },
+              }
+            );
+          });
       }
     } catch (error) {
       console.log(error);
