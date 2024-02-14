@@ -40,7 +40,7 @@ export function Tab() {
   return (
     <Tabs defaultValue="play" className="fade-in">
       <TabsList className="w-full bg-transparent py-2.5 rounded-none z-10 fixed top-0 bg-white h-fit items-center justify-between px-4 border-b">
-        <div className="relative mr-1">
+        <div className="relative mr-1.5">
           <TbMailPlus className="h-8  w-8 text-zinc-300" />
           {unseenMessagesCount > 0 && (
             <h1
