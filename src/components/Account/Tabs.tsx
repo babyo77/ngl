@@ -4,7 +4,7 @@ import Inbox from "./Inbox";
 import Settings from "./Settings";
 import { auth, usersCollection } from "@/firebase/firebaseConfig";
 import { msgCollection } from "../../firebase/firebaseConfig";
-import { TbMailHeart } from "react-icons/tb";
+import { TbMailPlus } from "react-icons/tb";
 import {
   doc,
   limit,
@@ -41,7 +41,7 @@ export function Tab() {
     <Tabs defaultValue="play" className="fade-in">
       <TabsList className="w-full bg-transparent py-2.5 rounded-none z-10 fixed top-0 bg-white h-fit items-center justify-between px-4 border-b">
         <div className="relative">
-          <TbMailHeart className="h-8  w-8 text-zinc-300" />
+          <TbMailPlus className="h-8  w-8 text-zinc-300" />
           {unseenMessagesCount > 0 && (
             <h1
               className={`absolute   bottom-3.5 ml-1 right-0 ${
