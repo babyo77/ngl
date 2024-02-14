@@ -44,7 +44,7 @@ export function Tab() {
           <BsMailbox className="h-8  w-8 text-zinc-300" />
           {unseenMessagesCount > 0 && (
             <h1
-              className={`absolute   bottom-[.6rem]  -right-0.5 ${
+              className={`absolute   bottom-[.7rem]  -right-0.5 ${
                 unseenMessagesCount >= 10 && " left-[1.3rem]"
               }  font-extrabold text-[#EC1187]`}
             >
