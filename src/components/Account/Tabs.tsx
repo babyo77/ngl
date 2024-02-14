@@ -4,6 +4,7 @@ import Inbox from "./Inbox";
 import Settings from "./Settings";
 import { auth, usersCollection } from "@/firebase/firebaseConfig";
 import { msgCollection } from "../../firebase/firebaseConfig";
+import { MdMailOutline } from "react-icons/md";
 import {
   doc,
   limit,
@@ -39,22 +40,24 @@ export function Tab() {
   return (
     <Tabs defaultValue="play" className="fade-in">
       <TabsList className="w-full bg-transparent py-2.5 rounded-none z-10 fixed top-0 bg-white h-fit items-center justify-between px-4 border-b">
-        {unseenMessagesCount > 0 && (
-          <h1 className=" font-extrabold text-[#EC1187]">
-            {unseenMessagesCount >= 10
-              ? "9+ Unread"
-              : `${unseenMessagesCount} unread`}
-          </h1>
-        )}
-        {unseenMessagesCount <= 0 && (
-          <h1 className=" font-extrabold text-[#EC1187] h-8 w-8"></h1>
-        )}
-        <div className="">
+        <div className="relative">
+          <MdMailOutline className="h-7   w-7 text-zinc-300" />
+          {unseenMessagesCount > 0 && (
+            <h1
+              className={`absolute   bottom-2.5 right-0 ${
+                unseenMessagesCount >= 10 && "left-4"
+              }  font-extrabold text-[#EC1187]`}
+            >
+              {unseenMessagesCount >= 10 ? "9+" : `${unseenMessagesCount}`}
+            </h1>
+          )}
+        </div>
+        <div>
           <TabsTrigger value="play">PLAY</TabsTrigger>
           <TabsTrigger value="inbox">
             INBOX
             {unseenMessagesCount > 0 && (
-              <div className="rounded-full bg-red-500 h-3 w-3 ml-1"></div>
+              <div className="rounded-full bg-red-500 h-3 w-3 ml-1 mb-0.5"></div>
             )}
           </TabsTrigger>
         </div>
