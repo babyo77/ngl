@@ -40,7 +40,7 @@ export function Tab() {
   return (
     <Tabs defaultValue="play" className="fade-in">
       <TabsList className="w-full bg-transparent py-2.5 rounded-none z-10 fixed top-0 bg-white h-fit items-center justify-between px-4 border-b">
-        <div className="relative mr-4">
+        <div className="relative ">
           <TbMailPlus className="h-8  w-8 text-zinc-300" />
           {unseenMessagesCount > 0 && (
             <h1
@@ -53,7 +53,9 @@ export function Tab() {
           )}
         </div>
         <div>
-          <TabsTrigger value="play">PLAY</TabsTrigger>
+          <TabsTrigger value="play" className="ml-4">
+            PLAY
+          </TabsTrigger>
           <TabsTrigger value="inbox">
             INBOX
             {unseenMessagesCount > 0 && (
