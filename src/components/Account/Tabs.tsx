@@ -41,11 +41,11 @@ export function Tab() {
     <Tabs defaultValue="play" className="fade-in">
       <TabsList className="w-full bg-transparent py-2.5 rounded-none z-10 fixed top-0 bg-white h-fit items-center justify-between px-4 border-b">
         <div className="relative">
-          <MdMailOutline className="h-7   w-7 text-zinc-300" />
+          <MdMailOutline className="h-8  w-8 text-zinc-300" />
           {unseenMessagesCount > 0 && (
             <h1
-              className={`absolute   bottom-2.5 right-0 ${
-                unseenMessagesCount <= 10 && " left-[1.1rem]"
+              className={`absolute   bottom-3 ml-1 right-0 ${
+                unseenMessagesCount >= 10 && " left-[1.1rem]"
               }  font-extrabold text-[#EC1187]`}
             >
               {unseenMessagesCount >= 10 ? "9+" : `${unseenMessagesCount}`}
