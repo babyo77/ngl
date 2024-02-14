@@ -11,10 +11,8 @@ import Cards from "..";
 import { useCallback, useRef, useState } from "react";
 import * as htmlToImage from "html-to-image";
 import NewMessage from "./NewMessage";
-import axios from "axios";
-import { apiUrl } from "@/API/api";
-import { auth, msgCollection } from "@/firebase/firebaseConfig";
-import { Timestamp, deleteDoc, doc } from "firebase/firestore";
+import { msgCollection } from "@/firebase/firebaseConfig";
+import { Timestamp, deleteDoc, doc, updateDoc } from "firebase/firestore";
 import { RiTwitterXLine } from "react-icons/ri";
 export function DrawerCard({
   msg,
@@ -37,20 +35,19 @@ export function DrawerCard({
   const [first, setFirst] = useState<boolean>(true);
   const twitterRef = useRef<HTMLDivElement>(null);
   const cardRef = useRef<HTMLDivElement>(null);
-  const updateMsg = async () => {
+
+  const updateMsg = useCallback(() => {
     if (!seen) {
       setSeen(true);
-      const data = {
-        token: await auth.currentUser?.getIdToken(),
-        id: id,
-      };
-      await axios.post(`${apiUrl}/api/user/update/msg`, JSON.stringify(data), {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      try {
+        updateDoc(doc(msgCollection, id), {
+          seen: true,
+        });
+      } catch (error) {
+        console.log("seen error: ", error);
+      }
     }
-  };
+  }, [id, seen]);
 
   const twitterShare = useCallback(async () => {
     const twitterCard = twitterRef.current;
@@ -145,14 +142,14 @@ export function DrawerCard({
       });
   }, [cardRef, msg, first]);
 
-  const handleDelete = async () => {
+  const handleDelete = useCallback(async () => {
     try {
       await deleteDoc(doc(msgCollection, id));
       console.log("Document deleted successfully!");
     } catch (error) {
       console.error("Error deleting document: ", error);
     }
-  };
+  }, [id]);
 
   return (
     <Drawer>

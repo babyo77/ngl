@@ -11,6 +11,7 @@ import {
   doc,
   getDocs,
   limit,
+  onSnapshot,
   orderBy,
   query,
   startAfter,
@@ -37,11 +38,11 @@ function InboxComp() {
       limit(70)
     );
 
-    const QuerySnapshot = await getDocs(messagesQuery);
-    const Msg: messages[] = QuerySnapshot.docs.map(
-      (snapshot) => snapshot.data() as messages
-    );
-    setData(Msg);
+    const unsubscribe = onSnapshot(messagesQuery, (doc) => {
+      const msg: messages[] = doc.docs.map((msg) => msg.data() as messages);
+      setData(msg);
+    });
+    return () => unsubscribe();
   }, []);
 
   useEffect(() => {
