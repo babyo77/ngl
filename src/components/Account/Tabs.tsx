@@ -44,7 +44,7 @@ export function Tab() {
           <MdMailOutline className="h-8  w-8 text-zinc-300" />
           {unseenMessagesCount > 0 && (
             <h1
-              className={`absolute   bottom-3 ml-1 right-0 ${
+              className={`absolute bottom-[.9rem] ml-1 right-0 ${
                 unseenMessagesCount >= 10 && " left-[1.1rem]"
               }  font-extrabold text-[#EC1187]`}
             >
