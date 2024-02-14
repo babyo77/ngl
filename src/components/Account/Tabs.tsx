@@ -53,7 +53,7 @@ export function Tab() {
           )}
         </div>
         <div>
-          <TabsTrigger value="play" className="ml-4">
+          <TabsTrigger value="play" className="ml-3.5">
             PLAY
           </TabsTrigger>
           <TabsTrigger value="inbox">
