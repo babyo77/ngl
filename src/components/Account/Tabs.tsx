@@ -4,7 +4,7 @@ import Inbox from "./Inbox";
 import Settings from "./Settings";
 import { auth, usersCollection } from "@/firebase/firebaseConfig";
 import { msgCollection } from "../../firebase/firebaseConfig";
-import { TbMailPlus } from "react-icons/tb";
+import { BsMailbox } from "react-icons/bs";
 import {
   doc,
   limit,
@@ -40,18 +40,18 @@ export function Tab() {
   return (
     <Tabs defaultValue="play" className="fade-in">
       <TabsList className="w-full bg-transparent py-2.5 rounded-none z-10 fixed top-0 bg-white h-fit items-center justify-between px-4 border-b">
-        <div className="relative ">
-          <TbMailPlus className="h-8  w-8 text-zinc-300" />
+        <TabsTrigger value="inbox" className="relative p-0">
+          <BsMailbox className="h-8  w-8 text-zinc-300" />
           {unseenMessagesCount > 0 && (
             <h1
-              className={`absolute   bottom-3.5 ml-1 right-0 ${
-                unseenMessagesCount >= 10 && " left-[1.1rem]"
+              className={`absolute   bottom-[.6rem]  -right-0.5 ${
+                unseenMessagesCount >= 10 && " left-[1.3rem]"
               }  font-extrabold text-[#EC1187]`}
             >
               {unseenMessagesCount >= 10 ? "9+" : `${unseenMessagesCount}`}
             </h1>
           )}
-        </div>
+        </TabsTrigger>
         <div>
           <TabsTrigger value="play" className="ml-3.5">
             PLAY
