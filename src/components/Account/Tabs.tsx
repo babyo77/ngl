@@ -45,7 +45,7 @@ export function Tab() {
           {unseenMessagesCount > 0 && (
             <h1
               className={`absolute   bottom-2.5 right-0 ${
-                unseenMessagesCount >= 10 && "left-4"
+                unseenMessagesCount <= 10 && " left-[1.1rem]"
               }  font-extrabold text-[#EC1187]`}
             >
               {unseenMessagesCount >= 10 ? "9+" : `${unseenMessagesCount}`}
