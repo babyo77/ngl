@@ -143,6 +143,7 @@ export function DrawerCard({
   }, [cardRef, msg, first]);
 
   const handleDelete = useCallback(async () => {
+    if (id === "ngl") return;
     try {
       await deleteDoc(doc(msgCollection, id));
       console.log("Document deleted successfully!");

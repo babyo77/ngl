@@ -67,7 +67,6 @@ function InboxComp() {
         (snapshot) => snapshot.data() as messages
       );
       setData([...data, ...newMsg]);
-      console.log(data.length);
     }
   }, [inView]);
 
