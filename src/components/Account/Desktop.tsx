@@ -12,10 +12,10 @@ function Desktop() {
         </h1>
         <span className="font-semibold ">on Phone</span>
 
-        <div className=" h-96 bg-black/20 w-96 border mt-5 object-center flex justify-center items-center overflow-hidden rounded-3xl">
+        <div className="  bg-black/20  border mt-5 object-center flex justify-center items-center overflow-hidden rounded-3xl">
           <QRCodeSVG
             value={window.location.origin + "/da/account"}
-            className="h-[90%] w-[90%] rounded-2xl"
+            className="h-96 w-96 p-4 rounded-[1.7rem]"
           />
         </div>
 
