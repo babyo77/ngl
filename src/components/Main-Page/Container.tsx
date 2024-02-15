@@ -12,7 +12,7 @@ import {
 
 import { Textarea } from "@/components/ui/textarea";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Loader } from "../Loaders/Loader";
 import { apiUrl } from "@/API/api";
 import { Link } from "react-router-dom";
@@ -59,7 +59,9 @@ export function Container({ userDetails }: { userDetails?: user }) {
     const count = setInterval(() => {
       let clickCount = parseInt(tapped.current?.textContent || "0", 10);
       clickCount += Math.floor(Math.random() * 5) - 1;
-      tapped.current!.textContent = clickCount.toString();
+      if (tapped.current?.textContent) {
+        tapped.current!.textContent = clickCount.toString();
+      }
     }, 800);
 
     fetchDiceData();
@@ -91,11 +93,11 @@ export function Container({ userDetails }: { userDetails?: user }) {
     }
   }
 
-  function ChangeInput() {
+  const ChangeInput = useCallback(() => {
     form.setValue("messageInput", dice[index]);
     setIndex((prev) => (prev + 1) % dice.length);
     setShow(true);
-  }
+  }, [dice, form, index]);
 
   return (
     <Form {...form}>
