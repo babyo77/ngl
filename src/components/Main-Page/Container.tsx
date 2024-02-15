@@ -20,7 +20,7 @@ import axios from "axios";
 import { user } from "@/interface";
 
 const FormSchema = z.object({
-  messageInput: z.string().min(0).max(130),
+  messageInput: z.string().min(0).max(111),
 });
 
 export function Container({ userDetails }: { userDetails?: user }) {
@@ -128,7 +128,7 @@ export function Container({ userDetails }: { userDetails?: user }) {
             <FormItem className=" relative">
               <FormControl>
                 <Textarea
-                  maxLength={130}
+                  maxLength={111}
                   onInput={(
                     e: React.ChangeEvent<HTMLTextAreaElement>
                   ): void => {
