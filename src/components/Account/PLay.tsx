@@ -65,8 +65,9 @@ function Play() {
 
   const text = useRef<HTMLInputElement>(null)
 
-  const messageOther = (e:React.ChangeEvent<HTMLInputElement>) => {
+  const messageOther = (e:React.KeyboardEvent<HTMLInputElement>) => {
     if(e.key === "Enter"){
+      e.preventDeafult()
       const user =text.current?.value
       console.log(user);
       
