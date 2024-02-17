@@ -65,17 +65,6 @@ function Play() {
 
   const text = useRef<HTMLInputElement>(null)
 
-  const messageOther = (e:React.KeyboardEvent<HTMLInputElement>) => {
-    if(e.key === "Enter"){
-      e.preventDefault() 
-      const user =text.current?.value
-      console.log(user);
-      
-      window.location.href = `${window.origin}/${user}`
-
-    }
-    
-  };
 
   async function updateDp(token: { token: string; dp: string }) {
     await axios.post(`${apiUrl}/api/user/update/dp`, token);
@@ -263,21 +252,6 @@ function Play() {
               </Button>
             </div>
           )}
-            <div className="  bg-zinc-100 backdrop-blur-lg mb-4 py-6 w-[90dvw] flex-col rounded-3xl gap-3 flex justify-center items-center">
-              <h1 className="text-black font-bold text-lg  text-center">
-                Message Others -
-              </h1>
-
-              <label >Enter User's ID - </label>
-              <input  type='text' ref={text} onKeyUp={messageOther}></input>
-
-              <Button
-                
-                className=" bg-transparent px-32 text-lg py-7  flex items-center justify-center tracking-normal font-extrabold  bg-gradient-to-br from-[#EC1187] to-[#FF8D10] rounded-full shadow-none"
-              >
-                Message
-              </Button>
-            </div>
         </div>
       )}
     </>
