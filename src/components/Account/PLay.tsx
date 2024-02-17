@@ -63,7 +63,6 @@ function Play() {
     }
   };
 
-
   async function updateDp(token: { token: string; dp: string }) {
     await axios.post(`${apiUrl}/api/user/update/dp`, token);
     setUploadFile(false);
@@ -255,7 +254,5 @@ function Play() {
     </>
   );
 }
-
 const PLay = memo(Play);
-
 export default PLay;
