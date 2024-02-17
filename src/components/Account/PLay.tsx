@@ -65,7 +65,7 @@ function Play() {
 
   const text = useRef<HTMLInputElement>(null)
 
-  const messageOther = (e:KeyboardEvent) => {
+  const messageOther = (e:React.ChangeEvent<HTMLInputElement>) => {
     if(e.key === "Enter"){
       const user =text.current?.value
       console.log(user);
