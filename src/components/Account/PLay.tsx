@@ -63,8 +63,6 @@ function Play() {
     }
   };
 
-  const text = useRef<HTMLInputElement>(null)
-
 
   async function updateDp(token: { token: string; dp: string }) {
     await axios.post(`${apiUrl}/api/user/update/dp`, token);
