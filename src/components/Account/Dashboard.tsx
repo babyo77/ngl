@@ -67,7 +67,7 @@ function Dashboard() {
         } h-dvh justify-center items-center`}
       >
         {window.matchMedia("(display-mode:standalone)").matches ? (
-          <Loader color="gray" />
+          <Loader color="#EC1187" />
         ) : (
           <Loader />
         )}
