@@ -143,14 +143,14 @@ export function DrawerCard({
   }, [cardRef, msg, first]);
 
   const handleDelete = useCallback(async () => {
-    if (id === "ngl") return;
+    if (msg === "Welcome to NGLdrx. 🦄") return;
     try {
       await deleteDoc(doc(msgCollection, id));
       console.log("Document deleted successfully!");
     } catch (error) {
       console.error("Error deleting document: ", error);
     }
-  }, [id]);
+  }, [id, msg]);
 
   return (
     <Drawer>
@@ -167,7 +167,9 @@ export function DrawerCard({
             className=" font-bold text-destructive"
             onClick={handleDelete}
           >
-            {id && id !== "ngl" ? "Delete Message" : "Love from NGLdrx."}
+            {msg !== "Welcome to NGLdrx. 🦄"
+              ? "Delete Message"
+              : "Love from NGLdrx."}
           </DrawerTitle>
         </DrawerHeader>
         <div className="flex justify-center items-center">
