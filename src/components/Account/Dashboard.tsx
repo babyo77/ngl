@@ -60,9 +60,17 @@ function Dashboard() {
   if (loading) {
     return (
       <div
-        className={`flex ${randomGradient} h-dvh justify-center items-center`}
+        className={`flex ${
+          window.matchMedia("(display-mode:standalone)").matches
+            ? "bg-white"
+            : randomGradient
+        } h-dvh justify-center items-center`}
       >
-        <Loader />
+        {window.matchMedia("(display-mode:standalone)").matches ? (
+          <Loader color="gray" />
+        ) : (
+          <Loader />
+        )}
       </div>
     );
   }
