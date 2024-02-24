@@ -5,7 +5,7 @@ function Desktop() {
       <div className="absolute inset-0 -z-10 h-full w-full bg-white bg-[linear-gradient(to_right,#f0f0f0_1px,transparent_1px),linear-gradient(to_bottom,#f0f0f0_1px,transparent_1px)] bg-[size:6rem_4rem]">
         <div className="absolute bottom-0 left-0 right-0 top-0 bg-[radial-gradient(circle_500px_at_50%_200px,#C9EBFF,transparent)]"></div>
       </div>
-      <div className="flex z-10 border flex-col h-screen text-center items-center py-10">
+      <div className="flex z-10 border flex-col h-screen text-center justify-center items-center py-10">
         <span className="font-semibold ">Not available on Desktop</span>
         <h1 className="font-bold text-5xl mt-4 mb-4 text-zinc-700">
           Scan this QR
