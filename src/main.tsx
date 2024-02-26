@@ -8,6 +8,10 @@ import { QueryClient, QueryClientProvider } from "react-query";
 
 const queryClient = new QueryClient();
 const router = createBrowserRouter([
+{
+    path: "/",
+    element: <App />,
+  },
   {
     path: "/:username?",
     element: <App />,
