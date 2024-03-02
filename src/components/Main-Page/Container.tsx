@@ -16,7 +16,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { Loader } from "../Loaders/Loader";
 import { apiUrl } from "@/API/api";
 import { Link } from "react-router-dom";
-import axios from "axios";
+// import axios from "axios";
 import { user } from "@/interface";
 
 const FormSchema = z.object({
@@ -39,21 +39,23 @@ export function Container({ userDetails }: { userDetails?: user }) {
   const tapped = useRef<HTMLSpanElement>(null);
   useEffect(() => {
     const fetchDiceData = async () => {
-      try {
-        const response = await axios.get(`${apiUrl}/dice`, {
-          responseType: "text",
-        });
-        const chunks = response.data
-          .split("\n")
-          .filter(Boolean)
-          .map((item: string) => item.replace(/"/g, ""));
-        setDice(chunks);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
+      // try {
+      //   const response = await axios.get(`${apiUrl}/dice`, {
+      //     responseType: "text",
+      //   });
+      //   const chunks = response.data
+      //     .split("\n")
+      //     .filter(Boolean)
+      //     .map((item: string) => item.replace(/"/g, ""));
+      //   setDice(chunks);
+      // } catch (error) {
+      //   console.error("Error fetching data:", error);
+      // }
 
-      const ip = await (await axios.get("https://api.ipify.org/")).data;
-      setInfo(ip);
+      // const ip = await (await axios.get("https://api.ipify.org/")).data;
+      // setInfo(ip);
+      setDice(["hello how are you"]);
+      setInfo("");
     };
 
     const count = setInterval(() => {
