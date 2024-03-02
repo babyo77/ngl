@@ -3,7 +3,7 @@ import { Container } from "./components";
 import { useEffect, useState } from "react";
 import { user } from "./interface";
 import { apiUrl } from "./API/api";
-// import { Temp } from "./components/Main-Page/temp";
+import { Temp } from "./components/Main-Page/temp";
 
 function App() {
   const { username } = useParams();
@@ -42,7 +42,9 @@ function App() {
         <div
           className={`absolute top-0 z-[-2] h-full w-screen ${randomGradient}`}
         ></div>
-        <div className="flex justify-center pt-12 ">{/* <Temp /> */}</div>
+        <div className="flex justify-center pt-12 ">
+          <Temp />
+        </div>
       </>
     );
   }
