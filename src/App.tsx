@@ -10,17 +10,19 @@ function App() {
   const [Found, setFound] = useState<boolean>(false);
   const [isLoading, setLoading] = useState<boolean>(true);
   const [details, setUser] = useState<user>();
-  const [randomGradient, setRandomGradient] = useState<string>();
+  const [randomGradient, setRandomGradient] = useState<string>(
+    "bg-gradient-to-br from-blue-500 to-purple-800"
+  );
 
-  const randomBg = () => {
-    const random = Math.floor(Math.random() * 3);
-    const gradient = [
-      "bg-gradient-to-br from-blue-500 to-purple-800",
-      "bg-gradient-to-br from-[#EC1187] to-[#FF8D10]",
-      "bg-gradient-to-br from-pink-500 via-purple-600 to-purple-900",
-    ];
-    setRandomGradient(gradient[random]);
-  };
+  // const randomBg = () => {
+  //   const random = Math.floor(Math.random() * 3);
+  //   const gradient = [
+  //     "bg-gradient-to-br from-blue-500 to-purple-800",
+  //     "bg-gradient-to-br from-[#EC1187] to-[#FF8D10]",
+  //     "bg-gradient-to-br from-pink-500 via-purple-600 to-purple-900",
+  //   ];
+  //   setRandomGradient(gradient[random]);
+  // };
 
   useEffect(() => {
     const userExist = async () => {
@@ -32,7 +34,7 @@ function App() {
         : (setFound(false), setLoading(false));
     };
     userExist();
-    randomBg();
+    setRandomGradient("bg-gradient-to-br from-blue-500 to-purple-800");
   }, [username]);
   if (isLoading) {
     return (
