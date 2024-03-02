@@ -2,7 +2,7 @@ import { initializeApp } from "firebase/app";
 import { GoogleAuthProvider, getAuth } from "firebase/auth";
 import { getFirestore, collection } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
-// import { getMessaging } from "firebase/messaging";
+import { getMessaging } from "firebase/messaging";
 const firebaseConfig = {
   apiKey: "AIzaSyC3UYt7dxYgR-8T1DgdZT86pwi5JmKLF2Y",
   authDomain: "ngl-drx-prod.firebaseapp.com",
@@ -19,7 +19,7 @@ export const auth = getAuth();
 export const msgCollection = collection(db, "messages");
 export const usersCollection = collection(db, "users");
 export const storage = getStorage(app);
-// export const messaging = getMessaging(app);
+export const messaging = getMessaging(app);
 export const googleAuthProvider = new GoogleAuthProvider();
 
 export default app;
