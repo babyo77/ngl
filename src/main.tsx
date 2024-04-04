@@ -15,6 +15,7 @@ const router = createBrowserRouter([
   {
     path: "/da/account",
     element: <Account />,
+    errorElement: <div>Open in Safari</div>,
   },
   {
     path: "*",
