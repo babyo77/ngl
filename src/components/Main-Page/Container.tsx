@@ -23,7 +23,7 @@ const FormSchema = z.object({
   messageInput: z.string().min(0).max(111),
 });
 
-export function Container({ userDetails }: { userDetails?: user }) {
+export default function Container({ userDetails }: { userDetails?: user }) {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {

@@ -1,10 +1,11 @@
-import React from "react";
+import React, { lazy, Suspense } from "react";
 import ReactDOM from "react-dom/client";
-import App from "./App.tsx";
+const App = lazy(() => import("./App.tsx"));
 import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Account from "./components/Account/Account.tsx";
+const Account = lazy(() => import("./components/Account/Dashboard.tsx"));
 import { QueryClient, QueryClientProvider } from "react-query";
+import { Loader } from "./components/Loaders/Loader.tsx";
 const client = new QueryClient();
 const router = createBrowserRouter([
   {
@@ -23,7 +24,15 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <QueryClientProvider client={client}>
-      <RouterProvider router={router} />
+      <Suspense
+        fallback={
+          <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex   items-center space-x-2">
+            <Loader color="red" />
+          </div>
+        }
+      >
+        <RouterProvider router={router} />
+      </Suspense>
     </QueryClientProvider>
   </React.StrictMode>
 );

@@ -1,9 +1,9 @@
 import { useParams } from "react-router-dom";
-import { Container } from "./components";
+import Container from "./components/Main-Page/Container";
 import { useEffect, useState } from "react";
 import { user } from "./interface";
 import { apiUrl } from "./API/api";
-import { Temp } from "./components/Main-Page/temp";
+import Temp from "./components/Main-Page/temp";
 
 function App() {
   const { username } = useParams();

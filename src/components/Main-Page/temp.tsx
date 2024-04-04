@@ -17,7 +17,7 @@ const FormSchema = z.object({
   messageInput: z.string().min(0),
 });
 
-export function Temp() {
+export default function Temp() {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
