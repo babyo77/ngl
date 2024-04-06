@@ -177,8 +177,8 @@ function Play() {
         </div>
       )}
       {loggedData && (
-        <div className="px-3 py-2 flex fade-in  flex-col gap-4 justify-center items-center">
-          <div className="border gap-2   bg-black/90 backdrop-blur-lg w-[90dvw] py-11 flex-col rounded-[2.2rem] shadow-lg  flex justify-center items-center">
+        <div className="px-3 py-2 flex  fade-in  flex-col gap-4 justify-center items-center">
+          <div className="border gap-2 animate-fade-up  bg-black/90 backdrop-blur-lg w-[90dvw] py-11 flex-col rounded-[2.2rem] shadow-lg  flex justify-center items-center">
             <input
               type="file"
               ref={fileinput}
@@ -208,7 +208,7 @@ function Play() {
             </h1>
           </div>
 
-          <div className="  bg-zinc-100 backdrop-blur-lg py-7 mt-1 w-[90dvw] flex-col rounded-3xl gap-3 flex justify-center items-center">
+          <div className="  bg-zinc-100 animate-fade-up backdrop-blur-lg py-7 mt-1 w-[90dvw] flex-col rounded-3xl gap-3 flex justify-center items-center">
             <h1 className="text-black font-bold text-lg  text-center">
               Step 1: Copy your link
             </h1>
@@ -218,14 +218,14 @@ function Play() {
 
             <Button
               onClick={handleCopy}
-              className="flex items-center justify-center tracking-normal font-extrabold border-[#EC1187] bg-gradient-to-br from-[#EC1187] to-[#FF8D10] border-[.2rem] py-4 text-sm px-6 bg-clip-text text-[#EC1187]  rounded-full shadow-none"
+              className="flex items-center  justify-center tracking-normal font-extrabold border-[#EC1187] bg-gradient-to-br from-[#EC1187] to-[#FF8D10] border-[.2rem] py-4 text-sm px-6 bg-clip-text text-[#EC1187]  rounded-full shadow-none"
             >
               {" "}
               <FaLink className="mr-2" /> copy link
             </Button>
           </div>
 
-          <div className="  bg-zinc-100 backdrop-blur-lg py-6 w-[90dvw] flex-col rounded-3xl gap-3 flex justify-center items-center">
+          <div className="animate-fade-up  bg-zinc-100 backdrop-blur-lg py-6 w-[90dvw] flex-col rounded-3xl gap-3 flex justify-center items-center">
             <h1 className="text-black font-bold text-lg  text-center">
               Step 2: Share link on social media
             </h1>
@@ -237,7 +237,7 @@ function Play() {
             </Button>
           </div>
           {!notification && (
-            <div className="  bg-zinc-100 backdrop-blur-lg mb-4 py-6 w-[90dvw] flex-col rounded-3xl gap-3 flex justify-center items-center">
+            <div className=" animate-fade-up  bg-zinc-100 backdrop-blur-lg mb-4 py-6 w-[90dvw] flex-col rounded-3xl gap-3 flex justify-center items-center">
               <h1 className="text-black font-bold text-lg  text-center">
                 Step 3: Enable Notification
               </h1>

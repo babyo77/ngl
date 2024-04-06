@@ -41,7 +41,7 @@ export function Tab() {
     <Tabs defaultValue="play" className="fade-in">
       <TabsList className="w-full bg-transparent py-2.5 rounded-none z-10 fixed top-0 bg-white h-fit items-center justify-between px-4 border-b">
         <TabsTrigger value="inbox" className="relative p-0">
-          <BsMailbox className="h-8  w-8 text-zinc-300" />
+          <BsMailbox className="h-8 animate-fade-right w-8 text-zinc-300" />
           {unseenMessagesCount > 0 && (
             <h1
               className={`absolute   bottom-[1rem]  -right-2 ${
@@ -53,10 +53,10 @@ export function Tab() {
           )}
         </TabsTrigger>
         <div>
-          <TabsTrigger value="play" className="ml-3.5">
+          <TabsTrigger value="play" className="ml-3.5 animate-fade-down">
             PLAY
           </TabsTrigger>
-          <TabsTrigger value="inbox">
+          <TabsTrigger value="inbox" className=" animate-fade-down">
             INBOX
             {unseenMessagesCount > 0 && (
               <div className="rounded-full bg-red-500 h-3 w-3 ml-1 mb-0.5"></div>

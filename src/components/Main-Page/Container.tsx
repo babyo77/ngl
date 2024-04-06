@@ -102,21 +102,21 @@ export default function Container({ userDetails }: { userDetails?: user }) {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
-        <div className="bg-white rounded-t-[1.7rem]  flex items-center px-4 py-3">
+        <div className="bg-white animate-fade-down rounded-t-[1.7rem]  flex items-center px-4 py-3">
           <a
             href={userDetails?.sociallink}
             target="_blank"
             className=" cursor-pointer"
           >
-            <Avatar>
-              <AvatarImage className="fade-in" src={userDetails?.avatar} />
+            <Avatar className="animate-fade-right">
+              <AvatarImage className="" src={userDetails?.avatar} />
               <AvatarFallback>CN</AvatarFallback>
             </Avatar>
           </a>
-          <div className="ml-1.5">
+          <div className="ml-1.5 animate-fade-left">
             <a href={userDetails?.sociallink} target="_blank">
-              <h1 className="text-[1rem]  fade-in">@{userDetails?.username}</h1>
-              <p className="-mt-1  text-sm font-bold">
+              <h1 className="text-[1rem] fade-in">@{userDetails?.username}</h1>
+              <p className="-mt-1 animate-fade-left  text-sm font-bold">
                 send me anonymous messages!
               </p>
             </a>
@@ -142,21 +142,21 @@ export default function Container({ userDetails }: { userDetails?: user }) {
                   }}
                   placeholder="send me anonymous messages..."
                   {...field}
-                  className="w-[40rem]  max-md:w-[21rem] min-h-[9rem] text-lg font-semibold rounded-b-[1.5rem] placeholder:text-xl placeholder:font-bold bg-gray-100/45 rounded-t-none border-none placeholder:text-black/25 resize-none py-4  px-5 backdrop-blur-md"
+                  className="w-[40rem] animate-fade-down  max-md:w-[21rem] min-h-[9rem] text-lg font-semibold rounded-b-[1.5rem] placeholder:text-xl placeholder:font-bold bg-gray-100/45 rounded-t-none border-none placeholder:text-black/25 resize-none py-4  px-5 backdrop-blur-md"
                 />
               </FormControl>
 
               <FormMessage className="text-white" />
               <span
                 onClick={ChangeInput}
-                className="bg-white/40 max-md:px-2 px-1.5  max-md:text-base selection:bg-none cursor-pointer py-1 max-md:py-1.5 rounded-full absolute text-lg z-10 bottom-4  right-4"
+                className="bg-white/40 animate-fade-left max-md:px-2 px-1.5  max-md:text-base selection:bg-none cursor-pointer py-1 max-md:py-1.5 rounded-full absolute text-lg z-10 bottom-4  right-4"
               >
                 🎲
               </span>
             </FormItem>
           )}
         />
-        <p className="text-center mt-4  text-white text-sm max-md:text-xs">
+        <p className="text-center mt-4 animate-fade-down text-white text-sm max-md:text-xs">
           🔒 anonymous q&a
         </p>
 
@@ -173,7 +173,7 @@ export default function Container({ userDetails }: { userDetails?: user }) {
               <Button
                 type="submit"
                 disabled={submitM}
-                className="w-full py-7  disabled:opacity-100 bg-black hover:bg-black text-lg mt-3 font-bold shadow-xl text-white 
+                className="w-full py-7 animate-fade-up disabled:opacity-100 bg-black hover:bg-black text-lg mt-3 font-bold shadow-xl text-white 
           rounded-full"
               >
                 {!submitM ? "Send!" : <Loader />}
@@ -182,7 +182,7 @@ export default function Container({ userDetails }: { userDetails?: user }) {
           </div>
         )}
         {!show && (
-          <div className=" relative top-[27vh]    max-md:w-[21rem]  w-[40rem]">
+          <div className=" relative top-[27vh]  animate-fade-up  max-md:w-[21rem]  w-[40rem]">
             <p className="text-center mt-4 fade-in  text-white text-lg font-bold max-md:text-sm">
               👇
               <span ref={tapped}>

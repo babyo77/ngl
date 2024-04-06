@@ -75,7 +75,7 @@ function InboxComp() {
   }, [getMoreMessages]);
 
   return (
-    <div className="flex  flex-col gap-4">
+    <div className="flex animate-fade-right flex-col gap-4">
       {isLoading && (
         <div className="w-full h-[90dvh] text-xl font-extrabold  flex justify-center items-center">
           <Loader color="#EC1187" />

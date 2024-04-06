@@ -21,7 +21,7 @@ function Settings() {
   return (
     <Drawer>
       <DrawerTrigger>
-        <IoIosSettings className="h-8   w-8 text-zinc-300" />
+        <IoIosSettings className="h-8 animate-fade-left w-8 text-zinc-300" />
       </DrawerTrigger>
       <DrawerContent className="px-7">
         <DrawerHeader>
