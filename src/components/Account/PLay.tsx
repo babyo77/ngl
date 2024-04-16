@@ -27,23 +27,25 @@ function Play() {
   const fileinput = useRef<HTMLInputElement>(null);
 
   const getKey = async () => {
-    const token = await getToken(messaging, {
-      vapidKey:
-        "BKClLMyaVIbmLst3qE2nUH8P295K_8ZinQ7uM4ap7F-ZyvkG8_eaXi7BTNQDrc39UzXcLGtXd-Ved6cNpWNXiyk",
-    });
-    axios.post(
-      `${apiUrl}/api/user/notify`,
-      JSON.stringify({
-        token: await auth.currentUser?.getIdToken(),
-        notify: token,
-      }),
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    setNotification(true);
+    if (messaging) {
+      const token = await getToken(messaging, {
+        vapidKey:
+          "BKClLMyaVIbmLst3qE2nUH8P295K_8ZinQ7uM4ap7F-ZyvkG8_eaXi7BTNQDrc39UzXcLGtXd-Ved6cNpWNXiyk",
+      });
+      axios.post(
+        `${apiUrl}/api/user/notify`,
+        JSON.stringify({
+          token: await auth.currentUser?.getIdToken(),
+          notify: token,
+        }),
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      setNotification(true);
+    }
   };
 
   const enableNotifications = async () => {
