@@ -57,9 +57,14 @@ export function DeleteDialog() {
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel className="text-[1rem] mt-3 font-bold rounded-2xl py-[1.4rem]">
-            Cancel
-          </AlertDialogCancel>
+          <Button
+            variant={"secondary"}
+            className="text-[1rem] mt-3 font-bold rounded-2xl py-6 px-7"
+          >
+            <AlertDialogCancel className=" p-0 bg-transparent border-none">
+              Cancel
+            </AlertDialogCancel>
+          </Button>
           {isLoading ? (
             <Button
               disabled

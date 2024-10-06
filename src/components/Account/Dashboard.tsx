@@ -1,5 +1,5 @@
 import { auth, googleAuthProvider } from "../../firebase/firebaseConfig";
-import { Desktop, Mobile } from "..";
+import { Mobile } from "..";
 import { onAuthStateChanged, signInWithPopup } from "firebase/auth";
 
 import { Button } from "../ui/button";
@@ -8,7 +8,6 @@ import { Loader } from "../Loaders/Loader";
 import { apiUrl } from "@/API/api";
 import { Link } from "react-router-dom";
 function Dashboard() {
-  const isDesktop = window.innerWidth <= 768;
   const [loggedIn, setLoggedIn] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
   const [randomGradient, setRandomGradient] = useState<string>();
@@ -54,9 +53,6 @@ function Dashboard() {
     }
   };
 
-  if (!isDesktop) {
-    return <Desktop />;
-  }
   if (loading) {
     return (
       <div
