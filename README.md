@@ -1,4 +1,4 @@
-# NGL Project
+# NGL - Send Anonymous Message
 
 This project is a web application built using React, Firebase, and modern web technologies. It integrates user-friendly features such as dynamic content, notifications, and QR code generation, with Firebase as the backend for data storage and authentication.
 
