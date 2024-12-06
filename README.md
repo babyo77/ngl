@@ -1,30 +1,17 @@
-# React + TypeScript + Vite
+# NGL Project
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project is a web application built using React, Firebase, and modern web technologies. It integrates user-friendly features such as dynamic content, notifications, and QR code generation, with Firebase as the backend for data storage and authentication.
 
-Currently, two official plugins are available:
+## Features
+- User authentication with Firebase
+- Dynamic data handling with React Query
+- QR code generation with `qrcode.react`
+- Notifications with Radix UI's `Toast` component
+- Form validation with React Hook Form and Zod
+- Beautiful UI with Tailwind CSS and Radix UI components
+- Image to base64 conversion with `html-to-image`
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
-
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+## Tech Stack
+- **Frontend:** React, TypeScript, Tailwind CSS, Radix UI, GSAP, React Query
+- **Backend:** Firebase (Realtime Database, Firebase Auth)
+- **Additional Libraries:** `html-to-image`, `qrcode.react`, `clsx`
