@@ -149,7 +149,7 @@ export default function Container({ userDetails }: { userDetails?: user }) {
               <FormMessage className="text-white" />
               <span
                 onClick={ChangeInput}
-                className="bg-white/40 animate-fade-left max-md:px-2 px-1.5  max-md:text-base selection:bg-none cursor-pointer py-1 max-md:py-1.5 rounded-full absolute text-lg z-10 bottom-4  right-4"
+                className="bg-white/40 animate-fade-left rounded-full aspect-square flex items-center justify-center w-10 h-10 cursor-pointer absolute z-10 bottom-4 right-4 text-lg"
               >
                 🎲
               </span>
